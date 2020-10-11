@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace dotnetCampus.Logging.Composition
 {
@@ -68,54 +67,18 @@ namespace dotnetCampus.Logging.Composition
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<ILogger>)this).GetEnumerator();
 
-        /// <inheritdoc />
-        public void Error(string message, [CallerMemberName] string? callerMemberName = null)
-            => Log(x => x.Error(message, null, callerMemberName));
-
-        /// <inheritdoc />
-        public void Error(Exception exception, string? message = null, [CallerMemberName] string? callerMemberName = null)
-            => Log(x => x.Error(exception, message, callerMemberName));
-
-        /// <inheritdoc />
-        public void Error(string message, Exception? exception = null, [CallerMemberName] string? callerMemberName = null)
-        {
-            if (exception is null)
-            {
-                Log(x => x.Error(message, null, callerMemberName));
-            }
-            else
-            {
-                Log(x => x.Error(exception, message, callerMemberName));
-            }
-        }
-
-        /// <inheritdoc />
-        public void Fatal(Exception exception, string message, [CallerMemberName] string? callerMemberName = null)
-            => Log(x => x.Fatal(exception, message, callerMemberName));
-
-        /// <inheritdoc />
-        public void Message(string text, [CallerMemberName] string? callerMemberName = null)
-            => Log(x => x.Message(text, callerMemberName));
-
-        /// <inheritdoc />
-        public void Trace(string text, [CallerMemberName] string? callerMemberName = null)
-            => Log(x => x.Trace(text, callerMemberName));
-
-        /// <inheritdoc />
-        public void Warning(string message, [CallerMemberName] string? callerMemberName = null)
-            => Log(x => x.Warning(message, callerMemberName));
-
         /// <summary>
         /// 转发日志到所有的子日志系统。
         /// </summary>
-        /// <param name="logAction"></param>
-        private void Log(Action<ILogger> logAction)
+        /// <param name="context">当条日志上下文。</param>
+
+        public void Log(in LogContext context)
         {
             lock (LoggersLocker)
             {
                 foreach (var logger in _loggers)
                 {
-                    logAction(logger.Key);
+                    logger.Value.Log(context);
                 }
             }
         }

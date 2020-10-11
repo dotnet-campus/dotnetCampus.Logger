@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
 
-using dotnetCampus.Logging.Core;
-
 namespace dotnetCampus.Logging.Standard
 {
     internal sealed class ConsoleLogWriter

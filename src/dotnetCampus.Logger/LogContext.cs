@@ -1,7 +1,8 @@
-﻿using System;
+﻿
+using System;
 using System.Runtime.InteropServices;
 
-namespace dotnetCampus.Logging.Core
+namespace dotnetCampus.Logging
 {
     /// <summary>
     /// 包含一条日志的所有信息。

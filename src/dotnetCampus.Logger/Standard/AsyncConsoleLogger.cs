@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+
 using dotnetCampus.Logging.Core;
 
 namespace dotnetCampus.Logging.Standard

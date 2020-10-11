@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 
-using dotnetCampus.Logging.Core;
 using dotnetCampus.Logging.IO;
 
 namespace dotnetCampus.Logging.Markdown
