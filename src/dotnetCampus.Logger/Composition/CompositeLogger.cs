@@ -11,7 +11,6 @@ namespace dotnetCampus.Logging.Composition
     /// </summary>
     public class CompositeLogger : ILogger, IEnumerable<ILogger>
     {
-        private readonly object _locker = new object();
         private readonly Dictionary<ILogger, ILogger> _loggers;
 
         /// <summary>
@@ -28,12 +27,17 @@ namespace dotnetCampus.Logging.Composition
         }
 
         /// <summary>
+        /// 获取 <see cref="_loggers"/> 操作专用的锁。
+        /// </summary>
+        private object LoggersLocker => _loggers;
+
+        /// <summary>
         /// 向组合日志中添加日志实例。如果添加的日志已存在，会忽略而不会重复添加也不会出现异常。
         /// </summary>
         /// <param name="logger">要添加的日志实例。</param>
         public void Add(ILogger logger)
         {
-            lock (_locker)
+            lock (LoggersLocker)
             {
                 _loggers[logger] = logger ?? throw new ArgumentNullException(nameof(logger));
             }
@@ -46,7 +50,7 @@ namespace dotnetCampus.Logging.Composition
         /// <returns>如果要移除的日志不存在，则返回 false；否则返回 true。</returns>
         public bool Remove(ILogger logger)
         {
-            lock (_locker)
+            lock (LoggersLocker)
             {
                 return _loggers.Remove(logger ?? throw new ArgumentNullException(nameof(logger)));
             }
@@ -55,7 +59,7 @@ namespace dotnetCampus.Logging.Composition
         /// <inheritdoc />
         IEnumerator<ILogger> IEnumerable<ILogger>.GetEnumerator()
         {
-            lock (_locker)
+            lock (LoggersLocker)
             {
                 return _loggers.Select(x => x.Value).ToList().GetEnumerator();
             }
@@ -107,7 +111,7 @@ namespace dotnetCampus.Logging.Composition
         /// <param name="logAction"></param>
         private void Log(Action<ILogger> logAction)
         {
-            lock (_locker)
+            lock (LoggersLocker)
             {
                 foreach (var logger in _loggers)
                 {
