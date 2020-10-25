@@ -14,27 +14,30 @@ namespace dotnetCampus.FileLogger
             DoubleBufferTask = new DoubleBufferLazyInitializeTask<string>(WriteFile);
         }
 
-        public FileLogger(FileInfo logFile) : this()
+        public FileLogger(FileLoggerConfiguration configuration) : this()
         {
-            SetLogFile(logFile);
+            SetConfiguration(configuration);
         }
 
-        public void SetLogFile(FileInfo logFile)
+        public void SetConfiguration(FileLoggerConfiguration configuration)
         {
-            if (LogFile != null)
+            if (FileLoggerConfiguration != null)
             {
                 throw new InvalidOperationException($"重复多次设置日志文件");
             }
 
-            LogFile = logFile;
+            FileLoggerConfiguration = configuration.Clone();
+
             DoubleBufferTask.OnInitialized();
 
             IsInitialized = true;
         }
 
+        private FileLoggerConfiguration FileLoggerConfiguration { set; get; } = null!;
+
         public bool IsInitialized { private set; get; } = false;
 
-        public FileInfo LogFile { private set; get; } = null!;
+        public FileInfo LogFile => FileLoggerConfiguration.LogFile;
 
         private DoubleBufferLazyInitializeTask<string> DoubleBufferTask { get; }
 
@@ -49,14 +52,33 @@ namespace dotnetCampus.FileLogger
             DoubleBufferTask.AddTask(logMessage);
         }
 
-        private Task WriteFile(List<string> logList)
+        private uint CurrentWriteTextCount { set; get; } = 0;
+
+        private async Task WriteFile(List<string> logList)
         {
             // 最多尝试写10次日志
-            for (var i = 0; i < 10; i++)
+            var maxWriteLogFileRetryCount = FileLoggerConfiguration.MaxWriteLogFileRetryCount;
+            for (var i = 0; i < maxWriteLogFileRetryCount; i++)
             {
                 try
                 {
-                    return File.AppendAllLinesAsync(LogFile.FullName, logList);
+                    await File.AppendAllLinesAsync(LogFile.FullName, logList);
+
+                    // 当前写入的数据量
+                    foreach (var logText in logList)
+                    {
+                        CurrentWriteTextCount += (uint)logText.Length;
+                    }
+
+                    if (CurrentWriteTextCount > FileLoggerConfiguration.NotifyMinWriteTextCount)
+                    {
+                        foreach (var limitTextCountFilter in FileLoggerConfiguration.LimitTextCountFilterList)
+                        {
+                            await limitTextCountFilter.FilterLogFile(LogFile);
+                        }
+                    }
+
+                    return;
                 }
                 catch (Exception e)
                 {
@@ -64,9 +86,13 @@ namespace dotnetCampus.FileLogger
                 }
 
                 Debug.WriteLine("[FileLogger] Retry count {0}", i);
+                await Task.Delay(FileLoggerConfiguration.RetryDelayTime);
             }
 
-            return Task.CompletedTask;
+            FileLoggerWriteFailed?.Invoke(this, new FileLoggerWriteFailedArgs(this, FileLoggerConfiguration, logList));
+            // 如果超过次数依然写入失败，那就忽略失败了
         }
+
+        public event EventHandler<FileLoggerWriteFailedArgs>? FileLoggerWriteFailed;
     }
 }
