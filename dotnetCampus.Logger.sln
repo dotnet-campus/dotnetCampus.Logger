@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D196596-756D-45C2-8A05-C8E4AB8A36E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnetCampus.Logger", "src\dotnetCampus.Logger\dotnetCampus.Logger.csproj", "{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger", "src\dotnetCampus.Logger\dotnetCampus.Logger.csproj", "{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFB0DF31-474C-4ACB-88C6-DD00552D5B5A}"
 	ProjectSection(SolutionItems) = preProject
-		build\Version.props = build\Version.props
-		README.md = README.md
 		CHANGELOG.md = CHANGELOG.md
 		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+		build\Version.props = build\Version.props
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.FileLogger", "src\dotnetCampus.FileLogger\dotnetCampus.FileLogger\dotnetCampus.FileLogger.csproj", "{C9399790-B935-4CE3-A75B-4D99133E1DB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +25,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -40,8 +39,27 @@ Global
 		{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}.Release|x64.Build.0 = Release|Any CPU
 		{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}.Release|x86.ActiveCfg = Release|Any CPU
 		{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}.Release|x86.Build.0 = Release|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Release|x64.Build.0 = Release|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272} = {5D196596-756D-45C2-8A05-C8E4AB8A36E6}
+		{C9399790-B935-4CE3-A75B-4D99133E1DB1} = {5D196596-756D-45C2-8A05-C8E4AB8A36E6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7D96521-5EB7-45B4-B70D-2B3FB69A3082}
 	EndGlobalSection
 EndGlobal
