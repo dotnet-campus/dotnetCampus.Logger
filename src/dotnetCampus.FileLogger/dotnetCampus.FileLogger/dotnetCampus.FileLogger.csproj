@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="dotnetCampus.AsyncWorkerCollection" Version="1.6.2" />
-  </ItemGroup>
-</Project>
