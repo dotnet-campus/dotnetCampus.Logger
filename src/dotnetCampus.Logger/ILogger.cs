@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dotnetCampus.Logger;
+namespace dotnetCampus.Logging;
 
 /// <summary>Represents a type used to perform logging.</summary>
 /// <remarks>Aggregates most logging patterns to a single method.</remarks>

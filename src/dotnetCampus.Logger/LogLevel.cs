@@ -1,4 +1,4 @@
-﻿namespace dotnetCampus.Logger;
+﻿namespace dotnetCampus.Logging;
 
 /// <summary>
 /// Defines logging severity levels.
