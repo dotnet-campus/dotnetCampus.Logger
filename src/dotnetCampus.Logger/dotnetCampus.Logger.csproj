@@ -1,27 +1,36 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- TargetFramework -->
   <PropertyGroup>
-    <!-- Features added:
-          - net7.0: Add required properties
-          - net5.0: Add init-only setters, more nullable attributes
-          - netcoreapp3.1: Add nullable attributes 
-         We support these frameworks:
+    <!-- We support these frameworks:
           - net8.0: Make developers to use the latest .NET features
           - net6.0: Microsoft supported latest .NET version
           - netstandard2.0: Support all other .NET foundation libraries
-          - net45: Support legacy .NET framework
+          - net47/net461/net45: Support legacy .NET framework
     -->
     <TargetFrameworks>net8.0;net6.0;netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworkSupportPartialImmutable Condition="'$(TargetFramework)'=='net6.0' OR '$(TargetFramework)'=='netstandard2.0' OR '$(TargetFramework)'=='net462'">true</TargetFrameworkSupportPartialImmutable>
+  </PropertyGroup>
+
+  <!-- Project Information -->
+  <PropertyGroup>
     <RootNamespace>dotnetCampus.Logging</RootNamespace>
+    <Deterministic>true</Deterministic>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Debug 下暂时忽略注释，否则注释警告会淹没正常警告。 -->
+    <NoWarn Condition="'$(Configuration)'=='debug'">CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Package Reference -->
   <ItemGroup>
-    <PackageReference Include="dotnetCampus.LatestCSharpFeatures.Source" Version="11.0.0-alpha03" PrivateAssets="all" />
+    <PackageReference Include="dotnetCampus.LatestCSharpFeatures" Version="12.0.0-alpha02" PrivateAssets="all" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
-  
+
   <!-- 在 GitHub Action -->
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>

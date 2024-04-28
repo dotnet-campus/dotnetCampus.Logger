@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\dotnetCampus.Logger\dotnetCampus.Logger.csproj" />
     <ProjectReference Include="..\LoggerSample.LoggerDependentLibrary\LoggerSample.LoggerDependentLibrary.csproj" />
     <ProjectReference Include="..\LoggerSample.LoggerIndependentLibrary\LoggerSample.LoggerIndependentLibrary.csproj" />
   </ItemGroup>
