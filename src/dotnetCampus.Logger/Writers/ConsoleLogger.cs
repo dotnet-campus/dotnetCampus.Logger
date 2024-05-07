@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
-using dotnetCampus.Logging.Configurations;
-using dotnetCampus.Logging.Writers.ConsoleLoggerHelpers;
+using dotnetCampus.Logging.Writers.Helpers;
 using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
 using B = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
 using D = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Decoration;
@@ -11,12 +10,22 @@ namespace dotnetCampus.Logging.Writers;
 
 public class ConsoleLogger : ILogger
 {
-    private readonly RepeatLoggerDetector _repeat = new(ClearAndMoveToLastLine);
+    /// <summary>
+    /// 控制台光标控制是否启用。目前可容纳的错误次数为 3 次，当降低到 0 次时，将不再尝试移动光标。
+    /// </summary>
+    private int _isCursorMovementEnabled = 3;
+
+    private readonly RepeatLoggerDetector _repeat;
 
     /// <summary>
     /// 高于或等于此级别的日志才会被记录。
     /// </summary>
     public LogLevel Level { get; set; }
+
+    public ConsoleLogger()
+    {
+        _repeat = new(ClearAndMoveToLastLine);
+    }
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
@@ -143,9 +152,9 @@ public class ConsoleLogger : ILogger
         return ConsoleFilterTags.Contains(tag.ToString());
     }
 
-    private static void ClearAndMoveToLastLine(int repeatCount)
+    private void ClearAndMoveToLastLine(int repeatCount)
     {
-        if (repeatCount > 2)
+        if (_isCursorMovementEnabled > 0 && repeatCount > 2)
         {
             try
             {
@@ -157,8 +166,9 @@ public class ConsoleLogger : ILogger
             }
             catch (IOException)
             {
-                // 日志记录时，如果无法移动光标，就放弃移动。
-                // 通常是因为当前输出位置不在缓冲区内。
+                // 日志记录时，如果无法移动光标，说明可能当前输出位置不在缓冲区内。
+                // 如果多次尝试失败，则认为当前控制台缓冲区不支持光标移动，遂放弃。
+                _isCursorMovementEnabled--;
             }
         }
     }
@@ -181,9 +191,4 @@ public class ConsoleLogger : ILogger
     private static string WarningExceptionTag => $"{B.Yellow}{F.Black} ! {Reset}{WarningText} ";
     private static string ErrorExceptionTag => $"{B.BrightRed}{F.Black} X {Reset}{ErrorText} ";
     private static string CriticalExceptionTag => $"{B.Red}{F.Black} 💥 {Reset}{CriticalText} ";
-}
-
-
-public record ConsoleLogOptions : LogOptions
-{
 }
