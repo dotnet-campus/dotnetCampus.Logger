@@ -1,4 +1,4 @@
-﻿namespace dotnetCampus.Logging.Writers;
+﻿namespace dotnetCampus.Logging.Writers.ConsoleLoggerHelpers;
 
 /// <summary>
 /// 包含控制台输出颜色的字符串常量。
