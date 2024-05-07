@@ -24,6 +24,11 @@
     <!-- Debug 下暂时忽略注释，否则注释警告会淹没正常警告。 -->
     <NoWarn Condition="'$(Configuration)'=='debug'">CS1591</NoWarn>
   </PropertyGroup>
+  
+  <!-- 仅在 net8.0 下才启用警告，其他框架全部关闭警告 -->
+  <PropertyGroup Condition="$(TargetFramework)!='net8.0'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
 
   <!-- Package Reference -->
   <ItemGroup>
