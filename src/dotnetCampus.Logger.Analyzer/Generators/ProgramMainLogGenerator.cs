@@ -34,6 +34,13 @@ public class ProgramMainLogGenerator : IIncrementalGenerator
 
             if (mds.Parent is not ClassDeclarationSyntax cds)
             {
+                // 必须在类中。
+                return false;
+            }
+
+            if (!cds.Modifiers.Any(SyntaxKind.PartialKeyword))
+            {
+                // 必须是 partial 类。
                 return false;
             }
 
