@@ -3,23 +3,25 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <IsRoslynComponent>true</IsRoslynComponent>
-
     <RootNamespace>dotnetCampus.Logger.Analyzer</RootNamespace>
-    <PackageId>dotnetCampus.Logger.Analyzer</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="dotnetCampus.LatestCSharpFeatures" Version="12.0.0-alpha02" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\dotnetCampus.Logger\ILogger.cs" Link="Externals\%(FileName).cs" />
+    <Compile Include="..\dotnetCampus.Logger\LogLevel.cs" Link="Externals\%(FileName).cs" />
+    <Compile Include="..\dotnetCampus.Logger\EventId.cs" Link="Externals\%(FileName).cs" />
   </ItemGroup>
 
 

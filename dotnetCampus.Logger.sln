@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger", "src\dotnetCampus.Logger\dotnetCampus.Logger.csproj", "{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}"
+	ProjectSection(ProjectDependencies) = postProject
+		{77F0A6B5-6C8B-4815-8C1E-4F97C24BFB36} = {77F0A6B5-6C8B-4815-8C1E-4F97C24BFB36}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{AFB0DF31-474C-4ACB-88C6-DD00552D5B5A}"
 	ProjectSection(SolutionItems) = preProject

@@ -9,7 +9,6 @@
           - net47/net461/net45: Support legacy .NET framework
     -->
     <TargetFrameworks>net8.0;net6.0;netstandard2.0;net45</TargetFrameworks>
-    <TargetFrameworkSupportPartialImmutable Condition="'$(TargetFramework)'=='net6.0' OR '$(TargetFramework)'=='netstandard2.0' OR '$(TargetFramework)'=='net462'">true</TargetFrameworkSupportPartialImmutable>
   </PropertyGroup>
 
   <!-- Project Information -->
@@ -21,20 +20,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- 仅在 net8.0 下才启用警告，其他框架全部关闭警告 -->
+    <WarningLevel Condition="$(TargetFramework)!='net8.0'">0</WarningLevel>
     <!-- Debug 下暂时忽略注释，否则注释警告会淹没正常警告。 -->
     <NoWarn Condition="'$(Configuration)'=='debug'">CS1591</NoWarn>
   </PropertyGroup>
-  
-  <!-- 仅在 net8.0 下才启用警告，其他框架全部关闭警告 -->
-  <PropertyGroup Condition="$(TargetFramework)!='net8.0'">
-    <WarningLevel>0</WarningLevel>
-  </PropertyGroup>
-
-  <!-- Package Reference -->
-  <ItemGroup>
-    <PackageReference Include="dotnetCampus.LatestCSharpFeatures" Version="12.0.0-alpha02" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
 
   <!-- 在 GitHub Action -->
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
@@ -44,5 +34,20 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <!-- Package Reference -->
+  <ItemGroup>
+    <PackageReference Include="dotnetCampus.LatestCSharpFeatures" Version="12.0.0-alpha02" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!-- 生成 NuGet 包。 -->
+  <Target Name="_IncludeAllDependencies" BeforeTargets="_GetPackageFiles">
+    <ItemGroup>
+      <None Include="Properties\Package\build\Package.props" Pack="True" PackagePath="build\$(PackageId).props" />
+      <None Include="Properties\Package\build\Package.targets" Pack="True" PackagePath="build\$(PackageId).targets" />
+      <None Include="..\..\artifacts\bin\dotnetCampus.Logger.Analyzer\$(Configuration)\**\*.dll" Pack="True" PackagePath="analyzers\dotnet\cs" />
+    </ItemGroup>
+  </Target>
 
 </Project>
