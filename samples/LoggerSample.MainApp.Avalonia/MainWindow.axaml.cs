@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace dotnetCampus.LoggerSample.Avalonia;
+namespace dotnetCampus.LoggerSample;
 
 public partial class MainWindow : Window
 {

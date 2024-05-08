@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
-namespace dotnetCampus.LoggerSample.Avalonia;
+namespace dotnetCampus.LoggerSample;
 
 public partial class App : Application
 {

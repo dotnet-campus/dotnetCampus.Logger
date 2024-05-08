@@ -24,10 +24,12 @@ public class PartialProgramAnalyzer : DiagnosticAnalyzer
 
     private void AnalyzeProgram(SyntaxNodeAnalysisContext context)
     {
-        if (context.Node is MemberDeclarationSyntax
+        if (context.Node is MethodDeclarationSyntax
             {
                 Parent: ClassDeclarationSyntax cds,
-            } && !cds.Modifiers.Any(SyntaxKind.PartialKeyword))
+            } mds
+            && Utils.CodeAnalysis.ProgramMainExtensions.CheckCanBeProgramMain(mds)
+            && !cds.Modifiers.Any(SyntaxKind.PartialKeyword))
         {
             var spanStart = cds.Modifiers.Count is 0
                 ? cds.Keyword.SpanStart

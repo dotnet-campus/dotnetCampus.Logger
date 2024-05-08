@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using dotnetCampus.Logger.Assets.Templates;
@@ -60,18 +61,21 @@ public class ProgramMainLogGenerator : IIncrementalGenerator
     private void Execute(SourceProductionContext context, INamedTypeSymbol programTypeSymbol)
     {
         var templateProgramNamespace = typeof(Program).Namespace!;
-        var generatedProgramNamespace = programTypeSymbol.ContainingNamespace.ToDisplayString();
-
         var templatesFolder = templateProgramNamespace.AsSpan().Slice(AssemblyInfo.RootNamespace.Length + 1).ToString();
-        foreach (var template in EmbeddedSourceFiles
-                     .Enumerate(templatesFolder)
-                     .Where(x => x.FileName.StartsWith("Program.")))
-        {
-            var generatedText = template.Content
-                .Replace(templateProgramNamespace, generatedProgramNamespace)
-                .Replace("Program", programTypeSymbol.Name);
+        var embeddedFiles = EmbeddedSourceFiles.Enumerate(templatesFolder).ToImmutableArray();
 
-            context.AddSource(template.FileName, SourceText.From(generatedText, Encoding.UTF8));
-        }
+        // 生成 Program.Logger.g.cs
+        var partialLoggerFile = embeddedFiles.First(x => x.FileName.StartsWith("Program.", StringComparison.Ordinal));
+        var generatedLoggerText = ConvertPartialProgramLogger(partialLoggerFile.Content, programTypeSymbol);
+        context.AddSource($"{programTypeSymbol.Name}.Logger.g.cs", SourceText.From(generatedLoggerText, Encoding.UTF8));
+    }
+
+    private string ConvertPartialProgramLogger(string sourceText, INamedTypeSymbol programTypeSymbol)
+    {
+        var templateProgramNamespace = typeof(Program).Namespace!;
+        var generatedProgramNamespace = programTypeSymbol.ContainingNamespace.ToDisplayString();
+        return sourceText
+            .Replace(templateProgramNamespace, generatedProgramNamespace)
+            .Replace("Program", programTypeSymbol.Name);
     }
 }

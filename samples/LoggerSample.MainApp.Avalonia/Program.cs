@@ -1,7 +1,8 @@
-﻿using Avalonia;
-using System;
+﻿using System;
+using Avalonia;
+using dotnetCampus.LoggerSample.Startup;
 
-namespace dotnetCampus.LoggerSample.Avalonia;
+namespace dotnetCampus.LoggerSample;
 
 internal partial class Program
 {
@@ -11,11 +12,6 @@ internal partial class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        // var logger = new LogBuilder()
-        //     .WithO
-        //     .AddWriter(new ConsoleLogWriter().WithOptions)
-        //     .Build();
-
         BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
     }
@@ -25,5 +21,6 @@ internal partial class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace();
+            .UseLogger(b => b
+                .UseMemoryCache(Log));
 }
