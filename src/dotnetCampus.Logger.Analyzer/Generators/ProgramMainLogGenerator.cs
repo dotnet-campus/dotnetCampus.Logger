@@ -20,6 +20,8 @@ public class ProgramMainLogGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        return;
+
         var provider = context.SyntaxProvider.CreateSyntaxProvider((node, ct) =>
         {
             if (node is not MethodDeclarationSyntax mds)

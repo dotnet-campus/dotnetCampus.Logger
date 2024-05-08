@@ -21,6 +21,5 @@ internal partial class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .UseLogger(b => b
-                .UseMemoryCache(Log));
+            .UseLogger(b => { });
 }

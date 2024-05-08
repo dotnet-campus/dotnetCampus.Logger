@@ -1,4 +1,6 @@
-﻿namespace dotnetCampus.Logging;
+﻿#nullable enable
+
+namespace dotnetCampus.Logging;
 
 /// <summary>
 /// Defines logging severity levels.

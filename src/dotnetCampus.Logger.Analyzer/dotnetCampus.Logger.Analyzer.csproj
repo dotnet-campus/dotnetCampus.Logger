@@ -19,12 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\dotnetCampus.Logger\ILogger.cs" Link="Assets\Externals\%(FileName).cs" />
-    <Compile Include="..\dotnetCampus.Logger\LogLevel.cs" Link="Assets\Externals\%(FileName).cs" />
-    <Compile Include="..\dotnetCampus.Logger\EventId.cs" Link="Assets\Externals\%(FileName).cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <_GeneratedLoggerFile Include="..\dotnetCampus.Logger\EventId.cs" />
+    <_GeneratedLoggerFile Include="..\dotnetCampus.Logger\ILogger.cs" />
+    <_GeneratedLoggerFile Include="..\dotnetCampus.Logger\Log.cs" />
+    <_GeneratedLoggerFile Include="..\dotnetCampus.Logger\LoggerExtensions.cs" />
+    <_GeneratedLoggerFile Include="..\dotnetCampus.Logger\LogLevel.cs" />
+    <Compile Include="@(_GeneratedLoggerFile)" Link="Assets\Sources\%(FileName).g.cs" />
+    <EmbeddedResource Include="@(_GeneratedLoggerFile)" Link="Assets\Sources\%(FileName).g.cs" />
     <EmbeddedResource Include="Assets\Templates\**\*.cs" />
   </ItemGroup>
 
