@@ -6,4 +6,8 @@
     <RootNamespace>dotnetCampus.LoggerSample</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\dotnetCampus.Logger\dotnetCampus.Logger.csproj" />
+  </ItemGroup>
+
 </Project>
