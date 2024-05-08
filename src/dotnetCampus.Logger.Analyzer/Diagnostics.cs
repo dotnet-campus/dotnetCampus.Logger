@@ -1,6 +1,5 @@
 ﻿using dotnetCampus.Logger.Properties;
 using Microsoft.CodeAnalysis;
-using static dotnetCampus.Logger.Properties.Localizations;
 
 // ReSharper disable InconsistentNaming
 

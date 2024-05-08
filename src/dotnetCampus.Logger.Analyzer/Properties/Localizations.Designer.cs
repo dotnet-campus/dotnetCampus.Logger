@@ -96,7 +96,16 @@ namespace dotnetCampus.Logger.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change {0} to a partial class to allow it to use the logging system before the logging module is initialized..
+        ///   Looks up a localized string similar to Change &apos;{0}&apos; to a partial class.
+        /// </summary>
+        internal static string DL1001_Fix {
+            get {
+                return ResourceManager.GetString("DL1001_Fix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change &apos;{0}&apos; to a partial class to allow it to use the logging system before the logging module is initialized..
         /// </summary>
         internal static string DL1001_Message {
             get {

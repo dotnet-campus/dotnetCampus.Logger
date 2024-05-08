@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using dotnetCampus.Logger.Templates;
+using dotnetCampus.Logger.Assets.Templates;
 using dotnetCampus.Logger.Utils.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;

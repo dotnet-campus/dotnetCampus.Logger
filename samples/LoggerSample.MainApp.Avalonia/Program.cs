@@ -1,10 +1,9 @@
 ﻿using Avalonia;
 using System;
-using dotnetCampus.Logging;
 
 namespace dotnetCampus.LoggerSample.Avalonia;
 
-internal class Program
+internal partial class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized

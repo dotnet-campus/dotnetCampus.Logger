@@ -8,7 +8,7 @@ using ILogger = global::dotnetCampus.Logging.ILogger;
 using LazyThreadSafetyMode = global::System.Threading.LazyThreadSafetyMode;
 using LogLevel = global::dotnetCampus.Logging.LogLevel;
 
-namespace dotnetCampus.Logger.Templates;
+namespace dotnetCampus.Logger.Assets.Templates;
 
 partial class Program
 {
