@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using dotnetCampus.Logger.Analyzer.Templates;
-using dotnetCampus.Logger.Analyzer.Utils;
+using dotnetCampus.Logger.Templates;
+using dotnetCampus.Logger.Utils;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace dotnetCampus.Logger.Analyzer;
+namespace dotnetCampus.Logger.Generators;
 
 /// <summary>
 /// 生成 Program.g.cs，为 Main 方法第一行日志生成支持代码。

@@ -5,7 +5,7 @@
     <IsPackable>false</IsPackable>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <IsRoslynComponent>true</IsRoslynComponent>
-    <RootNamespace>dotnetCampus.Logger.Analyzer</RootNamespace>
+    <RootNamespace>dotnetCampus.Logger</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,11 +17,11 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <Compile Include="..\dotnetCampus.Logger\ILogger.cs" Link="Externals\%(FileName).cs" />
-    <Compile Include="..\dotnetCampus.Logger\LogLevel.cs" Link="Externals\%(FileName).cs" />
-    <Compile Include="..\dotnetCampus.Logger\EventId.cs" Link="Externals\%(FileName).cs" />
+    <Compile Include="..\dotnetCampus.Logger\ILogger.cs" Link="Assets\Externals\%(FileName).cs" />
+    <Compile Include="..\dotnetCampus.Logger\LogLevel.cs" Link="Assets\Externals\%(FileName).cs" />
+    <Compile Include="..\dotnetCampus.Logger\EventId.cs" Link="Assets\Externals\%(FileName).cs" />
   </ItemGroup>
 
   <ItemGroup>

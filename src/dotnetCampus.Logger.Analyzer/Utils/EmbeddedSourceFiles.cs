@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace dotnetCampus.Logger.Analyzer.Utils;
+namespace dotnetCampus.Logger.Utils;
 
 /// <summary>
 /// 从嵌入的资源中寻找源代码。

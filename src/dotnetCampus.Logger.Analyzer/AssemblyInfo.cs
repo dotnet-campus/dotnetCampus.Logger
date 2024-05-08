@@ -1,4 +1,4 @@
-﻿namespace dotnetCampus.Logger.Analyzer;
+﻿namespace dotnetCampus.Logger;
 
 internal class AssemblyInfo
 {

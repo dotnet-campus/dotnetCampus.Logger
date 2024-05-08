@@ -8,7 +8,7 @@ using ILogger = global::dotnetCampus.Logging.ILogger;
 using LazyThreadSafetyMode = global::System.Threading.LazyThreadSafetyMode;
 using LogLevel = global::dotnetCampus.Logging.LogLevel;
 
-namespace dotnetCampus.Logger.Analyzer.Templates;
+namespace dotnetCampus.Logger.Templates;
 
 partial class Program
 {
@@ -33,7 +33,8 @@ partial class Program
 
         private readonly global::System.Collections.Concurrent.ConcurrentQueue<CachedLogItem> _queue = [];
 
-        void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, global::System.Func<TState, Exception?, string> formatter)
+        void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
+            global::System.Func<TState, Exception?, string> formatter)
         {
             if (_realLogger is { } logger)
             {
@@ -75,6 +76,6 @@ partial class Program
             object state,
             Exception? exception,
             global::System.Func<object, Exception?, string> formatter
-            );
+        );
     }
 }
