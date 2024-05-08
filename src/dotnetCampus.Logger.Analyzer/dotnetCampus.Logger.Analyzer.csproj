@@ -24,5 +24,8 @@
     <Compile Include="..\dotnetCampus.Logger\EventId.cs" Link="Externals\%(FileName).cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\**\*.cs" />
+  </ItemGroup>
 
 </Project>
