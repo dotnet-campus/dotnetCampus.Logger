@@ -19,6 +19,15 @@ public class Diagnostics
         DiagnosticSeverity.Error,
         true);
 
+    public static DiagnosticDescriptor DL0101_ProgramIsRecommendedToBePartial { get; } = new(
+        nameof(DL1001),
+        Localize(nameof(DL1001)),
+        Localize(nameof(DL1001_Message)),
+        Categories.Mechanism,
+        DiagnosticSeverity.Warning,
+        true,
+        description: Localize(DL1001_Description));
+
     private static class Categories
     {
         /// <summary>

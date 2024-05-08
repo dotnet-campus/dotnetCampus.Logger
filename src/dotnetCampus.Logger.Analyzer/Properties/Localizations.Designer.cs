@@ -60,7 +60,7 @@ namespace dotnetCampus.Logger.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown error..
+        ///   Looks up a localized string similar to Unknown Error.
         /// </summary>
         internal static string DL0000 {
             get {
@@ -74,6 +74,33 @@ namespace dotnetCampus.Logger.Properties {
         internal static string DL0000_Message {
             get {
                 return ResourceManager.GetString("DL0000_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the entry class to a partial class.
+        /// </summary>
+        internal static string DL1001 {
+            get {
+                return ResourceManager.GetString("DL1001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After changing the entry class to a partial class, the source generator can generate auxiliary log code according to the subsequent log initialization requirements; this way, you can even start using logs in the first sentence of the Main method without worrying about initialization issues..
+        /// </summary>
+        internal static string DL1001_Description {
+            get {
+                return ResourceManager.GetString("DL1001_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change {0} to a partial class to allow it to use the logging system before the logging module is initialized..
+        /// </summary>
+        internal static string DL1001_Message {
+            get {
+                return ResourceManager.GetString("DL1001_Message", resourceCulture);
             }
         }
     }

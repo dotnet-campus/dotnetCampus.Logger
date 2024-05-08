@@ -1,4 +1,4 @@
-﻿namespace dotnetCampus.Logger.Utils;
+﻿namespace dotnetCampus.Logger.Utils.IO;
 
 /// <summary>
 /// 嵌入的文本资源的数据。

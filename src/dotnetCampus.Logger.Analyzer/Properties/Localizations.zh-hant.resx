@@ -16,9 +16,18 @@
     </value>
   </resheader>
   <data name="DL0000" xml:space="preserve">
-        <value>未知錯誤。</value>
-    </data>
+    <value>未知錯誤</value>
+  </data>
   <data name="DL0000_Message" xml:space="preserve">
     <value>發生了未知錯誤。</value>
+  </data>
+  <data name="DL1001_Message" xml:space="preserve">
+    <value>將 {0} 改為分部類，以允許其在日誌模塊初始化之前使用日誌系統。</value>
+  </data>
+  <data name="DL1001" xml:space="preserve">
+    <value>修改入口類為分部類</value>
+  </data>
+  <data name="DL1001_Description" xml:space="preserve">
+    <value>將入口類改為分部類後，源生成器可以根據後續日誌初始化的要求生成輔助日誌代碼；這樣，你甚至可以在 Main 方法第一句化就開始使用日誌而無需擔心初始化問題。</value>
   </data>
 </root>
