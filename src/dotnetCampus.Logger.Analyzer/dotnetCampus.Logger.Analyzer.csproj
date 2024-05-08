@@ -22,10 +22,24 @@
     <Compile Include="..\dotnetCampus.Logger\ILogger.cs" Link="Assets\Externals\%(FileName).cs" />
     <Compile Include="..\dotnetCampus.Logger\LogLevel.cs" Link="Assets\Externals\%(FileName).cs" />
     <Compile Include="..\dotnetCampus.Logger\EventId.cs" Link="Assets\Externals\%(FileName).cs" />
+    <Compile Update="Properties\Localizations.zh-CN.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Localizations.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Localications.zh-CN.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Localications.zh-CN.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Templates\**\*.cs" />
+    <EmbeddedResource Update="Properties\Localizations.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localizations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
