@@ -1,12 +1,10 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using dotnetCampus.Logger.Utils.IO;
-using dotnetCampus.Logging;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 
@@ -31,11 +29,18 @@ public class LoggerGenerator : IIncrementalGenerator
             return;
         }
 
-        foreach (var file in EmbeddedSourceFiles.Enumerate("Assets/Sources"))
+        var sourceFiles = EmbeddedSourceFiles.Enumerate("Assets/Sources").ToImmutableArray();
+
+        foreach (var file in sourceFiles)
         {
             var code = GenerateSource(rootNamespace, file.Content);
             context.AddSource(file.FileName, SourceText.From(code, Encoding.UTF8));
         }
+
+        var globalUsingsCode = GenerateGlobalUsings(
+            rootNamespace,
+            [..sourceFiles.Select(x => x.FileName.Substring(0, x.FileName.IndexOf('.')))]);
+        context.AddSource("GlobalUsings.g.cs", SourceText.From(globalUsingsCode, Encoding.UTF8));
     }
 
     private string GenerateSource(string rootNamespace, string sourceText)
@@ -54,11 +59,21 @@ public class LoggerGenerator : IIncrementalGenerator
 
         return string.Concat(
             sourceSpan.Slice(0, namespaceStartIndex).ToString(),
-            rootNamespace,
+            $"{rootNamespace}.Logging",
             sourceSpan.Slice(namespaceEndIndex, publicKeywordIndex - namespaceEndIndex).ToString(),
             "internal",
             sourceSpan.Slice(publicKeywordIndex + "public".Length, sourceSpan.Length - publicKeywordIndex - "public".Length).ToString()
         );
+    }
+
+    private string GenerateGlobalUsings(string rootNamespace, ImmutableArray<string> typeNames)
+    {
+        return $"""
+global using {rootNamespace}.Logging;
+
+{string.Join("\n", typeNames.Select(x => $"global using {x} = {rootNamespace}.Logging.{x};"))}
+
+""";
     }
 
     private static Regex? _typeRegex;
