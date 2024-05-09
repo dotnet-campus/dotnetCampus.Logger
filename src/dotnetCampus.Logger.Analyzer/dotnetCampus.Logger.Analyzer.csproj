@@ -21,8 +21,8 @@
   <ItemGroup>
     <Compile Include="..\dotnetCampus.Logger\Properties\GlobalUsings.cs" Link="Properties\%(FileName).g.cs" />
     <Compile Include="..\dotnetCampus.Logger\Attributes\*.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
-    <Compile Include="..\dotnetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(FileName).cs" />
-    <EmbeddedResource Include="..\dotnetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(FileName).cs" />
+    <Compile Include="..\dotnetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(RecursiveDir)%(FileName).cs" />
+    <EmbeddedResource Include="..\dotnetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(RecursiveDir)%(FileName).cs" />
     <EmbeddedResource Include="Assets\Templates\**\*.cs" />
   </ItemGroup>
 

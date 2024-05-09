@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <CompilerVisibleProperty Include="RootNamespace" />
+    <CompilerVisibleProperty Include="OutputType" />
+    <CompilerVisibleProperty Include="_DLMainlyUseGeneratedLogger" />
   </ItemGroup>
 
 </Project>

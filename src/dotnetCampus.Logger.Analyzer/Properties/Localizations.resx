@@ -27,7 +27,7 @@
     <value>Unknown Error</value>
   </data>
   <data name="DL0000_Message" xml:space="preserve">
-    <value>An unknown error occurred.</value>
+    <value>An unknown error occurred. {0}</value>
   </data>
   <data name="DL1001" xml:space="preserve">
     <value>Change the entry class to a partial class</value>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using dotnetCampus.Logger.Utils.IO;
@@ -30,11 +29,6 @@ public class LoggerGenerator : IIncrementalGenerator
         }
 
         var sourceFiles = EmbeddedSourceFiles.Enumerate("Assets/Sources").ToImmutableArray();
-
-        var globalUsingsCode = GenerateGlobalUsings(
-            rootNamespace,
-            [..sourceFiles.Select(x => x.FileName.Substring(0, x.FileName.IndexOf('.')))]);
-        context.AddSource("GlobalUsings.g.cs", SourceText.From(globalUsingsCode, Encoding.UTF8));
 
         foreach (var file in sourceFiles)
         {
@@ -81,16 +75,6 @@ public class LoggerGenerator : IIncrementalGenerator
                 sourceSpan.Slice(publicKeywordIndex + "public".Length, sourceSpan.Length - publicKeywordIndex - "public".Length).ToString()
             );
         }
-    }
-
-    private string GenerateGlobalUsings(string rootNamespace, ImmutableArray<string> typeNames)
-    {
-        return $"""
-global using global::{rootNamespace}.Logging;
-
-{string.Join("\n", typeNames.Select(x => $"global using {x} = global::{rootNamespace}.Logging.{x};"))}
-
-""";
     }
 
     private static Regex? _typeRegex;

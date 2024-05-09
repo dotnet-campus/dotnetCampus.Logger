@@ -19,7 +19,7 @@
     <value>未知错误</value>
   </data>
   <data name="DL0000_Message" xml:space="preserve">
-    <value>发生了未知错误。</value>
+    <value>发生了未知错误。{0}</value>
   </data>
   <data name="DL1001_Message" xml:space="preserve">
     <value>将 '{0}' 改为分部类，以允许其在日志模块初始化之前使用日志系统。</value>

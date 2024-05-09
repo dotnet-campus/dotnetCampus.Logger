@@ -4,4 +4,9 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(_DLMainlyUseGeneratedLogger) == ''">
+    <!-- 对于库项目，优先使用源生成器日志系统 -->
+    <_DLMainlyUseGeneratedLogger Condition="$(OutputType) != 'Exe' and $(OutputType) != 'WinExe'">true</_DLMainlyUseGeneratedLogger>
+  </PropertyGroup>
+
 </Project>
