@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-using System;
+using global::System;
 
 namespace dotnetCampus.Logging.Writers;
 

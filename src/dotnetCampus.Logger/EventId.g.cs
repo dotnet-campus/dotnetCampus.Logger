@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-using System.Diagnostics.CodeAnalysis;
+using global::System.Diagnostics.CodeAnalysis;
 
 namespace dotnetCampus.Logging;
 

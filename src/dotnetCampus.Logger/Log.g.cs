@@ -1,7 +1,7 @@
 ﻿#nullable enable
 
-using System;
-using System.Diagnostics.CodeAnalysis;
+using global::System;
+using global::System.Diagnostics.CodeAnalysis;
 
 namespace dotnetCampus.Logging;
 
