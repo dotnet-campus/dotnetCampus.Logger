@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using dotnetCampus.Logger.Utils.CodeAnalysis;
@@ -32,46 +33,47 @@ public class GlobalUsingsGenerator : IIncrementalGenerator
             return;
         }
 
-        var useGeneratedLogger = CheckIsUsingGeneratedLogger(mainlyUseGeneratedLogger);
+        var useGeneratedLogger = mainlyUseGeneratedLogger.Equals("true", StringComparison.OrdinalIgnoreCase);
         var generatedCode = useGeneratedLogger
-            ? GenerateGlobalUsings(rootNamespace)
-            : GenerateGlobalUsings("dotnetCampus");
+            ? GenerateGlobalUsings(rootNamespace, useGeneratedLogger)
+            : GenerateGlobalUsings("dotnetCampus", useGeneratedLogger);
 
         context.AddSource("GlobalUsings.g.cs", SourceText.From(generatedCode, Encoding.UTF8));
     }
 
-    private static bool CheckIsUsingGeneratedLogger(string mainlyUseGeneratedLogger)
-    {
-        return mainlyUseGeneratedLogger.Equals("true", StringComparison.OrdinalIgnoreCase);
-    }
-
-    private string GenerateGlobalUsings(string rootNamespace)
+    private string GenerateGlobalUsings(string rootNamespace, bool useGeneratedLogger)
     {
         var sourceFiles = EmbeddedSourceFiles.Enumerate("Assets/Sources").ToImmutableArray();
 
         var globalUsingsCode = GenerateGlobalUsingsForTypes(
             rootNamespace,
-            [..sourceFiles.Select(x => x.FileName.Replace(".g.cs", ""))]);
+            [..sourceFiles],
+            useGeneratedLogger);
         return globalUsingsCode;
     }
 
-    private string GenerateGlobalUsingsForTypes(string rootNamespace, ImmutableArray<string> relativeTypeNames)
+    private string GenerateGlobalUsingsForTypes(string rootNamespace, ImmutableArray<EmbeddedSourceFile> sourceFiles, bool useGeneratedLogger)
     {
         return $"""
 global using global::{rootNamespace}.Logging;
 
-{string.Join("\n", relativeTypeNames.Select(GenerateTypeUsing).OfType<string>())}
+{string.Join("\n", sourceFiles.Select(GenerateTypeUsing).OfType<string>())}
 
 """;
 
-        string? GenerateTypeUsing(string relativeTypeName)
+        string? GenerateTypeUsing(EmbeddedSourceFile sourceFile)
         {
-            if (relativeTypeName.Contains('.'))
+            if (
+                // 如果使用源生成器的日志系统，则所有类型均要导出全局引用。
+                useGeneratedLogger
+                // 如果使用源生成器的日志系统，则所有类型均要导出全局引用。
+                || sourceFile.Namespace.EndsWith("Sources")
+            )
             {
-                return null;
+                return $"global using {sourceFile.TypeName} = global::{rootNamespace}.Logging.{sourceFile.TypeName};";
             }
 
-            return $"global using {relativeTypeName} = global::{rootNamespace}.Logging.{relativeTypeName};";
+            return null;
         }
     }
 }

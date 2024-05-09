@@ -25,15 +25,32 @@ internal static class EmbeddedSourceFiles
             var prefix = desiredFolder.Replace('/', '.').Replace('\\', '.') + ".";
             if (resourceName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             {
-                var fileName = resourceName.AsSpan().Slice(prefix.Length).ToString();
                 using var stream = assembly.GetManifestResourceStream(resourceName)!;
                 using var reader = new StreamReader(stream);
-                yield return new EmbeddedSourceFile(
-                    desiredFolder,
-                    folderName,
-                    fileName,
-                    resourceName,
-                    reader.ReadToEnd());
+                var contentText = reader.ReadToEnd();
+
+                var fileName = resourceName.AsSpan().Slice(prefix.Length).ToString();
+                var fileNameWithoutExtension = fileName.Replace(".g.cs", "").Replace(".cs", "");
+                var fileNameIndex = fileNameWithoutExtension.LastIndexOf('.');
+                if (fileNameIndex < 0)
+                {
+                    yield return new EmbeddedSourceFile(
+                        fileName,
+                        fileNameWithoutExtension,
+                        desiredFolder,
+                        contentText);
+                }
+                else
+                {
+                    var typeName = fileNameWithoutExtension.Substring(fileNameIndex + 1);
+                    var @namespace = $"{desiredFolder}.{fileNameWithoutExtension.Substring(0, fileNameIndex)}";
+
+                    yield return new EmbeddedSourceFile(
+                        fileName,
+                        typeName,
+                        @namespace,
+                        contentText);
+                }
             }
         }
     }

@@ -32,14 +32,14 @@ public class LoggerGenerator : IIncrementalGenerator
 
         foreach (var file in sourceFiles)
         {
-            var code = GenerateSource(file.FileName, rootNamespace, file.Content);
-            context.AddSource(file.FileName, SourceText.From(code, Encoding.UTF8));
+            var code = GenerateSource(file.TypeName, rootNamespace, file.Content);
+            context.AddSource($"{file.TypeName}.g.cs", SourceText.From(code, Encoding.UTF8));
         }
     }
 
-    private string GenerateSource(string fileName, string rootNamespace, string sourceText)
+    private string GenerateSource(string typeName, string rootNamespace, string sourceText)
     {
-        if (fileName == "Log.g.cs")
+        if (typeName == "Log")
         {
             // 源生成器为单独库生成的代码中，默认日志记录器是 BridgeLogger。
             sourceText = sourceText.Replace("new NullLogger();", "new BridgeLogger();");
@@ -54,7 +54,7 @@ public class LoggerGenerator : IIncrementalGenerator
         var classKeywordIndex = GetTypeRegex().Match(sourceText).Index;
         var publicKeywordIndex = sourceText.IndexOf("public", namespaceEndIndex, classKeywordIndex - namespaceEndIndex, StringComparison.Ordinal);
 
-        if (publicKeywordIndex < 0 || fileName.Contains("Bridge"))
+        if (publicKeywordIndex < 0 || typeName.Contains("Bridge"))
         {
             // 此类型不是 public 的，无需修改为 internal。
             // 此类型是 BridgeLogger，应该保持 public。

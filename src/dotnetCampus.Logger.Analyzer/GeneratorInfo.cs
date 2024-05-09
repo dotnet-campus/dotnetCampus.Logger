@@ -14,7 +14,7 @@ internal static class GeneratorInfo
         var templateNamespace = typeof(TReferenceType).Namespace!;
         var templatesFolder = templateNamespace.AsSpan().Slice(GeneratorInfo.RootNamespace.Length + 1).ToString();
         var embeddedFile = EmbeddedSourceFiles.Enumerate(templatesFolder)
-            .Single(x => x.FileName.StartsWith(typeName) && x.FileName.EndsWith(".g.cs"));
+            .Single(x => x.TypeName == typeName);
         return embeddedFile;
     }
 }
