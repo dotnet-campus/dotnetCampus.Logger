@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{AFB0DF31
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerSample.MainApp.Avalonia", "samples\LoggerSample.MainApp.Avalonia\LoggerSample.MainApp.Avalonia.csproj", "{C282F00B-0C42-491F-AC0D-967407E1C418}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerSample.MainApp", "samples\LoggerSample.MainApp\LoggerSample.MainApp.csproj", "{C282F00B-0C42-491F-AC0D-967407E1C418}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{34E3F27E-C7E2-45D7-8035-53C304F77E2A}"
 EndProject

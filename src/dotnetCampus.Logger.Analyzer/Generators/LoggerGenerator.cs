@@ -38,13 +38,19 @@ public class LoggerGenerator : IIncrementalGenerator
 
         foreach (var file in sourceFiles)
         {
-            var code = GenerateSource(rootNamespace, file.Content);
+            var code = GenerateSource(file.FileName, rootNamespace, file.Content);
             context.AddSource(file.FileName, SourceText.From(code, Encoding.UTF8));
         }
     }
 
-    private string GenerateSource(string rootNamespace, string sourceText)
+    private string GenerateSource(string fileName, string rootNamespace, string sourceText)
     {
+        if (fileName == "Log.g.cs")
+        {
+            // 源生成器为单独库生成的代码中，默认日志记录器是 BridgeLogger。
+            sourceText = sourceText.Replace("new NullLogger();", "new BridgeLogger();");
+        }
+
         var sourceSpan = sourceText.AsSpan();
 
         var namespaceKeywordIndex = sourceText.IndexOf("namespace", StringComparison.Ordinal);
@@ -54,9 +60,10 @@ public class LoggerGenerator : IIncrementalGenerator
         var classKeywordIndex = GetTypeRegex().Match(sourceText).Index;
         var publicKeywordIndex = sourceText.IndexOf("public", namespaceEndIndex, classKeywordIndex - namespaceEndIndex, StringComparison.Ordinal);
 
-        if (publicKeywordIndex < 0)
+        if (publicKeywordIndex < 0 || fileName.Contains("Bridge"))
         {
-            // 此类型不是 public 的，无需修改为 internal；仅修改命名空间即可。
+            // 此类型不是 public 的，无需修改为 internal。
+            // 此类型是 BridgeLogger，应该保持 public。
             return string.Concat(
                 sourceSpan.Slice(0, namespaceStartIndex).ToString(),
                 $"{rootNamespace}.Logging",

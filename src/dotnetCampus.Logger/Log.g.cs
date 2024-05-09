@@ -14,6 +14,8 @@ public static class Log
 
     static Log()
     {
+        // 在全局日志中，默认日志记录器是 NullLogger。
+        // 然而在源生成器为单独库生成的代码中，默认日志记录器是 BridgeLogger。
         Current = new NullLogger();
     }
 
