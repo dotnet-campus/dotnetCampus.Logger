@@ -15,13 +15,11 @@ namespace dotnetCampus.Logger.Generators;
 /// <summary>
 /// 生成 Program.g.cs，为 Main 方法第一行日志生成支持代码。
 /// </summary>
-[Generator]
+// [Generator]
 public class ProgramMainLogGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        return;
-
         var provider = context.SyntaxProvider.CreateSyntaxProvider((node, ct) =>
         {
             if (node is not MethodDeclarationSyntax mds)

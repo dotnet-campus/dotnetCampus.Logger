@@ -2,7 +2,7 @@
 
 namespace LoggerSample.MainApp;
 
-internal partial class Program
+internal class Program
 {
     public static void Main(string[] args)
     {

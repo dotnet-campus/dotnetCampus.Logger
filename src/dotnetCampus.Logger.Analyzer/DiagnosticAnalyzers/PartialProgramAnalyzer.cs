@@ -19,7 +19,7 @@ public class PartialProgramAnalyzer : DiagnosticAnalyzer
         context.EnableConcurrentExecution();
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
-        context.RegisterSyntaxNodeAction(AnalyzeProgram, SyntaxKind.MethodDeclaration);
+        // context.RegisterSyntaxNodeAction(AnalyzeProgram, SyntaxKind.MethodDeclaration);
     }
 
     private void AnalyzeProgram(SyntaxNodeAnalysisContext context)
