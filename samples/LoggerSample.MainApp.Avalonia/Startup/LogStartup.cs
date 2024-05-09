@@ -2,7 +2,7 @@
 using Avalonia;
 using dotnetCampus.Logging;
 
-namespace dotnetCampus.LoggerSample.Startup;
+namespace LoggerSample.MainApp.Avalonia.Startup;
 
 public static class LogStartup
 {

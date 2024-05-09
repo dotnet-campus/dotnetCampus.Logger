@@ -1,8 +1,8 @@
 ﻿using System;
 using Avalonia;
-using dotnetCampus.LoggerSample.Startup;
+using LoggerSample.MainApp.Avalonia.Startup;
 
-namespace dotnetCampus.LoggerSample;
+namespace LoggerSample.MainApp.Avalonia;
 
 internal partial class Program
 {

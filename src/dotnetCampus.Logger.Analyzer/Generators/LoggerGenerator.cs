@@ -31,16 +31,16 @@ public class LoggerGenerator : IIncrementalGenerator
 
         var sourceFiles = EmbeddedSourceFiles.Enumerate("Assets/Sources").ToImmutableArray();
 
+        var globalUsingsCode = GenerateGlobalUsings(
+            rootNamespace,
+            [..sourceFiles.Select(x => x.FileName.Substring(0, x.FileName.IndexOf('.')))]);
+        context.AddSource("GlobalUsings.g.cs", SourceText.From(globalUsingsCode, Encoding.UTF8));
+
         foreach (var file in sourceFiles)
         {
             var code = GenerateSource(rootNamespace, file.Content);
             context.AddSource(file.FileName, SourceText.From(code, Encoding.UTF8));
         }
-
-        var globalUsingsCode = GenerateGlobalUsings(
-            rootNamespace,
-            [..sourceFiles.Select(x => x.FileName.Substring(0, x.FileName.IndexOf('.')))]);
-        context.AddSource("GlobalUsings.g.cs", SourceText.From(globalUsingsCode, Encoding.UTF8));
     }
 
     private string GenerateSource(string rootNamespace, string sourceText)
@@ -51,27 +51,37 @@ public class LoggerGenerator : IIncrementalGenerator
         var namespaceStartIndex = namespaceKeywordIndex + "namespace".Length + 1;
         var namespaceEndIndex = sourceText.IndexOf(";", namespaceStartIndex, StringComparison.Ordinal);
 
-        var @namespace = sourceSpan.Slice(namespaceStartIndex, namespaceEndIndex - namespaceStartIndex).Trim();
-
-        // 搜索 class/record/struct/enum/interface 等关键字
         var classKeywordIndex = GetTypeRegex().Match(sourceText).Index;
         var publicKeywordIndex = sourceText.IndexOf("public", namespaceEndIndex, classKeywordIndex - namespaceEndIndex, StringComparison.Ordinal);
 
-        return string.Concat(
-            sourceSpan.Slice(0, namespaceStartIndex).ToString(),
-            $"{rootNamespace}.Logging",
-            sourceSpan.Slice(namespaceEndIndex, publicKeywordIndex - namespaceEndIndex).ToString(),
-            "internal",
-            sourceSpan.Slice(publicKeywordIndex + "public".Length, sourceSpan.Length - publicKeywordIndex - "public".Length).ToString()
-        );
+        if (publicKeywordIndex < 0)
+        {
+            // 此类型不是 public 的，无需修改为 internal；仅修改命名空间即可。
+            return string.Concat(
+                sourceSpan.Slice(0, namespaceStartIndex).ToString(),
+                $"{rootNamespace}.Logging",
+                sourceSpan.Slice(namespaceEndIndex, sourceSpan.Length - namespaceEndIndex).ToString()
+            );
+        }
+        else
+        {
+            // 此类型是 public 的，需要修改为 internal。
+            return string.Concat(
+                sourceSpan.Slice(0, namespaceStartIndex).ToString(),
+                $"{rootNamespace}.Logging",
+                sourceSpan.Slice(namespaceEndIndex, publicKeywordIndex - namespaceEndIndex).ToString(),
+                "internal",
+                sourceSpan.Slice(publicKeywordIndex + "public".Length, sourceSpan.Length - publicKeywordIndex - "public".Length).ToString()
+            );
+        }
     }
 
     private string GenerateGlobalUsings(string rootNamespace, ImmutableArray<string> typeNames)
     {
         return $"""
-global using {rootNamespace}.Logging;
+global using global::{rootNamespace}.Logging;
 
-{string.Join("\n", typeNames.Select(x => $"global using {x} = {rootNamespace}.Logging.{x};"))}
+{string.Join("\n", typeNames.Select(x => $"global using {x} = global::{rootNamespace}.Logging.{x};"))}
 
 """;
     }
