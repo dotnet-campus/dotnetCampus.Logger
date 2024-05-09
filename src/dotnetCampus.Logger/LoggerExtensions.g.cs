@@ -4,30 +4,41 @@ using global::System;
 
 namespace dotnetCampus.Logging;
 
+/// <summary>
+/// <see cref="ILogger"/> 的常见场景的扩展方法。
+/// </summary>
 public static class LoggerExtensions
 {
     /// <summary>
-    /// 在开启了追踪的情况下输出日志。（默认开启）
+    /// 记录追踪级别的日志。
     /// </summary>
     /// <param name="logger">记录日志所使用的记录器。</param>
-    /// <param name="message">要记录的消息，形如 [tag] message</param>
+    /// <param name="message">要记录的消息。</param>
+    /// <remarks>
+    /// 请注意，这里的 <see cref="Trace"/> 仅代表追踪级别；如果配置输出 trace 级别的日志，即便编译时未定义 TRACE 条件编译符也会输出。<br/>
+    /// 如果希望仅在定义了 TRACE 条件编译符时输出日志，请使用 <see cref="Log.Trace"/>。
+    /// </remarks>
     public static void Trace(this ILogger logger, string message)
     {
         logger.Log(LogLevel.Trace, default, message, null, (s, ex) => message);
     }
 
     /// <summary>
-    /// 记录 debug 级别的日志。
+    /// 记录调试级别的日志。
     /// </summary>
     /// <param name="logger">记录日志所使用的记录器。</param>
     /// <param name="message">要记录的消息。</param>
+    /// <remarks>
+    /// 请注意，这里的 <see cref="Debug"/> 仅代表调试级别；如果配置了输出 debug 级别的日志，即便是 release 编译也会输出。<br/>
+    /// 如果希望仅在 debug 配置下输出日志，请使用 <see cref="Log.Debug"/>。
+    /// </remarks>
     public static void Debug(this ILogger logger, string message)
     {
         logger.Log(LogLevel.Debug, default, message, null, (s, ex) => message);
     }
 
     /// <summary>
-    /// 正常记录日志。
+    /// 记录信息日志。
     /// </summary>
     /// <param name="logger">记录日志所使用的记录器。</param>
     /// <param name="message">要记录的消息。</param>
@@ -40,8 +51,8 @@ public static class LoggerExtensions
     /// 记录警告日志。
     /// </summary>
     /// <param name="logger">记录日志所使用的记录器。</param>
-    /// <param name="message">要记录的消息，形如 [tag] message</param>
-    /// <param name="exception">相关的异常信息。</param>
+    /// <param name="message">要记录的消息。</param>
+    /// <param name="exception">如果有异常信息，可以传入此参数。</param>
     public static void Warn(this ILogger logger, string message, Exception? exception = null)
     {
         logger.Log(LogLevel.Warning, default, message, null, (s, ex) => message);
@@ -51,8 +62,8 @@ public static class LoggerExtensions
     /// 记录错误日志。
     /// </summary>
     /// <param name="logger">记录日志所使用的记录器。</param>
-    /// <param name="message">要记录的消息，形如 [tag] message</param>
-    /// <param name="exception">相关的异常信息。</param>
+    /// <param name="message">要记录的消息。</param>
+    /// <param name="exception">如果有异常信息，可以传入此参数。</param>
     public static void Error(this ILogger logger, string message, Exception? exception = null)
     {
         logger.Log(LogLevel.Warning, default, message, null, (s, ex) => message);
@@ -62,8 +73,8 @@ public static class LoggerExtensions
     /// 记录崩溃日志。
     /// </summary>
     /// <param name="logger">记录日志所使用的记录器。</param>
-    /// <param name="message">要记录的消息，形如 [tag] message</param>
-    /// <param name="exception">相关的异常信息。</param>
+    /// <param name="message">要记录的消息。</param>
+    /// <param name="exception">如果有异常信息，可以传入此参数。</param>
     public static void Fatal(this ILogger logger, string message, Exception? exception = null)
     {
         logger.Log(LogLevel.Critical, default, message, null, (s, ex) => message);

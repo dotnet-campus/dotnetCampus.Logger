@@ -3,47 +3,42 @@
 namespace dotnetCampus.Logging;
 
 /// <summary>
-/// Defines logging severity levels.
+/// 定义日志的严重程度。
 /// </summary>
 public enum LogLevel
 {
     /// <summary>
-    /// Logs that contain the most detailed messages. These messages may contain sensitive application data.
-    /// These messages are disabled by default and should never be enabled in a production environment.
+    /// 包含最详细消息的日志。这些消息可能包含敏感的应用程序数据。默认情况下禁用这些消息，不应在生产环境中启用。
     /// </summary>
     Trace = 0,
 
     /// <summary>
-    /// Logs that are used for interactive investigation during development.  These logs should primarily contain
-    /// information useful for debugging and have no long-term value.
+    /// 用于开发过程中的交互式调查的日志。这些日志应主要包含有用于调试的信息，没有长期价值。
     /// </summary>
     Debug = 1,
 
     /// <summary>
-    /// Logs that track the general flow of the application. These logs should have long-term value.
+    /// 跟踪应用程序的一般流程的日志。这些日志应具有长期价值。
     /// </summary>
     Information = 2,
 
     /// <summary>
-    /// Logs that highlight an abnormal or unexpected event in the application flow, but do not otherwise cause the
-    /// application execution to stop.
+    /// 强调应用程序流程中的异常或意外事件的日志，但不会导致应用程序执行停止。
     /// </summary>
     Warning = 3,
 
     /// <summary>
-    /// Logs that highlight when the current flow of execution is stopped due to a failure. These should indicate a
-    /// failure in the current activity, not an application-wide failure.
+    /// 强调当前执行流程由于失败而停止的日志。这些日志应指示当前活动的失败，而不是应用程序范围的失败。
     /// </summary>
     Error = 4,
 
     /// <summary>
-    /// Logs that describe an unrecoverable application or system crash, or a catastrophic failure that requires
-    /// immediate attention.
+    /// 描述不可恢复的应用程序或系统崩溃，或需要立即处理的灾难性失败的日志。
     /// </summary>
     Critical = 5,
 
     /// <summary>
-    /// Not used for writing log messages. Specifies that a logging category should not write any messages.
+    /// 此严重程度不用于写入日志消息，配置成此级别仅表示不会写入任何日志。
     /// </summary>
     None = 6,
 }

@@ -2,7 +2,7 @@
 
 namespace LoggerSample.LoggerDependentLibrary;
 
-public class Class1
+public class DllReferenceTarget
 {
     public void CollectLogs()
     {

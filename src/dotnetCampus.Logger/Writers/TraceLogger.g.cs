@@ -6,19 +6,20 @@ using global::System.Diagnostics;
 namespace dotnetCampus.Logging.Writers;
 
 /// <summary>
-/// 提供仅在 debug 下才会记录的日志。
+/// 提供仅在开启了 TRACE 条件编译符下才会记录的日志。
 /// </summary>
 public class TraceLogger(ILogger realLogger) : ILogger
 {
+    /// <inheritdoc />
     void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         realLogger.Log(logLevel, eventId, state, exception, formatter);
     }
 
     /// <summary>
-    /// 在开启了追踪的情况下输出日志。（默认开启）
+    /// 记录追踪级别的日志。
     /// </summary>
-    /// <param name="message">要记录的消息，形如 [tag] message</param>
+    /// <param name="message">要记录的消息。</param>
     [Conditional("TRACE")]
     public void Trace(string message)
     {
@@ -26,7 +27,7 @@ public class TraceLogger(ILogger realLogger) : ILogger
     }
 
     /// <summary>
-    /// 记录 debug 级别的日志。
+    /// 记录调试级别的日志。
     /// </summary>
     /// <param name="message">要记录的消息。</param>
     [Conditional("TRACE")]
@@ -36,7 +37,7 @@ public class TraceLogger(ILogger realLogger) : ILogger
     }
 
     /// <summary>
-    /// 正常记录日志。
+    /// 记录信息日志。
     /// </summary>
     /// <param name="message">要记录的消息。</param>
     [Conditional("TRACE")]
@@ -53,5 +54,27 @@ public class TraceLogger(ILogger realLogger) : ILogger
     public void Warn(string message)
     {
         realLogger.Log(LogLevel.Warning, default, message, null, (s, ex) => message);
+    }
+
+    /// <summary>
+    /// 记录错误日志。
+    /// </summary>
+    /// <param name="message">要记录的消息。</param>
+    /// <param name="exception">如果有异常信息，可以传入此参数。</param>
+    [Conditional("TRACE")]
+    public void Error(string message, Exception? exception = null)
+    {
+        realLogger.Log(LogLevel.Warning, default, message, null, (s, ex) => message);
+    }
+
+    /// <summary>
+    /// 记录崩溃日志。
+    /// </summary>
+    /// <param name="message">要记录的消息。</param>
+    /// <param name="exception">如果有异常信息，可以传入此参数。</param>
+    [Conditional("TRACE")]
+    public void Fatal(string message, Exception? exception = null)
+    {
+        realLogger.Log(LogLevel.Critical, default, message, null, (s, ex) => message);
     }
 }
