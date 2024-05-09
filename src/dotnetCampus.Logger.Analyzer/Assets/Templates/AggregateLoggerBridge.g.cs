@@ -6,7 +6,7 @@ using GILogger = global::dotnetCampus.Logging.ILogger;
 using GLog = global::dotnetCampus.Logging.Log;
 using GLogLevel = global::dotnetCampus.Logging.LogLevel;
 
-namespace LoggerSample.MainApp;
+namespace dotnetCampus.Logger.Assets.Templates;
 
 /// <summary>
 /// 聚合各个来源的日志桥。调用其 <see cref="Link"/> 方法可以将
@@ -32,6 +32,7 @@ partial class AggregateLoggerBridge
 
         _logger = logger;
 
+        // 链接来自各个源的日志桥：
         // <FLAG>
         //
         // 源生成器请在此处添加代码...

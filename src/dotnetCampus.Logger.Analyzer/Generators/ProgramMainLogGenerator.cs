@@ -60,12 +60,8 @@ public class ProgramMainLogGenerator : IIncrementalGenerator
 
     private void Execute(SourceProductionContext context, INamedTypeSymbol programTypeSymbol)
     {
-        var templateProgramNamespace = typeof(Program).Namespace!;
-        var templatesFolder = templateProgramNamespace.AsSpan().Slice(AssemblyInfo.RootNamespace.Length + 1).ToString();
-        var embeddedFiles = EmbeddedSourceFiles.Enumerate(templatesFolder).ToImmutableArray();
-
         // 生成 Program.Logger.g.cs
-        var partialLoggerFile = embeddedFiles.First(x => x.FileName.StartsWith("Program.", StringComparison.Ordinal));
+        var partialLoggerFile = GeneratorInfo.GetEmbeddedTemplateFile<Program>();
         var generatedLoggerText = ConvertPartialProgramLogger(partialLoggerFile.Content, programTypeSymbol);
         context.AddSource($"{programTypeSymbol.Name}.Logger.g.cs", SourceText.From(generatedLoggerText, Encoding.UTF8));
     }

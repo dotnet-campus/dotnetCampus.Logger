@@ -18,7 +18,7 @@ internal static class EmbeddedSourceFiles
     internal static IEnumerable<EmbeddedSourceFile> Enumerate(string folderName)
     {
         // 资源字符串格式为："{Namespace}.{Folder}.{filename}.{Extension}"
-        var desiredFolder = $"{AssemblyInfo.RootNamespace}.{folderName}";
+        var desiredFolder = $"{GeneratorInfo.RootNamespace}.{folderName}";
         var assembly = Assembly.GetExecutingAssembly();
         foreach (var resourceName in assembly.GetManifestResourceNames())
         {
