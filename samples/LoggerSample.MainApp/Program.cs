@@ -24,11 +24,12 @@ internal class Program
                 //     IncludeScopes = true,
                 // },
             })
-            .AddBridge(LoggerBridge.Default)
+            .AddBridge(LoggerBridgeLinker.Default)
             .Build()
             .IntoGlobalStaticLog();
     }
 }
 
 [ImportLoggerBridge<global::LoggerSample.LoggerIndependentLibrary.Logging.ILoggerBridge>]
-internal partial class LoggerBridge;
+[ImportLoggerBridge<global::LoggerSample.LoggerIndependentProject.Logging.ILoggerBridge>]
+internal partial class LoggerBridgeLinker;
