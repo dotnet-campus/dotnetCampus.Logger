@@ -1,4 +1,5 @@
 ﻿using dotnetCampus.Logging.Attributes;
+using dotnetCampus.Logging.Configurations;
 using dotnetCampus.Logging.Writers;
 
 namespace LoggerSample.MainApp;
@@ -11,8 +12,18 @@ internal class Program
 
         // 以下初始化代码可能会较晚执行。
         new LoggerBuilder()
-            .UseLevel(LogLevel.Information)
-            .AddWriter(new ConsoleLogger())
+            .WithLevel(LogLevel.Information)
+            .WithOptions(new LogOptions
+            {
+                LogLevel = LogLevel.Debug,
+            })
+            .AddWriter(new ConsoleLogger
+            {
+                // Options = new ConsoleLoggerOptions
+                // {
+                //     IncludeScopes = true,
+                // },
+            })
             .AddBridge(LoggerBridge.Default)
             .BuildIntoStaticLog();
     }

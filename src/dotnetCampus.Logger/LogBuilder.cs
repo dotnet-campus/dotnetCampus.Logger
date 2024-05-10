@@ -27,7 +27,7 @@ public class LoggerBuilder
         return this;
     }
 
-    public LoggerBuilder UseLevel(LogLevel level)
+    public LoggerBuilder WithLevel(LogLevel level)
     {
         _options ??= new LogOptions();
         _options.LogLevel = level;
