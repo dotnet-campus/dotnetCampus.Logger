@@ -3,16 +3,22 @@
 using GEventId = global::dotnetCampus.Logging.EventId;
 using GException = global::System.Exception;
 using GILogger = global::dotnetCampus.Logging.ILogger;
+using GILoggerBridgeLinker = global::dotnetCampus.Logging.Bridges.ILoggerBridgeLinker;
 using GLog = global::dotnetCampus.Logging.Log;
 using GLogLevel = global::dotnetCampus.Logging.LogLevel;
 
 namespace dotnetCampus.Logger.Assets.Templates;
 
 /// <summary>
-/// 聚合各个来源的日志桥。调用其 <see cref="Link"/> 方法可以将
+/// 聚合各个来源的日志桥。调用其 <see cref="Link"/> 方法可以将这些来源的日志桥对接到指定的日志记录器上。
 /// </summary>
-partial class AggregateLoggerBridge
+partial class AggregateLoggerBridgeLinker : GILoggerBridgeLinker
 {
+    /// <summary>
+    /// 获取用于对接到日志记录系统的聚合日志桥。
+    /// </summary>
+    public static AggregateLoggerBridgeLinker Default { get; } = new();
+
     private GILogger? _logger;
 
     /// <summary>
@@ -23,7 +29,7 @@ partial class AggregateLoggerBridge
     /// 如果已经对接过日志记录器，则会抛出此异常。
     /// 如果希望针对不同的库对接不同的日志记录器，请编写多个聚合日志桥并分别导入各自的日志桥。
     /// </exception>
-    public void Link(GILogger? logger = null)
+    public void Link(GILogger logger)
     {
         if (_logger != null)
         {

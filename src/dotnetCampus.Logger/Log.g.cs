@@ -8,7 +8,7 @@ namespace dotnetCampus.Logging;
 /// <summary>
 /// 提供静态的日志记录方法。
 /// </summary>
-public static class Log
+public static partial class Log
 {
     private static ILogger _current;
 

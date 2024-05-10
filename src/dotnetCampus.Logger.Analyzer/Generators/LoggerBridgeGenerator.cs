@@ -82,18 +82,17 @@ public class LoggerBridgeGenerator : IIncrementalGenerator
         var bridgeNamespace = bridgeItem.Aggregate.ContainingNamespace.ToDisplayString();
         var bridgeName = bridgeItem.Aggregate.Name;
 
-        var loggerBridgeFile = GeneratorInfo.GetEmbeddedTemplateFile<AggregateLoggerBridge>();
+        var loggerBridgeFile = GeneratorInfo.GetEmbeddedTemplateFile<AggregateLoggerBridgeLinker>();
         var intermediateCode = loggerBridgeFile.Content
-            .Replace(typeof(AggregateLoggerBridge).Namespace!, bridgeNamespace)
-            .Replace(nameof(AggregateLoggerBridge), bridgeName)
-            .Replace($"partial class {bridgeName}", $"""
-partial class {bridgeName} :
-{string.Join("\n", bridgeItem.Collected.Select(x => $"    global::{x.ToDisplayString()}"))}
-""");
+            .Replace(typeof(AggregateLoggerBridgeLinker).Namespace!, bridgeNamespace)
+            .Replace(nameof(AggregateLoggerBridgeLinker), bridgeName)
+            .Replace(
+                $"partial class {bridgeName} : GILoggerBridgeLinker",
+                $"partial class {bridgeName} : GILoggerBridgeLinker{string.Concat(bridgeItem.Collected.Select(x => $",\n    global::{x.ToDisplayString()}"))}");
 
         var generatedCode = InsertLinks(bridgeItem, intermediateCode);
 
-        context.AddSource($"{nameof(AggregateLoggerBridge)}.{bridgeName}.g.cs", SourceText.From(generatedCode, Encoding.UTF8));
+        context.AddSource($"{nameof(AggregateLoggerBridgeLinker)}.{bridgeName}.g.cs", SourceText.From(generatedCode, Encoding.UTF8));
     }
 
     private string InsertLinks(LoggerBridgeItem bridgeItem, string sourceCode)

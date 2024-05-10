@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using dotnetCampus.Logging.Bridges;
 using dotnetCampus.Logging.Configurations;
+using dotnetCampus.Logging.Writers;
 
 namespace dotnetCampus.Logging;
 
@@ -8,7 +10,7 @@ public class LoggerBuilder
 {
     private LogOptions? _options;
     private readonly List<ILogger> _writers = [];
-    private Action<ILogger>? _flusher;
+    private readonly List<ILoggerBridgeLinker> _linkers = [];
 
     /// <summary>
     /// 调用此方法以便在日志模块初始化完成前先对所有记录的日志进行缓存，以便在日志模块初始化完成后再将缓存的日志写入到日志文件中。
@@ -22,7 +24,6 @@ public class LoggerBuilder
     /// </remarks>
     public LoggerBuilder UseMemoryCache(Action<ILogger> flusher)
     {
-        _flusher = flusher;
         return this;
     }
 
@@ -45,16 +46,42 @@ public class LoggerBuilder
         return this;
     }
 
+    public LoggerBuilder AddBridge(ILoggerBridgeLinker linker)
+    {
+        _linkers.Add(linker);
+        return this;
+    }
+
     public CompositeLogger Build()
     {
         var logger = new CompositeLogger(_options ?? new LogOptions())
         {
             Writers = [.._writers],
         };
-        if (_flusher is { } flusher)
+        foreach (var linker in _linkers)
         {
-            flusher(logger);
+            linker.Link(logger);
         }
         return logger;
+    }
+
+    public CompositeLogger BuildIntoStaticLog()
+    {
+        var logger = Build();
+        Log.SetLogger(logger);
+        return logger;
+    }
+}
+
+partial class Log
+{
+    internal static void SetLogger(ILogger logger)
+    {
+        var oldLogger = Current;
+        if (oldLogger is MemoryCacheLogger mcl)
+        {
+            mcl.Flush(logger);
+        }
+        Current = logger;
     }
 }
