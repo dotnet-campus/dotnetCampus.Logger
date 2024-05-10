@@ -25,7 +25,8 @@ internal class Program
                 // },
             })
             .AddBridge(LoggerBridge.Default)
-            .BuildIntoStaticLog();
+            .Build()
+            .IntoGlobalStaticLog();
     }
 }
 
