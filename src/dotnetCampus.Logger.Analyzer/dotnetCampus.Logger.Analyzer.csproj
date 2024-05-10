@@ -30,8 +30,4 @@
     <EmbeddedResource Include="Assets\Templates\**\*.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\dotnetCampus.Logger\dotnetCampus.Logger.csproj" />
-  </ItemGroup>
-
 </Project>
