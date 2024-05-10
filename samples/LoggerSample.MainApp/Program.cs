@@ -14,6 +14,9 @@ internal class Program
 
         // 以下初始化代码可能会较晚执行。
         new LoggerBuilder()
+            .WithMemoryCache(new MemoryCacheOptions
+            {
+            })
             .WithLevel(LogLevel.Information)
             .WithOptions(new LogOptions
             {

@@ -16,16 +16,16 @@ public class LoggerBuilder
     private readonly List<ILoggerBridgeLinker> _linkers = [];
 
     /// <summary>
-    /// 调用此方法以便在日志模块初始化完成前先对所有记录的日志进行缓存，以便在日志模块初始化完成后再将缓存的日志写入到日志文件中。
+    /// 指定在日志模块完成初始化之前直接或间接调用全局 <see cref="Log"/> 所记录的日志应被缓存到内存中。
     /// </summary>
-    /// <param name="flusher">
-    /// 在日志模块初始化完成后，将缓存的日志写入到日志文件中。
-    /// 如果在 Program.cs 类中，请直接传入源生成器生成的 Log 属性作为此参数。
+    /// <param name="options">
+    /// 指定缓存日志的选项。
     /// </param>
     /// <remarks>
-    /// 此方法不会在运行时起任何作用，仅决定编译时在 Program.cs 类中所生成的日志记录器。生成后，你可以在 Program.cs 类中使用 Log.Info 等方法进行日志记录。
+    /// 此方法不会在运行时起任何作用！！！<br/>
+    /// 此方法仅在编译期决定全局日志 <see cref="Log"/> 的行为，并且一旦编译完成，此行为将不可更改。<br/>
     /// </remarks>
-    public LoggerBuilder UseMemoryCache(Action<ILogger> flusher)
+    public LoggerBuilder WithMemoryCache(MemoryCacheOptions? options = null)
     {
         return this;
     }
