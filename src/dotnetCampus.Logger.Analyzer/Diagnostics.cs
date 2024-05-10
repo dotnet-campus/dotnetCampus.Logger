@@ -22,8 +22,8 @@ public class Diagnostics
         nameof(DL1001),
         Localize(nameof(DL1001)),
         Localize(nameof(DL1001_Message)),
-        Categories.Mechanism,
-        DiagnosticSeverity.Warning,
+        Categories.Performance,
+        DiagnosticSeverity.Info,
         true,
         description: Localize(DL1001_Description));
 
@@ -53,6 +53,11 @@ public class Diagnostics
         /// 为了代码可读性，使之更易于理解、方便调试，则报告此诊断。
         /// </summary>
         public const string Readable = "dotnetCampus.Readable";
+
+        /// <summary>
+        /// 为了提升性能，或避免性能问题，则报告此诊断。
+        /// </summary>
+        public const string Performance = "dotnetCampus.Performance";
 
         /// <summary>
         /// 能写得出来正常编译，但会引发运行时异常，则报告此诊断。
