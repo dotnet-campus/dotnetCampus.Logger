@@ -42,7 +42,7 @@ public class LoggerGenerator : IIncrementalGenerator
         if (typeName == "Log")
         {
             // 源生成器为单独库生成的代码中，默认日志记录器是 BridgeLogger。
-            sourceText = sourceText.Replace("new NullLogger();", "new BridgeLogger();");
+            sourceText = sourceText.Replace("new MemoryCacheLogger();", "new BridgeLogger();");
         }
 
         var sourceSpan = sourceText.AsSpan();

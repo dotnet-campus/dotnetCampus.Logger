@@ -23,6 +23,7 @@
     <Compile Include="..\dotnetCampus.Logger\Properties\GlobalUsings.cs" Link="Properties\%(FileName).g.cs" />
     <Compile Include="..\dotnetCampus.Logger\Attributes\*.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
     <Compile Include="..\dotnetCampus.Logger\Bridges\ILoggerBridgeLinker.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
+    <Compile Include="..\dotnetCampus.Logger\Writers\MemoryCacheLogger.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
 
     <!-- 提供给源生成器使用。 -->
     <Compile Include="..\dotnetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(RecursiveDir)%(FileName).cs" />

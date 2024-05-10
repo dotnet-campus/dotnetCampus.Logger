@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using global::dotnetCampus.Logging.Writers;
 using global::System;
 using global::System.Diagnostics.CodeAnalysis;
 
@@ -14,9 +15,9 @@ public static partial class Log
 
     static Log()
     {
-        // 在全局日志中，默认日志记录器是 NullLogger。
+        // 在全局日志中，默认日志记录器是 MemoryCacheLogger。
         // 然而在源生成器为单独库生成的代码中，默认日志记录器是 BridgeLogger。
-        Current = new NullLogger();
+        Current = new MemoryCacheLogger();
     }
 
     /// <summary>
