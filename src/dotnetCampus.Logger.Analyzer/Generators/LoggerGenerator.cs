@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
+using dotnetCampus.Logger.Utils.CodeAnalysis;
 using dotnetCampus.Logger.Utils.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -23,7 +24,17 @@ public class LoggerGenerator : IIncrementalGenerator
 
     private void Execute(SourceProductionContext context, AnalyzerConfigOptionsProvider provider)
     {
-        if (!provider.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace))
+        if (provider.GlobalOptions
+                .TryGetValue<string>("_DLRootNamespace", out var rootNamespace)
+                .TryGetValue<bool>("_DLGenerateSource", out var isGenerateSource)
+                is var result
+                && !result)
+        {
+            // 此项目是通过依赖间接引用的，没有 build 因此无法在源生成器中使用编译属性，所以只能选择引用。
+            return;
+        }
+
+        if (!isGenerateSource)
         {
             return;
         }

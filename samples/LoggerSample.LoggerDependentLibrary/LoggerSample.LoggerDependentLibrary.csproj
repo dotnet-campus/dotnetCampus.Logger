@@ -5,7 +5,6 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <_DLMainlyUseGeneratedLogger>false</_DLMainlyUseGeneratedLogger>
   </PropertyGroup>
 
   <ItemGroup>

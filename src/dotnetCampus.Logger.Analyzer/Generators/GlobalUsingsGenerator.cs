@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.Diagnostics;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using dotnetCampus.Logger.Utils.CodeAnalysis;
@@ -24,19 +22,26 @@ public class GlobalUsingsGenerator : IIncrementalGenerator
 
     private void Execute(SourceProductionContext context, AnalyzerConfigOptionsProvider provider)
     {
-        provider.GlobalOptions.TryGetValue("build_property.OutputType", out var outputType);
-        provider.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace);
-        provider.GlobalOptions.TryGetValue("build_property._DLMainlyUseGeneratedLogger", out var mainlyUseGeneratedLogger);
-        if (outputType is null || rootNamespace is null || mainlyUseGeneratedLogger is null)
+        if (provider.GlobalOptions
+                .TryGetValue<string>("_DLRootNamespace", out var rootNamespace)
+                .TryGetValue<bool>("_DLGenerateSource", out var generateSource)
+                .TryGetValue<bool>("_DLGenerateGlobalUsings", out var generateGlobalUsings)
+                .TryGetValue<bool>("_DLPreferGeneratedSource", out var preferGeneratedSource)
+                is var result
+                && !result)
         {
-            context.ReportUnknownError("NuGet 包中应包含 OutputType、RootNamespace 和 _DLMainlyUseGeneratedLogger 属性。");
+            // 此项目是通过依赖间接引用的，没有 build 因此无法在源生成器中使用编译属性，所以只能选择引用。
             return;
         }
 
-        var useGeneratedLogger = mainlyUseGeneratedLogger.Equals("true", StringComparison.OrdinalIgnoreCase);
-        var generatedCode = useGeneratedLogger
-            ? GenerateGlobalUsings(rootNamespace, useGeneratedLogger)
-            : GenerateGlobalUsings("dotnetCampus", useGeneratedLogger);
+        if (!generateSource || !generateGlobalUsings)
+        {
+            return;
+        }
+
+        var generatedCode = preferGeneratedSource
+            ? GenerateGlobalUsings(rootNamespace, preferGeneratedSource)
+            : GenerateGlobalUsings("dotnetCampus", preferGeneratedSource);
 
         context.AddSource("GlobalUsings.g.cs", SourceText.From(generatedCode, Encoding.UTF8));
     }
@@ -66,7 +71,6 @@ global using global::{rootNamespace}.Logging;
             if (
                 // 如果使用源生成器的日志系统，则所有类型均要导出全局引用。
                 useGeneratedLogger
-                // 如果使用源生成器的日志系统，则所有类型均要导出全局引用。
                 || sourceFile.Namespace.EndsWith("Sources")
             )
             {

@@ -4,9 +4,54 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(_DLMainlyUseGeneratedLogger) == ''">
-    <!-- 对于库项目，优先使用源生成器日志系统 -->
-    <_DLMainlyUseGeneratedLogger Condition="$(OutputType) != 'Exe' and $(OutputType) != 'WinExe'">true</_DLMainlyUseGeneratedLogger>
+  <!-- DCUseGeneratedLogger = null -->
+  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == '' ">
+    <DCUseGeneratedLogger>onlyReference</DCUseGeneratedLogger>
   </PropertyGroup>
+
+  <!-- DCUseGeneratedLogger = onlySource / true -->
+  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'onlySource' or '$(DCUseGeneratedLogger)' == 'true' ">
+    <_DLGenerateSource>true</_DLGenerateSource>
+    <_DLGenerateGlobalUsings>false</_DLGenerateGlobalUsings>
+    <_DLPreferGeneratedSource>true</_DLPreferGeneratedSource>
+  </PropertyGroup>
+
+  <!-- DCUseGeneratedLogger = onlySource / true -->
+  <ItemGroup Condition=" '$(DCUseGeneratedLogger)' == 'onlySource' or '$(DCUseGeneratedLogger)' == 'true' ">
+    <PackageReference Update="dotnetCampus.Logger" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- DCUseGeneratedLogger = preferSource -->
+  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'preferSource' ">
+    <_DLGenerateSource>true</_DLGenerateSource>
+    <_DLGenerateGlobalUsings>true</_DLGenerateGlobalUsings>
+    <_DLPreferGeneratedSource>true</_DLPreferGeneratedSource>
+  </PropertyGroup>
+
+  <!-- DCUseGeneratedLogger = preferReference -->
+  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'preferReference' ">
+    <_DLGenerateSource>true</_DLGenerateSource>
+    <_DLGenerateGlobalUsings>true</_DLGenerateGlobalUsings>
+    <_DLPreferGeneratedSource>false</_DLPreferGeneratedSource>
+  </PropertyGroup>
+
+  <!-- DCUseGeneratedLogger = onlyReference / false / 其他值 -->
+  <PropertyGroup>
+    <_DLGenerateSource Condition=" '$(_DLGenerateSource)' == '' ">false</_DLGenerateSource>
+    <_DLGenerateGlobalUsings Condition=" '$(_DLGenerateGlobalUsings)' == '' ">false</_DLGenerateGlobalUsings>
+    <_DLPreferGeneratedSource Condition=" '$(_DLPreferGeneratedSource)' == '' ">false</_DLPreferGeneratedSource>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <_DLRootNamespace>$(RootNamespace)</_DLRootNamespace>
+    <_DLRootNamespace Condition=" '$(_DLRootNamespace)' == '' ">$(MSBuildProjectName.Replace(" ", "_"))</_DLRootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CompilerVisibleProperty Include="_DLGenerateSource" />
+    <CompilerVisibleProperty Include="_DLGenerateGlobalUsings" />
+    <CompilerVisibleProperty Include="_DLPreferGeneratedSource" />
+    <CompilerVisibleProperty Include="_DLRootNamespace" />
+  </ItemGroup>
 
 </Project>

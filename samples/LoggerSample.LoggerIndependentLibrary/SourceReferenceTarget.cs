@@ -1,4 +1,6 @@
-﻿namespace LoggerSample.LoggerIndependentLibrary;
+﻿using LoggerSample.LoggerIndependentLibrary.Logging;
+
+namespace LoggerSample.LoggerIndependentLibrary;
 
 public static class SourceReferenceTarget
 {

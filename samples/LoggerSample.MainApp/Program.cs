@@ -1,7 +1,6 @@
 ﻿using dotnetCampus.Logging.Attributes;
 using dotnetCampus.Logging.Configurations;
 using dotnetCampus.Logging.Writers;
-using LoggerSample.MainApp.Logging;
 
 namespace LoggerSample.MainApp;
 
@@ -37,5 +36,4 @@ internal class Program
 
 [ImportLoggerBridge<global::LoggerSample.LoggerIndependentLibrary.Logging.ILoggerBridge>]
 [ImportLoggerBridge<global::LoggerSample.LoggerIndependentProject.Logging.ILoggerBridge>]
-[ImportLoggerBridge<global::LoggerSample.MainApp.Logging.ILoggerBridge>]
 internal partial class LoggerBridgeLinker;
