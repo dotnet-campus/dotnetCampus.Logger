@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using global::dotnetCampus.Logging.Writers;
 using global::System;
 using global::System.Diagnostics.CodeAnalysis;
 
