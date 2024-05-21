@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\src\dotnetCampus.Logger\Properties\Package\build\Package.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DCUseGeneratedLogger>true</DCUseGeneratedLogger>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\dotnetCampus.Logger.Analyzer\dotnetCampus.Logger.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <Import Project="..\..\src\dotnetCampus.Logger\Properties\Package\build\Package.targets" />
+
+</Project>

@@ -1,18 +1,24 @@
 <Project>
+
   <Import Project="build\Version.props" />
+
+  <!-- 框架和语言信息 -->
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <PackageOutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)</PackageOutputPath>
-    <Company>dotnet campus（.NET 职业技术学院）</Company>
- 
-    <!-- 替换下面信息 -->
+    <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+    <RepositoryRoot>$(MSBuildThisFileDirectory)</RepositoryRoot>
+  </PropertyGroup>
+
+  <!--库信息 -->
+  <PropertyGroup>
+    <Description>提供统一的日志记录方法。使用源生成器允许库的作者在不依赖本日志库的情况下完成日志的记录，并且还能对接到产品中完成日志的统一输出。</Description>
     <Authors>dotnet-campus</Authors>
+    <Company>dotnet campus（.NET 职业技术学院）</Company>
+    <Copyright>Copyright 2020-$([System.DateTime]::Now.ToString(`yyyy`)) &#169; dotnet campus, All Rights Reserved.</Copyright>
+    <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/dotnet-campus/dotnetCampus.Logger</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dotnet-campus/dotnetCampus.Logger</PackageProjectUrl>
-    <Description>提供统一的日志记录方法，并附带各种各样的实现。</Description>
-
-    <RepositoryType>git</RepositoryType>
-    <Copyright>Copyright © 2020 dotnet campus, All Rights Reserved.</Copyright> 
   </PropertyGroup>
+
 </Project>
