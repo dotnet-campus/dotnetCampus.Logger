@@ -170,6 +170,10 @@ public class ConsoleLogger : ILogger
                 // 如果多次尝试失败，则认为当前控制台缓冲区不支持光标移动，遂放弃。
                 _isCursorMovementEnabled--;
             }
+            catch (ArgumentException)
+            {
+                // 日志记录时，有可能已经移动到头了，就不要移动了。
+            }
         }
     }
 
