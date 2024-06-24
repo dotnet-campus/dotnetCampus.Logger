@@ -11,6 +11,8 @@ namespace dotnetCampus.Logging;
 public static partial class Log
 {
     private static ILogger _current;
+    private static DebugLogger _debug;
+    private static TraceLogger _trace;
 
     static Log()
     {
@@ -25,7 +27,7 @@ public static partial class Log
     public static ILogger Current
     {
         get => _current;
-        [MemberNotNull(nameof(_current), nameof(Debug), nameof(Trace))]
+        [MemberNotNull(nameof(_current), nameof(_debug), nameof(_trace))]
         private set
         {
             if (value == null)
@@ -35,14 +37,14 @@ public static partial class Log
 
             if (Equals(_current, value))
             {
-                DebugLogger ??= new DebugLogger(value);
-                TraceLogger ??= new TraceLogger(value);
+                _debug ??= new DebugLogger(value);
+                _trace ??= new TraceLogger(value);
                 return;
             }
 
             _current = value;
-            DebugLogger = new DebugLogger(value);
-            TraceLogger = new TraceLogger(value);
+            _debug = new DebugLogger(value);
+            _trace = new TraceLogger(value);
         }
     }
 
@@ -52,7 +54,7 @@ public static partial class Log
     /// <remarks>
     /// 请注意，所有通过此记录器记录的日志仅在以 debug 配置编译时才会被记录，并且在非 debug 编译后对此记录器的调用都会被编译器优化掉。
     /// </remarks>
-    public static DebugLogger DebugLogger { get; private set; }
+    public static DebugLogger DebugLogger => _debug;
 
     /// <summary>
     /// 获取仅在 TRACE 条件编译符被定义时才会记录的日志记录器。
@@ -61,7 +63,7 @@ public static partial class Log
     /// <remarks>
     /// 请注意，所有通过此记录器记录的日志仅在定义了 TRACE 条件编译符时才会被记录，并且在未定义 TRACE 条件编译符后对此记录器的调用都会被编译器优化掉。
     /// </remarks>
-    public static TraceLogger TraceLogger { get; private set; }
+    public static TraceLogger TraceLogger => _trace;
 
     /// <summary>
     /// 记录跟踪日志。
