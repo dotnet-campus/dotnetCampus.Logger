@@ -35,14 +35,14 @@ public static partial class Log
 
             if (Equals(_current, value))
             {
-                Debug ??= new DebugLogger(value);
-                Trace ??= new TraceLogger(value);
+                DebugLogger ??= new DebugLogger(value);
+                TraceLogger ??= new TraceLogger(value);
                 return;
             }
 
             _current = value;
-            Debug = new DebugLogger(value);
-            Trace = new TraceLogger(value);
+            DebugLogger = new DebugLogger(value);
+            TraceLogger = new TraceLogger(value);
         }
     }
 
@@ -52,7 +52,7 @@ public static partial class Log
     /// <remarks>
     /// 请注意，所有通过此记录器记录的日志仅在以 debug 配置编译时才会被记录，并且在非 debug 编译后对此记录器的调用都会被编译器优化掉。
     /// </remarks>
-    public static DebugLogger Debug { get; private set; }
+    public static DebugLogger DebugLogger { get; private set; }
 
     /// <summary>
     /// 获取仅在 TRACE 条件编译符被定义时才会记录的日志记录器。
@@ -61,7 +61,33 @@ public static partial class Log
     /// <remarks>
     /// 请注意，所有通过此记录器记录的日志仅在定义了 TRACE 条件编译符时才会被记录，并且在未定义 TRACE 条件编译符后对此记录器的调用都会被编译器优化掉。
     /// </remarks>
-    public static TraceLogger Trace { get; private set; }
+    public static TraceLogger TraceLogger { get; private set; }
+
+    /// <summary>
+    /// 记录跟踪日志。
+    /// </summary>
+    /// <param name="message">要记录的消息。</param>
+    /// <remarks>
+    /// 如果开启了跟踪级别的日志记录，此方法产生的日志在生产环境中也依然会被记录。<br/>
+    /// 如果希望仅在 TRACE 条件编译符被定义时记录日志，请使用 <see cref="TraceLogger"/>。
+    /// </remarks>
+    public static void Trace(string message)
+    {
+        Current.Log(LogLevel.Trace, default, message, null, (s, ex) => message);
+    }
+
+    /// <summary>
+    /// 记录调试日志。
+    /// </summary>
+    /// <param name="message">要记录的消息。</param>
+    /// <remarks>
+    /// 如果开启了调试级别的日志记录，此方法产生的日志在生产环境中也依然会被记录。<br/>
+    /// 如果希望仅在 debug 配置下记录日志，请使用 <see cref="DebugLogger"/>。
+    /// </remarks>
+    public static void Debug(string message)
+    {
+        Current.Log(LogLevel.Debug, default, message, null, (s, ex) => message);
+    }
 
     /// <summary>
     /// 记录信息日志。

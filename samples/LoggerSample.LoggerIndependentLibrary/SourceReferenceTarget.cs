@@ -6,20 +6,22 @@ public static class SourceReferenceTarget
 {
     public static void CollectLogs()
     {
-        Log.Trace.Trace("[SourceReference] Log.Trace.Trace");
-        Log.Trace.Debug("[SourceReference] Log.Trace.Debug");
-        Log.Trace.Info("[SourceReference] Log.Trace.Info");
-        Log.Trace.Warn("[SourceReference] Log.Trace.Warn");
-        Log.Trace.Error("[SourceReference] Log.Trace.Error");
-        Log.Trace.Fatal("[SourceReference] Log.Trace.Fatal");
+        Log.TraceLogger.Trace("[SourceReference] Log.Trace.Trace");
+        Log.TraceLogger.Debug("[SourceReference] Log.Trace.Debug");
+        Log.TraceLogger.Info("[SourceReference] Log.Trace.Info");
+        Log.TraceLogger.Warn("[SourceReference] Log.Trace.Warn");
+        Log.TraceLogger.Error("[SourceReference] Log.Trace.Error");
+        Log.TraceLogger.Fatal("[SourceReference] Log.Trace.Fatal");
 
-        Log.Debug.Trace("[SourceReference] Log.Debug.Trace");
-        Log.Debug.Debug("[SourceReference] Log.Debug.Debug");
-        Log.Debug.Info("[SourceReference] Log.Debug.Info");
-        Log.Debug.Warn("[SourceReference] Log.Debug.Warn");
-        Log.Debug.Error("[SourceReference] Log.Debug.Error");
-        Log.Debug.Fatal("[SourceReference] Log.Debug.Fatal");
+        Log.DebugLogger.Trace("[SourceReference] Log.Debug.Trace");
+        Log.DebugLogger.Debug("[SourceReference] Log.Debug.Debug");
+        Log.DebugLogger.Info("[SourceReference] Log.Debug.Info");
+        Log.DebugLogger.Warn("[SourceReference] Log.Debug.Warn");
+        Log.DebugLogger.Error("[SourceReference] Log.Debug.Error");
+        Log.DebugLogger.Fatal("[SourceReference] Log.Debug.Fatal");
 
+        Log.Trace("[SourceReference] Log.Trace");
+        Log.Debug("[SourceReference] Log.Debug");
         Log.Info("[SourceReference] Log.Info");
         Log.Warn("[SourceReference] Log.Warn");
         Log.Error("[SourceReference] Log.Error");
