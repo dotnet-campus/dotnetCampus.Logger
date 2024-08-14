@@ -14,9 +14,12 @@
   <!-- Project Information -->
   <PropertyGroup>
     <RootNamespace>dotnetCampus.Logging</RootNamespace>
-    <Deterministic>true</Deterministic>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -44,8 +47,8 @@
   <!-- 生成 NuGet 包。 -->
   <Target Name="_IncludeAllDependencies" BeforeTargets="_GetPackageFiles">
     <ItemGroup>
-      <None Include="Properties\Package\build\Package.props" Pack="True" PackagePath="build\$(PackageId).props" />
-      <None Include="Properties\Package\build\Package.targets" Pack="True" PackagePath="build\$(PackageId).targets" />
+      <None Include="Properties\Package\buildTransitive\Package.props" Pack="True" PackagePath="buildTransitive\$(PackageId).props" />
+      <None Include="Properties\Package\buildTransitive\Package.targets" Pack="True" PackagePath="buildTransitive\$(PackageId).targets" />
       <None Include="..\..\artifacts\bin\dotnetCampus.Logger.Analyzer\$(Configuration)\**\*.dll" Pack="True" PackagePath="analyzers\dotnet\cs" />
     </ItemGroup>
   </Target>

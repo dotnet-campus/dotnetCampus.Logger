@@ -21,4 +21,6 @@
     <PackageProjectUrl>https://github.com/dotnet-campus/dotnetCampus.Logger</PackageProjectUrl>
   </PropertyGroup>
 
+  <Import Project="$(MSBuildThisFileDirectory)src\dotnetCampus.Logger\Properties\Package\buildTransitive\Package.props" />
+
 </Project>

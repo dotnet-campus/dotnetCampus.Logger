@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\src\dotnetCampus.Logger\Properties\Package\build\Package.props" />
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
@@ -15,7 +13,5 @@
     <ProjectReference Include="..\LoggerSample.LoggerIndependentLibrary\LoggerSample.LoggerIndependentLibrary.csproj" />
     <ProjectReference Include="..\LoggerSample.LoggerIndependentProject\LoggerSample.LoggerIndependentProject.csproj" />
   </ItemGroup>
-
-  <Import Project="..\..\src\dotnetCampus.Logger\Properties\Package\build\Package.targets" />
 
 </Project>
