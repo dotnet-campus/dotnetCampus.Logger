@@ -28,6 +28,14 @@ internal class TagFilterManager
     /// </summary>
     /// <param name="text">要判断的日志原文。</param>
     /// <returns>是否满足过滤条件。</returns>
+    /// <remarks>
+    /// 匹配原则：
+    /// <list type="number">
+    /// <item>先看任一标签进行初筛：只要有一个标签匹配，即选出；但如果没有指定任一标签，则全部选出。</item>
+    /// <item>在前一个初筛的基础上，再看排除标签：只要有一个标签匹配，即排除。</item>
+    /// <item>在前两个筛选的基础上，再看包含标签：必须全部标签匹配，才选出，其他全部排除。</item>
+    /// </list>
+    /// </remarks>
     internal bool IsTagEnabled(string text)
     {
         if (AnyFilterTags.Count is 0 && ExcludingFilterTags.Count is 0 && IncludingFilterTags.Count is 0)
@@ -38,6 +46,7 @@ internal class TagFilterManager
         var defaultEnabled = AnyFilterTags.Count is 0 && IncludingFilterTags.Count is 0;
         var currentTagStartIndex = -1;
         var isInTag = false;
+        var matchAny = false;
         List<string> includingTags = IncludingFilterTags.ToList();
         for (var i = 0; i < text.Length; i++)
         {
@@ -62,23 +71,28 @@ internal class TagFilterManager
                 {
                     return false;
                 }
-                // 如果有包含标签，则匹配一个，直到全部匹配。
-                if (IncludingFilterTags.Count > 0)
+                // 如果有任一标签，则匹配一个即可。
+                matchAny = matchAny || defaultEnabled || AnyFilterTags.Contains(tag);
+                if (matchAny)
                 {
-                    if (includingTags.Contains(tag))
+                    // 如果有包含标签，则匹配一个，直到全部匹配。
+                    if (IncludingFilterTags.Count > 0)
                     {
-                        includingTags.Remove(tag);
+                        if (includingTags.Contains(tag))
+                        {
+                            includingTags.Remove(tag);
+                        }
+                        if (includingTags.Count is 0)
+                        {
+                            return true;
+                        }
+                        continue;
                     }
-                    if (includingTags.Count is 0)
+
+                    if (ExcludingFilterTags.Count is 0)
                     {
                         return true;
                     }
-                    continue;
-                }
-                // 如果有任一标签，则匹配一个即可。
-                if (AnyFilterTags.Contains(tag))
-                {
-                    return true;
                 }
             }
             else if (char.IsWhiteSpace(text[i]))
@@ -88,10 +102,10 @@ internal class TagFilterManager
             else if (!isInTag)
             {
                 // 当前不在标签内，且非空白字符，直接跳出。
-                return defaultEnabled;
+                return defaultEnabled || matchAny;
             }
         }
-        return defaultEnabled;
+        return defaultEnabled || matchAny;
     }
 
     /// <summary>
