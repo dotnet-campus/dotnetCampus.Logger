@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace dotnetCampus.Logging.Writers.Helpers;
@@ -109,54 +110,58 @@ internal class TagFilterManager
     /// <param name="args">命令行参数。</param>
     public static TagFilterManager? FromCommandLineArgs(string[] args)
     {
+        if (!TryGetCommandLineValue(args, LogTagParameterName, out var value))
+        {
+            return null;
+        }
+
         HashSet<string> anyFilterTags = [];
         HashSet<string> includingFilterTags = [];
         HashSet<string> excludingFilterTags = [];
-        for (var i = 0; i < args.Length; i++)
+        var filterTags = value.Split([',', ';', ' ']);
+        foreach (var tag in filterTags)
         {
-            if (args[i] != LogTagParameterName || i + 1 >= args.Length)
+            if (tag.StartsWith("-", StringComparison.Ordinal))
             {
-                continue;
-            }
-
-            var filterTags = args[i + 1].Split([',', ';', ' ']);
-            foreach (var tag in filterTags)
-            {
-                if (tag.StartsWith("-", StringComparison.Ordinal))
-                {
 #if NET8_0_OR_GREATER
-                    excludingFilterTags.Add(tag[1..]);
+                excludingFilterTags.Add(tag[1..]);
 #else
-                    excludingFilterTags.Add(tag.Substring(1));
+                excludingFilterTags.Add(tag.Substring(1));
 #endif
-                }
-                else if (tag.StartsWith("+", StringComparison.Ordinal))
-                {
-#if NET8_0_OR_GREATER
-                    includingFilterTags.Add(tag[1..]);
-#else
-                    includingFilterTags.Add(tag.Substring(1));
-#endif
-                }
-                else
-                {
-                    anyFilterTags.Add(tag);
-                }
             }
-
-            return new TagFilterManager
+            else if (tag.StartsWith("+", StringComparison.Ordinal))
             {
-                AnyFilterTags = anyFilterTags.ToImmutableHashSet(),
-                IncludingFilterTags = includingFilterTags.ToImmutableHashSet(),
-                ExcludingFilterTags = excludingFilterTags.ToImmutableHashSet(),
-            };
+#if NET8_0_OR_GREATER
+                includingFilterTags.Add(tag[1..]);
+#else
+                includingFilterTags.Add(tag.Substring(1));
+#endif
+            }
+            else
+            {
+                anyFilterTags.Add(tag);
+            }
         }
 
         return new TagFilterManager
         {
-            AnyFilterTags = [],
-            IncludingFilterTags = [],
-            ExcludingFilterTags = [],
+            AnyFilterTags = anyFilterTags.ToImmutableHashSet(),
+            IncludingFilterTags = includingFilterTags.ToImmutableHashSet(),
+            ExcludingFilterTags = excludingFilterTags.ToImmutableHashSet(),
         };
+    }
+
+    private static bool TryGetCommandLineValue(string[] args, string parameterName, [NotNullWhen(true)] out string? value)
+    {
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (string.Equals(args[i], parameterName, StringComparison.OrdinalIgnoreCase) && i + 1 < args.Length)
+            {
+                value = args[i + 1];
+                return true;
+            }
+        }
+        value = null;
+        return false;
     }
 }
