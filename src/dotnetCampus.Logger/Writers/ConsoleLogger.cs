@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using dotnetCampus.Logging.Writers.Helpers;
 using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
 using B = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
@@ -141,14 +140,14 @@ public class ConsoleLogger : ILogger
     }
 
     private const string Reset = C.Reset;
-    private const string DebugText = F.White;
-    private const string TraceText = F.BrightBlack;
+    private const string TraceText = F.Magenta;
+    private const string DebugText = F.BrightBlack;
     private const string InformationText = F.Green + D.Bold;
     private const string WarningText = F.Yellow;
     private const string ErrorText = F.BrightRed;
     private const string CriticalText = F.Red;
 
-    private static string TraceTag => $"{B.Black}{F.BrightBlack}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
+    private static string TraceTag => $"{B.Magenta}{F.White}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
     private static string DebugTag => $"{B.BrightBlack}{F.White}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
     private static string InformationTag => $"{B.Green}{F.Black}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
     private static string WarningTag => $"{B.Yellow}{F.Black}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
