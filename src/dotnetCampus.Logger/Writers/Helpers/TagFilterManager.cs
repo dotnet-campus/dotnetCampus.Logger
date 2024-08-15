@@ -5,18 +5,20 @@ namespace dotnetCampus.Logging.Writers.Helpers;
 
 internal class TagFilterManager
 {
+    public const string LogTagParameterName = "--log-console-tags";
+
     /// <summary>
-    /// 当前已设置的过滤标签。（无前缀，代表任一匹配。）
+    /// 当前已设置的任一标签。（无前缀）
     /// </summary>
     public required ImmutableHashSetString AnyFilterTags { get; init; }
 
     /// <summary>
-    /// 当前已设置的过滤标签。（前缀为 +，代表必须匹配。）
+    /// 当前已设置的包含标签。（前缀为 +）
     /// </summary>
     public required ImmutableHashSetString IncludingFilterTags { get; init; }
 
     /// <summary>
-    /// 当前已设置的过滤标签。（前缀为 -，代表必须不匹配。）
+    /// 当前已设置的排除标签。（前缀为 -）
     /// </summary>
     public required ImmutableHashSetString ExcludingFilterTags { get; init; }
 
@@ -84,7 +86,7 @@ internal class TagFilterManager
         HashSet<string> excludingFilterTags = [];
         for (var i = 0; i < args.Length; i++)
         {
-            if (args[i] != "--log-console-tags" || i + 1 >= args.Length)
+            if (args[i] != LogTagParameterName || i + 1 >= args.Length)
             {
                 continue;
             }
