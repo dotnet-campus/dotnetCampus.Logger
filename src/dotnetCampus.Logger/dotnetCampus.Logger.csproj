@@ -44,6 +44,10 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="dotnetCampus.Logger.Tests" />
+  </ItemGroup>
+
   <!-- 生成 NuGet 包。 -->
   <Target Name="_IncludeAllDependencies" BeforeTargets="_GetPackageFiles">
     <ItemGroup>

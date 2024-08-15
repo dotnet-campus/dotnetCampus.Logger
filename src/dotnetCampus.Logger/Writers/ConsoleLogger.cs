@@ -16,6 +16,7 @@ public class ConsoleLogger : ILogger
     private int _isCursorMovementEnabled = 3;
 
     private readonly RepeatLoggerDetector _repeat;
+    private TagFilterManager? _tagFilterManager;
 
     /// <summary>
     /// 高于或等于此级别的日志才会被记录。
@@ -35,7 +36,7 @@ public class ConsoleLogger : ILogger
         }
 
         var message = formatter(state, exception);
-        if (!IsTagEnabled(message))
+        if (_tagFilterManager?.IsTagEnabled(message) is false)
         {
             return;
         }
@@ -95,11 +96,6 @@ public class ConsoleLogger : ILogger
     }
 
     /// <summary>
-    /// 当前已设置的过滤标签。
-    /// </summary>
-    private static ImmutableHashSetString ConsoleFilterTags { get; set; } = [];
-
-    /// <summary>
     /// 高于或等于此级别的日志才会被记录。
     /// </summary>
     public ConsoleLogger UseLevel(LogLevel level)
@@ -114,42 +110,8 @@ public class ConsoleLogger : ILogger
     /// <param name="args">命令行参数。</param>
     public ConsoleLogger FilterConsoleTagsFromCommandLineArgs(string[] args)
     {
-        for (var i = 0; i < args.Length; i++)
-        {
-            if (args[i] == "--log-console-tags" && i + 1 < args.Length)
-            {
-                ConsoleFilterTags = args[i + 1].Split([',', ';', ' ']).ToImmutableHashSet();
-                break;
-            }
-        }
+        _tagFilterManager = TagFilterManager.FromCommandLineArgs(args);
         return this;
-    }
-
-    /// <summary>
-    /// 判断某个日志是否满足当前标签过滤条件。
-    /// </summary>
-    /// <param name="text">要判断的日志原文。</param>
-    /// <returns>是否满足过滤条件。</returns>
-    private static bool IsTagEnabled(string text)
-    {
-        if (ConsoleFilterTags.Count is 0)
-        {
-            return true;
-        }
-
-        var start = text.IndexOf('[');
-        if (start == -1)
-        {
-            return true;
-        }
-        var end = text.IndexOf(']', start);
-        if (end == -1)
-        {
-            return true;
-        }
-
-        var tag = text.AsSpan().Slice(start + 1, end - start - 1);
-        return ConsoleFilterTags.Contains(tag.ToString());
     }
 
     private void ClearAndMoveToLastLine(int repeatCount)
