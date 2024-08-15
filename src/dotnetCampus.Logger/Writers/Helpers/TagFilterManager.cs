@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace dotnetCampus.Logging.Writers.Helpers;
 
@@ -37,6 +38,7 @@ internal class TagFilterManager
         var defaultEnabled = AnyFilterTags.Count is 0 && IncludingFilterTags.Count is 0;
         var currentTagStartIndex = -1;
         var isInTag = false;
+        List<string> includingTags = IncludingFilterTags.ToList();
         for (var i = 0; i < text.Length; i++)
         {
             if (text[i] == '[')
@@ -60,7 +62,24 @@ internal class TagFilterManager
                 {
                     return false;
                 }
-
+                // 如果有包含标签，则匹配一个，直到全部匹配。
+                if (IncludingFilterTags.Count > 0)
+                {
+                    if (includingTags.Contains(tag))
+                    {
+                        includingTags.Remove(tag);
+                    }
+                    if (includingTags.Count is 0)
+                    {
+                        return true;
+                    }
+                    continue;
+                }
+                // 如果有任一标签，则匹配一个即可。
+                if (AnyFilterTags.Contains(tag))
+                {
+                    return true;
+                }
             }
             else if (char.IsWhiteSpace(text[i]))
             {
