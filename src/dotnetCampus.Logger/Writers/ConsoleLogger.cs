@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using dotnetCampus.Logging.Writers.Helpers;
 using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
@@ -97,7 +98,12 @@ public class ConsoleLogger : ILogger
     /// <summary>
     /// 当前已设置的过滤标签。
     /// </summary>
-    private static ImmutableHashSetString ConsoleFilterTags { get; set; } = [];
+    private static ImmutableHashSetString IncludingFilterTags { get; set; } = [];
+
+    /// <summary>
+    /// 当前已设置的过滤标签。
+    /// </summary>
+    private static ImmutableHashSetString ExcludingFilterTags { get; set; } = [];
 
     /// <summary>
     /// 高于或等于此级别的日志才会被记录。
@@ -114,13 +120,36 @@ public class ConsoleLogger : ILogger
     /// <param name="args">命令行参数。</param>
     public ConsoleLogger FilterConsoleTagsFromCommandLineArgs(string[] args)
     {
+        HashSet<string> includingFilterTags = [];
+        HashSet<string> excludingFilterTags = [];
         for (var i = 0; i < args.Length; i++)
         {
-            if (args[i] == "--log-console-tags" && i + 1 < args.Length)
+            if (args[i] != "--log-console-tags" || i + 1 >= args.Length)
             {
-                ConsoleFilterTags = args[i + 1].Split([',', ';', ' ']).ToImmutableHashSet();
-                break;
+                continue;
             }
+
+            var filterTags = args[i + 1].Split([',', ';', ' ']);
+            foreach (var tag in filterTags)
+            {
+                if (tag.StartsWith("-", StringComparison.Ordinal))
+                {
+#if NET8_0_OR_GREATER
+                    excludingFilterTags.Add(tag[1..]);
+#else
+                    excludingFilterTags.Add(tag.Substring(1));
+#endif
+                }
+                else
+                {
+                    includingFilterTags.Add(tag);
+                }
+            }
+
+            IncludingFilterTags = includingFilterTags.ToImmutableHashSet();
+            ExcludingFilterTags = excludingFilterTags.ToImmutableHashSet();
+
+            break;
         }
         return this;
     }
@@ -132,24 +161,52 @@ public class ConsoleLogger : ILogger
     /// <returns>是否满足过滤条件。</returns>
     private static bool IsTagEnabled(string text)
     {
-        if (ConsoleFilterTags.Count is 0)
+        if (IncludingFilterTags.Count is 0 && ExcludingFilterTags.Count is 0)
         {
             return true;
         }
 
-        var start = text.IndexOf('[');
-        if (start == -1)
+        var defaultEnabled = IncludingFilterTags.Count is 0;
+        var currentTagStartIndex = -1;
+        var isInTag = false;
+        for (var i = 0; i < text.Length; i++)
         {
-            return true;
+            if (text[i] == '[')
+            {
+                // 进入标签。
+                currentTagStartIndex = i;
+                isInTag = true;
+            }
+            else if (text[i] == ']')
+            {
+                // 离开标签。
+                var currentTagEndIndex = i;
+                isInTag = false;
+                if (currentTagStartIndex < 0)
+                {
+                    return defaultEnabled;
+                }
+                var tag = text.AsSpan().Slice(currentTagStartIndex + 1, currentTagEndIndex - currentTagStartIndex - 1);
+                if (IncludingFilterTags.Contains(tag.ToString()))
+                {
+                    return true;
+                }
+                if (ExcludingFilterTags.Contains(tag.ToString()))
+                {
+                    return false;
+                }
+            }
+            else if (char.IsWhiteSpace(text[i]))
+            {
+                // 空白字符，不处理。
+            }
+            else if (!isInTag)
+            {
+                // 当前不在标签内，且非空白字符，直接跳出。
+                return defaultEnabled;
+            }
         }
-        var end = text.IndexOf(']', start);
-        if (end == -1)
-        {
-            return true;
-        }
-
-        var tag = text.AsSpan().Slice(start + 1, end - start - 1);
-        return ConsoleFilterTags.Contains(tag.ToString());
+        return defaultEnabled;
     }
 
     private void ClearAndMoveToLastLine(int repeatCount)
