@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using dotnetCampus.Logging.Writers.Helpers;
 using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
 using B = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
@@ -74,7 +75,7 @@ public class ConsoleLogger : ILogger
             };
             ConsoleMultilineMessage($"""
                 {message}
-                {tag}{exception.GetType().Name}: {exception.Message}
+                {tag}{BuildExceptionTreeText(exception)}
                 """, formatter);
         }
     }
@@ -91,6 +92,42 @@ public class ConsoleLogger : ILogger
             while (reader.ReadLine() is { } line)
             {
                 Console.WriteLine(formatter(line));
+            }
+        }
+    }
+
+    /// <summary>
+    /// 以树形结构构建异常信息。
+    /// </summary>
+    /// <param name="tag">在异常信息前的标签。</param>
+    /// <param name="exception">异常。</param>
+    /// <returns>树形结构的异常信息。</returns>
+    private static string BuildExceptionTreeText(Exception exception)
+    {
+        var builder = new StringBuilder();
+        BuildExceptionTreeTextRecursively(builder, exception);
+        return builder.ToString();
+
+        static void BuildExceptionTreeTextRecursively(StringBuilder builder, Exception exception, int depth = 0)
+        {
+            if (depth is not 0)
+            {
+                builder
+                    .Append(' ', depth * 2 + 2)
+                    .Append('└')
+                    .Append(exception.InnerException is not null ? '┬' : '─');
+            }
+            builder.AppendLine($"{exception.GetType().Name}: {exception.Message}");
+            if (exception is AggregateException ae)
+            {
+                foreach (var innerException in ae.InnerExceptions)
+                {
+                    BuildExceptionTreeTextRecursively(builder, innerException, depth + 1);
+                }
+            }
+            else if (exception.InnerException is { } innerException)
+            {
+                BuildExceptionTreeTextRecursively(builder, innerException, depth + 1);
             }
         }
     }
