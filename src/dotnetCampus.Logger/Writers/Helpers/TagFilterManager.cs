@@ -43,10 +43,11 @@ internal class TagFilterManager
             return true;
         }
 
-        var defaultEnabled = AnyFilterTags.Count is 0 && IncludingFilterTags.Count is 0;
+        var 任一满足 = AnyFilterTags.Count is 0;
+        var 包含满足 = IncludingFilterTags.Count is 0;
+
         var currentTagStartIndex = -1;
         var isInTag = false;
-        var matchAny = false;
         List<string> includingTags = IncludingFilterTags.ToList();
         for (var i = 0; i < text.Length; i++)
         {
@@ -63,7 +64,7 @@ internal class TagFilterManager
                 isInTag = false;
                 if (currentTagStartIndex < 0)
                 {
-                    return defaultEnabled;
+                    return 任一满足;
                 }
                 var tag = text.AsSpan().Slice(currentTagStartIndex + 1, currentTagEndIndex - currentTagStartIndex - 1).ToString();
                 // 只要有一个排除标签匹配，就不输出。
@@ -72,11 +73,11 @@ internal class TagFilterManager
                     return false;
                 }
                 // 如果有任一标签，则匹配一个即可。
-                matchAny = matchAny || defaultEnabled || AnyFilterTags.Contains(tag);
-                if (matchAny)
+                任一满足 = 任一满足 || AnyFilterTags.Contains(tag);
+                if (任一满足)
                 {
                     // 如果有包含标签，则匹配一个，直到全部匹配。
-                    if (IncludingFilterTags.Count > 0)
+                    if (!包含满足 && IncludingFilterTags.Count > 0)
                     {
                         if (includingTags.Contains(tag))
                         {
@@ -84,14 +85,8 @@ internal class TagFilterManager
                         }
                         if (includingTags.Count is 0)
                         {
-                            return true;
+                            包含满足 = true;
                         }
-                        continue;
-                    }
-
-                    if (ExcludingFilterTags.Count is 0)
-                    {
-                        return true;
                     }
                 }
             }
@@ -102,10 +97,10 @@ internal class TagFilterManager
             else if (!isInTag)
             {
                 // 当前不在标签内，且非空白字符，直接跳出。
-                return defaultEnabled || matchAny;
+                return 任一满足 && 包含满足;
             }
         }
-        return defaultEnabled || matchAny;
+        return 任一满足 && 包含满足;
     }
 
     /// <summary>
