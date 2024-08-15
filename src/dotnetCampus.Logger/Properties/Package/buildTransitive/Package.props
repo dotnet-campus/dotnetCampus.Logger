@@ -17,8 +17,7 @@
       解释：
       - 所谓优先，指的是生成 global usings 以指定优先级；
     -->
-    <DCUseGeneratedLogger>
-    </DCUseGeneratedLogger>
+    <!-- <DCUseGeneratedLogger></DCUseGeneratedLogger> -->
   </PropertyGroup>
 
 </Project>
