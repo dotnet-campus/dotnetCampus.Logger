@@ -141,7 +141,7 @@ public class ConsoleLogger : ILogger
 
     private const string Reset = C.Reset;
     private const string TraceText = F.Magenta;
-    private const string DebugText = F.BrightBlack;
+    private const string DebugText = F.White;
     private const string InformationText = F.Green + D.Bold;
     private const string WarningText = F.Yellow;
     private const string ErrorText = F.BrightRed;
