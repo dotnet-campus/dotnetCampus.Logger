@@ -30,12 +30,13 @@ public class LoggerGenerator : IIncrementalGenerator
                 is var result
                 && !result)
         {
-            // 此项目是通过依赖间接引用的，没有 build 因此无法在源生成器中使用编译属性，所以只能选择引用。
+            // 此项目未设置必要的属性（通常这是不应该出现的，因为 buildTransitive 传递的编译目标会自动生成这些属性）。
             return;
         }
 
         if (!isGenerateSource)
         {
+            // 属性设置为不生成源代码。
             return;
         }
 
