@@ -1,8 +1,10 @@
 ﻿using System.Text;
 using dotnetCampus.Logger.Assets.Templates;
+using dotnetCampus.Logger.Utils.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using static dotnetCampus.Logger.Utils.CodeAnalysis.ProgramMainExtensions;
 
@@ -16,7 +18,7 @@ public class ProgramMainLogGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var provider = context.SyntaxProvider.CreateSyntaxProvider((node, ct) =>
+        var syntaxProvider = context.SyntaxProvider.CreateSyntaxProvider((node, ct) =>
         {
             if (node is not MethodDeclarationSyntax mds)
             {
@@ -51,11 +53,28 @@ public class ProgramMainLogGenerator : IIncrementalGenerator
             return programTypeSymbol;
         });
 
-        context.RegisterSourceOutput(provider, Execute);
+        context.RegisterSourceOutput(syntaxProvider.Combine(context.AnalyzerConfigOptionsProvider), Execute);
     }
 
-    private void Execute(SourceProductionContext context, INamedTypeSymbol programTypeSymbol)
+    private void Execute(SourceProductionContext context, (INamedTypeSymbol programTypeSymbol, AnalyzerConfigOptionsProvider analyzerConfigOptions) tuple)
     {
+        var (programTypeSymbol, provider) = tuple;
+
+        if (provider.GlobalOptions
+                    .TryGetValue<bool>("_DLGenerateSource", out var isGenerateSource)
+                is var result
+            && !result)
+        {
+            // 此项目未设置必要的属性（通常这是不应该出现的，因为 buildTransitive 传递的编译目标会自动生成这些属性）。
+            return;
+        }
+
+        if (!isGenerateSource)
+        {
+            // 属性设置为不生成源代码。
+            return;
+        }
+
         // 生成 Program.Logger.g.cs
         var partialLoggerFile = GeneratorInfo.GetEmbeddedTemplateFile<Program>();
         var generatedLoggerText = ConvertPartialProgramLogger(partialLoggerFile.Content, programTypeSymbol);
