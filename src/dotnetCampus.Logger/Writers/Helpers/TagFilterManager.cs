@@ -75,19 +75,16 @@ internal class TagFilterManager
                 }
                 // 如果有任一标签，则匹配一个即可。
                 任一满足 = 任一满足 || AnyFilterTags.Contains(tag);
-                if (任一满足)
+                // 如果有包含标签，则匹配一个，直到全部匹配。
+                if (!包含满足 && IncludingFilterTags.Count > 0)
                 {
-                    // 如果有包含标签，则匹配一个，直到全部匹配。
-                    if (!包含满足 && IncludingFilterTags.Count > 0)
+                    if (includingTags.Contains(tag))
                     {
-                        if (includingTags.Contains(tag))
-                        {
-                            includingTags.Remove(tag);
-                        }
-                        if (includingTags.Count is 0)
-                        {
-                            包含满足 = true;
-                        }
+                        includingTags.Remove(tag);
+                    }
+                    if (includingTags.Count is 0)
+                    {
+                        包含满足 = true;
                     }
                 }
             }

@@ -84,6 +84,32 @@ public class TagFilterManagerTests
         Assert.IsFalse(filter.IsTagEnabled("[xxxx] Message"));
     }
 
+    [TestMethod("单个任一和包含标签，只要有一个标签匹配即允许。且标签顺序不影响。")]
+    public void 单个任一和包含标签且标签顺序不影响()
+    {
+        var filter = CreateFilter("+Bar,Foo");
+        Assert.IsFalse(filter.IsTagEnabled("[Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[Bar] Message"));
+        Assert.IsTrue(filter.IsTagEnabled("[Foo][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Bar] Message"));
+        Assert.IsTrue(filter.IsTagEnabled("[xxxx][Foo][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx] Message"));
+    }
+
+    [TestMethod("单个任一和包含标签，只要有一个标签匹配即允许。且标签顺序不影响2。")]
+    public void 单个任一和包含标签且标签顺序不影响2()
+    {
+        var filter = CreateFilter("+Foo,Bar");
+        Assert.IsFalse(filter.IsTagEnabled("[Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[Bar] Message"));
+        Assert.IsTrue(filter.IsTagEnabled("[Foo][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Bar] Message"));
+        Assert.IsTrue(filter.IsTagEnabled("[xxxx][Foo][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx] Message"));
+    }
+
     [TestMethod("单个任一和排除标签，只要有一个标签匹配即不允许。")]
     public void 单个任一和排除标签()
     {
@@ -97,10 +123,36 @@ public class TagFilterManagerTests
         Assert.IsFalse(filter.IsTagEnabled("[xxxx] Message"));
     }
 
+    [TestMethod("单个任一和排除标签，只要有一个标签匹配即不允许。且标签顺序不影响。")]
+    public void 单个任一和排除标签且标签顺序不影响()
+    {
+        var filter = CreateFilter("-Bar,Foo");
+        Assert.IsTrue(filter.IsTagEnabled("[Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[Foo][Bar] Message"));
+        Assert.IsTrue(filter.IsTagEnabled("[xxxx][Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Foo][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx] Message"));
+    }
+
     [TestMethod("单个包含和排除标签，只要有一个标签匹配即不允许。")]
     public void 单个包含和排除标签()
     {
         var filter = CreateFilter("+Foo,-Bar");
+        Assert.IsTrue(filter.IsTagEnabled("[Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[Foo][Bar] Message"));
+        Assert.IsTrue(filter.IsTagEnabled("[xxxx][Foo] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx][Foo][Bar] Message"));
+        Assert.IsFalse(filter.IsTagEnabled("[xxxx] Message"));
+    }
+
+    [TestMethod("单个包含和排除标签，只要有一个标签匹配即不允许。且标签顺序不影响。")]
+    public void 单个包含和排除标签且标签顺序不影响()
+    {
+        var filter = CreateFilter("-Bar,+Foo");
         Assert.IsTrue(filter.IsTagEnabled("[Foo] Message"));
         Assert.IsFalse(filter.IsTagEnabled("[Bar] Message"));
         Assert.IsFalse(filter.IsTagEnabled("[Foo][Bar] Message"));
