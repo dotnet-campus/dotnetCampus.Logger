@@ -66,14 +66,20 @@ public class ConsoleLogger : ILogger
             return;
         }
 
+        var traceTag = TraceTag;
+        var debugTag = DebugTag;
+        var informationTag = InformationTag;
+        var warningTag = WarningTag;
+        var errorTag = ErrorTag;
+        var criticalTag = CriticalTag;
         LogCore(logLevel, exception, message, m => logLevel switch
         {
-            LogLevel.Trace => $"{TraceTag} {TraceText}{m}{Reset}",
-            LogLevel.Debug => $"{DebugTag} {DebugText}{m}{Reset}",
-            LogLevel.Information => $"{InformationTag} {InformationText}{m}{Reset}",
-            LogLevel.Warning => $"{WarningTag} {WarningText}{m}{Reset}",
-            LogLevel.Error => $"{ErrorTag} {ErrorText}{m}{Reset}",
-            LogLevel.Critical => $"{CriticalTag} {CriticalText}{m}{Reset}",
+            LogLevel.Trace => $"{traceTag} {TraceText}{m}{Reset}",
+            LogLevel.Debug => $"{debugTag} {DebugText}{m}{Reset}",
+            LogLevel.Information => $"{informationTag} {InformationText}{m}{Reset}",
+            LogLevel.Warning => $"{warningTag} {WarningText}{m}{Reset}",
+            LogLevel.Error => $"{errorTag} {ErrorText}{m}{Reset}",
+            LogLevel.Critical => $"{criticalTag} {CriticalText}{m}{Reset}",
             _ => null,
         });
     }
