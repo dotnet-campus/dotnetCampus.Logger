@@ -110,7 +110,8 @@ internal static class LoggerStartup
             // 设置日志级别为 Debug。
             .WithLevel(LogLevel.Debug)
             // 添加一个控制台日志写入器，这样控制台里就可以看到日志输出了。
-            .AddWriter(new ConsoleLogger()
+            .AddConsoleLogger(b => b
+                .WithThreadSafe(LogWritingThreadMode.ProducerConsumer)
                 .FilterConsoleTagsFromCommandLineArgs(args))
             // 如果有一些库使用了本日志框架（使用源生成器，不带依赖的那种），那么可以通过这个方法将它们的日志桥接到本日志框架中。
             .AddBridge(LoggerBridgeLinker.Default)
