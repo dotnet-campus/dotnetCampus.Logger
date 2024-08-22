@@ -1,4 +1,6 @@
-﻿using dotnetCampus.Logging.Attributes;
+﻿using System;
+using System.Threading.Tasks;
+using dotnetCampus.Logging.Attributes;
 using dotnetCampus.Logging.Configurations;
 using dotnetCampus.Logging.Writers;
 
@@ -31,6 +33,16 @@ internal class Program
             .AddBridge(LoggerBridgeLinker.Default)
             .Build()
             .IntoGlobalStaticLog();
+
+        Run();
+    }
+
+    private static void Run()
+    {
+        Parallel.For(0, 0x00010000, i =>
+        {
+            Log.Debug($"[TEST] {DateTime.Now:HH:mm:ss}");
+        });
     }
 }
 
