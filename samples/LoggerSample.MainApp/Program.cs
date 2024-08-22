@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using dotnetCampus.Logging.Attributes;
@@ -37,13 +38,14 @@ internal class Program
 
     private static void Run()
     {
-        Log.Debug("[TEST] 开始");
+        var stopwatch = Stopwatch.StartNew();
+        Log.Debug($"[TEST] 开始 {stopwatch.ElapsedMilliseconds}ms");
         Parallel.For(0, 0x00004000, i =>
         {
-            Thread.Sleep(1);
+            Thread.Sleep(0);
             Log.Debug($"[TEST] {DateTime.Now:HH:mm:ss}");
         });
-        Log.Debug("[TEST] 完成");
+        Log.Debug($"[TEST] 完成 {stopwatch.ElapsedMilliseconds}ms");
     }
 }
 
