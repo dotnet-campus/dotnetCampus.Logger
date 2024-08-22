@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace dotnetCampus.Logging.Writers.Helpers;
 
+/// <summary>
+/// 管理控制台日志的标签过滤。
+/// </summary>
 internal class TagFilterManager
 {
     public const string LogTagParameterName = "--log-console-tags";

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using dotnetCampus.Logging.Attributes;
 using dotnetCampus.Logging.Configurations;
@@ -23,26 +24,26 @@ internal class Program
             {
                 LogLevel = LogLevel.Debug,
             })
-            .AddWriter(new ConsoleLogger
-            {
-                // Options = new ConsoleLoggerOptions
-                // {
-                //     IncludeScopes = true,
-                // },
-            })
+            .AddConsoleLogger(b => b
+                .WithThreadSafe(LogWritingThreadMode.ProducerConsumer)
+                .FilterConsoleTagsFromCommandLineArgs(args))
             .AddBridge(LoggerBridgeLinker.Default)
             .Build()
             .IntoGlobalStaticLog();
 
         Run();
+        Thread.Sleep(5000);
     }
 
     private static void Run()
     {
-        Parallel.For(0, 0x00010000, i =>
+        Log.Debug("[TEST] 开始");
+        Parallel.For(0, 0x00004000, i =>
         {
+            Thread.Sleep(1);
             Log.Debug($"[TEST] {DateTime.Now:HH:mm:ss}");
         });
+        Log.Debug("[TEST] 完成");
     }
 }
 

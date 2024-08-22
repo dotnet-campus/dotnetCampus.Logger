@@ -16,18 +16,30 @@ public class ConsoleLogger : ILogger
     private int _isCursorMovementEnabled = 3;
 
     private readonly RepeatLoggerDetector _repeat;
-    private TagFilterManager? _tagFilterManager;
+
+    internal ConsoleLogger(ICoreLogWriter coreWriter, TagFilterManager? tagManager)
+    {
+        _repeat = new RepeatLoggerDetector(ClearAndMoveToLastLine);
+        CoreWriter = coreWriter;
+        TagManager = tagManager;
+    }
 
     /// <summary>
     /// 高于或等于此级别的日志才会被记录。
     /// </summary>
-    public LogLevel Level { get; set; }
+    public LogLevel Level { get; init; }
 
-    public ConsoleLogger()
-    {
-        _repeat = new(ClearAndMoveToLastLine);
-    }
+    /// <summary>
+    /// 最终日志写入器。
+    /// </summary>
+    private ICoreLogWriter CoreWriter { get; }
 
+    /// <summary>
+    /// 管理控制台日志的标签过滤。
+    /// </summary>
+    private TagFilterManager? TagManager { get; }
+
+    /// <inheritdoc />
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         if (logLevel < Level)
@@ -36,7 +48,7 @@ public class ConsoleLogger : ILogger
         }
 
         var message = formatter(state, exception);
-        if (_tagFilterManager?.IsTagEnabled(message) is false)
+        if (TagManager?.IsTagEnabled(message) is false)
         {
             return;
         }
@@ -53,7 +65,14 @@ public class ConsoleLogger : ILogger
         });
     }
 
-    private void LogCore(LogLevel logLevel, Exception? exception, string message, Func<string, string?> formatter)
+    /// <summary>
+    /// 记录日志。在必要的情况下会保证线程安全。
+    /// </summary>
+    /// <param name="logLevel"></param>
+    /// <param name="exception"></param>
+    /// <param name="message"></param>
+    /// <param name="formatter"></param>
+    private void LogCore(LogLevel logLevel, Exception? exception, string message, Func<string, string?> formatter) => CoreWriter.Do(() =>
     {
         if (_repeat.RepeatOrResetLastLog(logLevel, message, exception) is var count and > 1)
         {
@@ -77,9 +96,15 @@ public class ConsoleLogger : ILogger
                 {tag}{exception}
                 """, formatter);
         }
-    }
+    });
 
-    private static void ConsoleMultilineMessage(string message, Func<string, string?> formatter, bool forceSingleLine = false)
+    /// <summary>
+    /// 记录多行日志。
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="formatter"></param>
+    /// <param name="forceSingleLine"></param>
+    private void ConsoleMultilineMessage(string message, Func<string, string?> formatter, bool forceSingleLine = false)
     {
         if (forceSingleLine || !message.Contains('\n'))
         {
@@ -96,46 +121,34 @@ public class ConsoleLogger : ILogger
     }
 
     /// <summary>
-    /// 高于或等于此级别的日志才会被记录。
+    /// 清空当前行并移动光标到上一行。
     /// </summary>
-    public ConsoleLogger UseLevel(LogLevel level)
-    {
-        Level = level;
-        return this;
-    }
-
-    /// <summary>
-    /// 从命令行参数中提取过滤标签。
-    /// </summary>
-    /// <param name="args">命令行参数。</param>
-    public ConsoleLogger FilterConsoleTagsFromCommandLineArgs(string[] args)
-    {
-        _tagFilterManager = TagFilterManager.FromCommandLineArgs(args);
-        return this;
-    }
-
+    /// <param name="repeatCount">此移动光标，是因为日志已重复第几次。</param>
     private void ClearAndMoveToLastLine(int repeatCount)
     {
-        if (_isCursorMovementEnabled > 0 && repeatCount > 2)
+        if (_isCursorMovementEnabled <= 0 || repeatCount <= 2)
         {
-            try
-            {
-                var desiredY = Console.CursorTop - 1;
-                var y = Math.Clamp(desiredY, 0, Console.WindowHeight - 1);
-                Console.SetCursorPosition(0, y);
-                Console.Write(new string(' ', Console.WindowWidth));
-                Console.SetCursorPosition(0, y);
-            }
-            catch (IOException)
-            {
-                // 日志记录时，如果无法移动光标，说明可能当前输出位置不在缓冲区内。
-                // 如果多次尝试失败，则认为当前控制台缓冲区不支持光标移动，遂放弃。
-                _isCursorMovementEnabled--;
-            }
-            catch (ArgumentException)
-            {
-                // 日志记录时，有可能已经移动到头了，就不要移动了。
-            }
+            // 如果光标控制不可用，或者还没有重复次数，则不尝试移动光标。
+            return;
+        }
+
+        try
+        {
+            var desiredY = Console.CursorTop - 1;
+            var y = Math.Clamp(desiredY, 0, Console.WindowHeight - 1);
+            Console.SetCursorPosition(0, y);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, y);
+        }
+        catch (IOException)
+        {
+            // 日志记录时，如果无法移动光标，说明可能当前输出位置不在缓冲区内。
+            // 如果多次尝试失败，则认为当前控制台缓冲区不支持光标移动，遂放弃。
+            _isCursorMovementEnabled--;
+        }
+        catch (ArgumentException)
+        {
+            // 日志记录时，有可能已经移动到头了，就不要移动了。
         }
     }
 
