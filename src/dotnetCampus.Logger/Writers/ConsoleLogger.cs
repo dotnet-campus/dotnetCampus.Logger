@@ -8,6 +8,9 @@ using F = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Foregr
 
 namespace dotnetCampus.Logging.Writers;
 
+/// <summary>
+/// 在控制台输出日志的日志记录器。
+/// </summary>
 public class ConsoleLogger : ILogger
 {
     /// <summary>
@@ -16,6 +19,16 @@ public class ConsoleLogger : ILogger
     private int _isCursorMovementEnabled = 3;
 
     private readonly RepeatLoggerDetector _repeat;
+
+    /// <summary>
+    /// 创建一个 <see cref="ConsoleLogger"/> 的新实例。
+    /// </summary>
+    /// <param name="threadMode">指定控制台日志的线程安全模式。</param>
+    /// <param name="mainArgs">Main 方法的参数。</param>
+    public ConsoleLogger(LogWritingThreadMode threadMode = LogWritingThreadMode.NotThreadSafe, string[]? mainArgs = null)
+        : this(threadMode.CreateCoreLogWriter(), TagFilterManager.FromCommandLineArgs(mainArgs ?? []))
+    {
+    }
 
     internal ConsoleLogger(ICoreLogWriter coreWriter, TagFilterManager? tagManager)
     {
