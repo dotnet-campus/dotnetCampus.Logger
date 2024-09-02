@@ -75,7 +75,7 @@ public static partial class Log
     /// </remarks>
     public static void Trace(string message)
     {
-        Current.Log(LogLevel.Trace, default, message, null, (s, ex) => message);
+        Current.Log(LogLevel.Trace, default, message, null, static (s, ex) => s);
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public static partial class Log
     /// </remarks>
     public static void Debug(string message)
     {
-        Current.Log(LogLevel.Debug, default, message, null, (s, ex) => message);
+        Current.Log(LogLevel.Debug, default, message, null, static (s, ex) => s);
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public static partial class Log
     /// <param name="message">要记录的消息。</param>
     public static void Info(string message)
     {
-        Current.Log(LogLevel.Information, default, message, null, (s, ex) => message);
+        Current.Log(LogLevel.Information, default, message, null, static (s, ex) => s);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public static partial class Log
     /// <param name="exception">如果有异常信息，可以传入此参数。</param>
     public static void Warn(string message, Exception? exception = null)
     {
-        Current.Log(LogLevel.Warning, default, message, exception, (s, ex) => message);
+        Current.Log(LogLevel.Warning, default, message, exception, static (s, ex) => s);
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public static partial class Log
     /// <param name="exception">如果有异常信息，可以传入此参数。</param>
     public static void Error(string message, Exception? exception = null)
     {
-        Current.Log(LogLevel.Error, default, message, exception, (s, ex) => message);
+        Current.Log(LogLevel.Error, default, message, exception, static (s, ex) => s);
     }
 
     /// <summary>
@@ -127,6 +127,6 @@ public static partial class Log
     /// <param name="exception">如果有异常信息，可以传入此参数。</param>
     public static void Fatal(string message, Exception? exception = null)
     {
-        Current.Log(LogLevel.Critical, default, message, null, (s, ex) => message);
+        Current.Log(LogLevel.Critical, default, message, null, static (s, ex) => s);
     }
 }
