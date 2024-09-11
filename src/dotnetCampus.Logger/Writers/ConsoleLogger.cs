@@ -26,7 +26,7 @@ public class ConsoleLogger : ILogger
     /// <param name="threadMode">指定控制台日志的线程安全模式。</param>
     /// <param name="mainArgs">Main 方法的参数。</param>
     public ConsoleLogger(LogWritingThreadMode threadMode = LogWritingThreadMode.NotThreadSafe, string[]? mainArgs = null)
-        : this(threadMode.CreateCoreLogWriter(), TagFilterManager.FromCommandLineArgs(mainArgs ?? []))
+        : this(threadMode.CreateCoreLogWriter(SafeWriteLine), TagFilterManager.FromCommandLineArgs(mainArgs ?? []))
     {
     }
 
@@ -127,15 +127,32 @@ public class ConsoleLogger : ILogger
     {
         if (forceSingleLine || !message.Contains('\n'))
         {
-            Console.WriteLine(formatter(message));
+            SafeWriteLine(formatter(message));
         }
         else
         {
             using var reader = new StringReader(message);
             while (reader.ReadLine() is { } line)
             {
-                Console.WriteLine(formatter(line));
+                SafeWriteLine(formatter(line));
             }
+        }
+    }
+
+    /// <summary>
+    /// 安全地写入一行日志，避免出现 IO 异常。
+    /// </summary>
+    /// <param name="message"></param>
+    internal static void SafeWriteLine(string? message)
+    {
+        try
+        {
+            Console.WriteLine(message);
+        }
+        catch (IOException)
+        {
+            // 如果写入日志时发生 IO 异常，已经没有办法救活了。
+            // 这是日志系统的内部实现，所以日志也记不了了，汗……
         }
     }
 

@@ -9,7 +9,7 @@ namespace dotnetCampus.Logging.Writers;
 public sealed class ConsoleLoggerBuilder
 {
     private TagFilterManager? _tagFilterManager;
-    private ICoreLogWriter _coreWriter = new NotThreadSafeLogWriter();
+    private ICoreLogWriter _coreWriter = new NotThreadSafeLogWriter(ConsoleLogger.SafeWriteLine);
 
     /// <summary>
     /// 高于或等于此级别的日志才会被记录。
@@ -35,9 +35,9 @@ public sealed class ConsoleLoggerBuilder
     {
         _coreWriter = threadMode switch
         {
-            LogWritingThreadMode.NotThreadSafe => new NotThreadSafeLogWriter(),
-            LogWritingThreadMode.Lock => new LockLogWriter(),
-            LogWritingThreadMode.ProducerConsumer => new ProducerConsumerLogWriter(),
+            LogWritingThreadMode.NotThreadSafe => new NotThreadSafeLogWriter(ConsoleLogger.SafeWriteLine),
+            LogWritingThreadMode.Lock => new LockLogWriter(ConsoleLogger.SafeWriteLine),
+            LogWritingThreadMode.ProducerConsumer => new ProducerConsumerLogWriter(ConsoleLogger.SafeWriteLine),
             _ => throw new ArgumentOutOfRangeException(nameof(threadMode)),
         };
         return this;
