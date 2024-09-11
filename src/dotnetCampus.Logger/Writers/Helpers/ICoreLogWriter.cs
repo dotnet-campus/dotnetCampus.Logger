@@ -25,14 +25,14 @@ internal interface ICoreLogWriter
 /// <summary>
 /// 不处理线程安全问题的日志写入器。
 /// </summary>
-internal sealed class NotThreadSafeLogWriter : ICoreLogWriter
+internal sealed class NotThreadSafeLogWriter(Action<string> logger) : ICoreLogWriter
 {
     /// <inheritdoc />
     public void Write(string? message)
     {
         if (message is not null)
         {
-            Console.WriteLine(message);
+            logger(message);
         }
     }
 
@@ -46,7 +46,7 @@ internal sealed class NotThreadSafeLogWriter : ICoreLogWriter
 /// <summary>
 /// 使用锁来保证线程安全的日志写入器。
 /// </summary>
-internal sealed class LockLogWriter : ICoreLogWriter
+internal sealed class LockLogWriter(Action<string> logger) : ICoreLogWriter
 {
     private readonly object _lock = new();
 
@@ -57,7 +57,7 @@ internal sealed class LockLogWriter : ICoreLogWriter
         {
             lock (_lock)
             {
-                Console.WriteLine(message);
+                logger(message);
             }
         }
     }
@@ -77,13 +77,15 @@ internal sealed class LockLogWriter : ICoreLogWriter
 /// </summary>
 internal sealed class ProducerConsumerLogWriter : ICoreLogWriter
 {
+    private readonly Action<string> _logger;
     private readonly BlockingCollection<object> _queue = new();
 
     /// <summary>
     /// 创建 <see cref="ProducerConsumerLogWriter"/> 的新实例，并启动消费线程。
     /// </summary>
-    public ProducerConsumerLogWriter()
+    public ProducerConsumerLogWriter(Action<string> logger)
     {
+        _logger = logger;
         new Task(Consume, TaskCreationOptions.LongRunning).Start();
     }
 
@@ -112,7 +114,7 @@ internal sealed class ProducerConsumerLogWriter : ICoreLogWriter
             switch (item)
             {
                 case string message:
-                    Console.WriteLine(message);
+                    _logger(message);
                     break;
                 case Action action:
                     action();

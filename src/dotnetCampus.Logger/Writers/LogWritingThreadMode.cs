@@ -36,13 +36,14 @@ internal static class LogWritingThreadModeExtensions
     /// 根据 <see cref="LogWritingThreadMode"/> 创建对应的 <see cref="ICoreLogWriter"/> 实例。
     /// </summary>
     /// <param name="threadMode">线程安全模式。</param>
+    /// <param name="logger">实际的日志写入方法。</param>
     /// <returns>最终日志写入器。</returns>
     /// <exception cref="ArgumentOutOfRangeException">当线程安全模式不支持时抛出。</exception>
-    public static ICoreLogWriter CreateCoreLogWriter(this LogWritingThreadMode threadMode) => threadMode switch
+    public static ICoreLogWriter CreateCoreLogWriter(this LogWritingThreadMode threadMode, Action<string> logger) => threadMode switch
     {
-        LogWritingThreadMode.NotThreadSafe => new NotThreadSafeLogWriter(),
-        LogWritingThreadMode.Lock => new LockLogWriter(),
-        LogWritingThreadMode.ProducerConsumer => new ProducerConsumerLogWriter(),
+        LogWritingThreadMode.NotThreadSafe => new NotThreadSafeLogWriter(logger),
+        LogWritingThreadMode.Lock => new LockLogWriter(logger),
+        LogWritingThreadMode.ProducerConsumer => new ProducerConsumerLogWriter(logger),
         _ => throw new ArgumentOutOfRangeException(nameof(threadMode)),
     };
 }
