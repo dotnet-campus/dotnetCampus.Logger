@@ -128,6 +128,8 @@ internal static class LoggerStartup
 internal partial class LoggerBridgeLinker;
 ```
 
+当然，在你的应用程序中，日志级别通常不是写死在代码里的，往往需要从命令行参数、环境变量、配置文件等位置读取。那么可通过 `LogLevel.Parse` 方法将字符串解析为日志级别，相比于普通枚举的解析，此方法额外支持日志级别的常见别名。
+
 ### 日志过滤规则
 
 当在命令行中传入 `--log-console-tags TagA,TagB` 时，将进行日志过滤，只输出包含 `TagA` 或 `TagB` 的日志。
