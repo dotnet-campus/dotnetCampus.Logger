@@ -128,7 +128,7 @@ internal static class LoggerStartup
 internal partial class LoggerBridgeLinker;
 ```
 
-当然，在你的应用程序中，日志级别通常不是写死在代码里的，往往需要从命令行参数、环境变量、配置文件等位置读取。那么可通过 `LogLevel.Parse` 方法将字符串解析为日志级别，相比于普通枚举的解析，此方法额外支持日志级别的常见别名。
+当然，在你的应用程序中，日志级别通常不是写死在代码里的，往往需要从命令行参数、环境变量、配置文件等位置读取。那么可通过 `LogLevelParser.Parse` 方法将字符串解析为日志级别，相比于普通枚举的解析，此方法额外支持日志级别的常见别名。支持的别名请参见 [LogLevelParser.cs](https://github.com/dotnet-campus/dotnetCampus.Logger/blob/main/src/dotnetCampus.Logger/LogLevelParser.cs) 的注释。
 
 ### 日志过滤规则
 
