@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-using System.Runtime.CompilerServices;
+using global::System.Runtime.CompilerServices;
 using global::System;
 using global::System.Diagnostics.CodeAnalysis;
 
