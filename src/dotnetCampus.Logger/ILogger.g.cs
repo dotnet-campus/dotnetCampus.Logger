@@ -13,6 +13,13 @@ namespace dotnetCampus.Logging;
 public interface ILogger
 {
     /// <summary>
+    /// 检查是否已启用给定的日志级别。
+    /// </summary>
+    /// <param name="logLevel"></param>
+    /// <returns></returns>
+    bool IsEnabled(LogLevel logLevel);
+
+    /// <summary>
     /// 写入日志条目。
     /// </summary>
     /// <param name="logLevel">将在此级别上写入条目。</param>

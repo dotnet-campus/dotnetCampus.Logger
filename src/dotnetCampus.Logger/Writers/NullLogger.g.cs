@@ -9,6 +9,8 @@ namespace dotnetCampus.Logging.Writers;
 /// </summary>
 internal class NullLogger : ILogger
 {
+    public bool IsEnabled(LogLevel logLevel) => false;
+
     /// <inheritdoc />
     void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {

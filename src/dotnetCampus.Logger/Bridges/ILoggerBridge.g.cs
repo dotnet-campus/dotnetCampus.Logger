@@ -10,6 +10,12 @@ namespace dotnetCampus.Logging.Bridges;
 /// </summary>
 public interface ILoggerBridge
 {
+    bool IsEnabled(int logLevel)
+#if NETCOREAPP3_0_OR_GREATER
+        => true
+#endif
+    ;
+
     /// <summary>
     /// 写入日志条目。
     /// </summary>

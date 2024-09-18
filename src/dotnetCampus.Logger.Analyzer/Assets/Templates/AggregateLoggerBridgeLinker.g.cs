@@ -19,6 +19,12 @@ partial class AggregateLoggerBridgeLinker : GILoggerBridgeLinker
     /// </summary>
     public static AggregateLoggerBridgeLinker Default { get; } = new();
 
+    public bool IsEnabled(int logLevel)
+    {
+        var logger = _logger ?? GLog.Current;
+        return logger.IsEnabled((GLogLevel)logLevel);
+    }
+
     private GILogger? _logger;
 
     /// <summary>

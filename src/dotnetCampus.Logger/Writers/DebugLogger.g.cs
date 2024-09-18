@@ -10,6 +10,12 @@ namespace dotnetCampus.Logging.Writers;
 /// </summary>
 public class DebugLogger(ILogger realLogger) : ILogger
 {
+    public bool IsEnabled(LogLevel logLevel)
+    {
+        // 在 debug 模式下，所有日志都是可用的
+        return true;
+    }
+
     /// <inheritdoc />
     void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {

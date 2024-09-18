@@ -52,6 +52,16 @@ public class ConsoleLogger : ILogger
     /// </summary>
     private TagFilterManager? TagManager { get; }
 
+    public bool IsEnabled(LogLevel logLevel)
+    {
+        if (logLevel < Level)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     /// <inheritdoc />
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {

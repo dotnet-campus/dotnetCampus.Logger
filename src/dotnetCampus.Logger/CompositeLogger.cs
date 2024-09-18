@@ -29,6 +29,16 @@ public class CompositeLogger : ILogger
     /// </summary>
     public required ImmutableArrayILogger Writers { get; init; }
 
+    public bool IsEnabled(LogLevel logLevel)
+    {
+        if (logLevel < Level)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         if (logLevel < Level)
