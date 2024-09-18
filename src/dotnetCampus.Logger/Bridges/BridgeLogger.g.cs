@@ -12,7 +12,13 @@ internal class BridgeLogger : ILogger
 {
     public bool IsEnabled(LogLevel logLevel)
     {
-        throw new NotImplementedException();
+        return
+#if NETCOREAPP3_0_OR_GREATER
+        ILoggerBridge
+#else
+        LoggerBridgeLinker
+#endif
+            .Bridge?.IsEnabled((int)logLevel) ?? false;
     }
 
     /// <inheritdoc />
