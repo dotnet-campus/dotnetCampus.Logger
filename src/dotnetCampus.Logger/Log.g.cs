@@ -143,7 +143,6 @@ public static partial class Log
         Trace(message.ToStringAndClear());
     }
 
-
     /// <inheritdoc cref="Debug(string)"/>
     public static void Debug(LoggerInterpolatedStringHandler message)
     {
@@ -155,7 +154,6 @@ public static partial class Log
 
         Debug(message.ToStringAndClear());
     }
-
 
     /// <inheritdoc cref="Info(string)"/>
     public static void Info(LoggerInterpolatedStringHandler message)
@@ -169,7 +167,6 @@ public static partial class Log
         Info(message.ToStringAndClear());
     }
 
-
     /// <inheritdoc cref="Warn(string,Exception)"/>
     public static void Warn(LoggerInterpolatedStringHandler message, Exception? exception = null)
     {
@@ -182,7 +179,6 @@ public static partial class Log
         Warn(message.ToStringAndClear(), exception);
     }
 
-
     /// <inheritdoc cref="Error(string,Exception)"/>
     public static void Error(LoggerInterpolatedStringHandler message, Exception? exception = null)
     {
@@ -194,7 +190,6 @@ public static partial class Log
 
         Error(message.ToStringAndClear(), exception);
     }
-
 
     /// <inheritdoc cref="Fatal(string,Exception)"/>
     public static void Fatal(LoggerInterpolatedStringHandler message, Exception? exception = null)
