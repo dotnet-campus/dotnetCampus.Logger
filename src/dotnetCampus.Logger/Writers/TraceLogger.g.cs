@@ -10,6 +10,8 @@ namespace dotnetCampus.Logging.Writers;
 /// </summary>
 public class TraceLogger(ILogger realLogger) : ILogger
 {
+    public bool IsEnabled(LogLevel logLevel) => true;
+
     /// <inheritdoc />
     void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {

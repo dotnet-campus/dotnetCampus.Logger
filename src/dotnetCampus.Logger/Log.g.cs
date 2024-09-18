@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System.Runtime.CompilerServices;
 using global::System;
 using global::System.Diagnostics.CodeAnalysis;
 
@@ -129,4 +130,82 @@ public static partial class Log
     {
         Current.Log(LogLevel.Critical, default, message, null, static (s, ex) => s);
     }
+
+#if NET6_0_OR_GREATER
+    /// <inheritdoc cref="Trace(string)"/>
+    public static void Trace(LoggerInterpolatedStringHandler message)
+    {
+        if (!Current.IsEnabled(LogLevel.Trace))
+        {
+            message.Discard();
+            return;
+        }
+        Trace(message.ToStringAndClear());
+    }
+
+
+    /// <inheritdoc cref="Debug(string)"/>
+    public static void Debug(LoggerInterpolatedStringHandler message)
+    {
+        if (!Current.IsEnabled(LogLevel.Debug))
+        {
+            message.Discard();
+            return;
+        }
+
+        Debug(message.ToStringAndClear());
+    }
+
+
+    /// <inheritdoc cref="Info(string)"/>
+    public static void Info(LoggerInterpolatedStringHandler message)
+    {
+        if (!Current.IsEnabled(LogLevel.Information))
+        {
+            message.Discard();
+            return;
+        }
+
+        Info(message.ToStringAndClear());
+    }
+
+
+    /// <inheritdoc cref="Warn(string,Exception)"/>
+    public static void Warn(LoggerInterpolatedStringHandler message, Exception? exception = null)
+    {
+        if (!Current.IsEnabled(LogLevel.Warning))
+        {
+            message.Discard();
+            return;
+        }
+
+        Warn(message.ToStringAndClear(), exception);
+    }
+
+
+    /// <inheritdoc cref="Error(string,Exception)"/>
+    public static void Error(LoggerInterpolatedStringHandler message, Exception? exception = null)
+    {
+        if (!Current.IsEnabled(LogLevel.Error))
+        {
+            message.Discard();
+            return;
+        }
+
+        Error(message.ToStringAndClear(), exception);
+    }
+
+
+    /// <inheritdoc cref="Fatal(string,Exception)"/>
+    public static void Fatal(LoggerInterpolatedStringHandler message, Exception? exception = null)
+    {
+        if (!Current.IsEnabled(LogLevel.Critical))
+        {
+            message.Discard();
+            return;
+        }
+
+        Fatal(message.ToStringAndClear(), exception);
+    }
+#endif
 }

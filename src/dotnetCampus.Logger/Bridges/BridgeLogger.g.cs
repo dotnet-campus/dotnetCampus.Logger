@@ -10,6 +10,11 @@ namespace dotnetCampus.Logging.Bridges;
 /// </summary>
 internal class BridgeLogger : ILogger
 {
+    public bool IsEnabled(LogLevel logLevel)
+    {
+        throw new NotImplementedException();
+    }
+
     /// <inheritdoc />
     void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {

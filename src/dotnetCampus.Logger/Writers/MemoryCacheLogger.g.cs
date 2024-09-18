@@ -13,6 +13,12 @@ internal class MemoryCacheLogger : ILogger
 
     private readonly System.Collections.Concurrent.ConcurrentQueue<CachedLogItem> _queue = [];
 
+    public bool IsEnabled(LogLevel logLevel)
+    {
+        // 不知道到时候的真的日志是什么，所以只好全记录了
+        return true;
+    }
+
     void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         if (_realLogger is { } logger)
