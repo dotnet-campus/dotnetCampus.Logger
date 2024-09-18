@@ -1,6 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-
-#if NET6_0_OR_GREATER
+﻿#if NET6_0_OR_GREATER
+using global::System.Runtime.CompilerServices;
 
 namespace dotnetCampus.Logging;
 
@@ -18,7 +17,7 @@ public ref struct LoggerInterpolatedStringHandler
 
     public void AppendFormatted<T>(T value) => _handler.AppendFormatted(value);
 
-    public void AppendFormatted<T>(T value, string? format) => _handler.AppendFormatted(value, format);
+    public void AppendFormatted<T>(T value, string format) => _handler.AppendFormatted(value, format);
 
     public string ToStringAndClear() => _handler.ToStringAndClear();
 
