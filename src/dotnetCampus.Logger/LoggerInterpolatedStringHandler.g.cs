@@ -15,20 +15,20 @@ public ref struct LoggerInterpolatedStringHandler
 
     public void AppendLiteral(string s)
     {
-        ref var handle = ref _handler;
-        handle.AppendLiteral(s);
+        ref var handler = ref _handler;
+        handler.AppendLiteral(s);
     }
 
     public void AppendFormatted<T>(T value)
     {
-        ref var handle = ref _handler;
-        handle.AppendFormatted(value);
+        ref var handler = ref _handler;
+        handler.AppendFormatted(value);
     }
 
     public void AppendFormatted<T>(T value, string format)
     {
-        ref var handle = ref _handler;
-        handle.AppendFormatted(value, format);
+        ref var handler = ref _handler;
+        handler.AppendFormatted(value, format);
     }
 
     public string ToStringAndClear()
@@ -39,8 +39,8 @@ public ref struct LoggerInterpolatedStringHandler
 
     public override string ToString()
     {
-        ref var handle = ref _handler;
-        return handle.ToString();
+        ref var handler = ref _handler;
+        return handler.ToString();
     }
 
     /// <summary>
@@ -50,8 +50,8 @@ public ref struct LoggerInterpolatedStringHandler
     {
         // 这里的 ToStringAndClear 其实只是取其 Clear 的功能
         // 暂时先使用 DefaultInterpolatedStringHandler 提供的能力，后续再考虑是否需要优化
-        ref var handle = ref _handler;
-        handle.ToStringAndClear();
+        ref var handler = ref _handler;
+        handler.ToStringAndClear();
     }
 }
 
