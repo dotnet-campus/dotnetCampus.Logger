@@ -43,7 +43,14 @@ public class LoggerBridgeGeneratorTest
                     internal partial class LoggerBridgeLinker;
                     """
                 )
-            ]
+            ],
+            references:
+            new[]
+            {
+                MetadataReference.CreateFromFile(typeof(LoggerSample.LoggerIndependentProject.SourceReferenceTarget).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(LoggerSample.LoggerIndependentLibrary.SourceReferenceTarget).Assembly.Location)
+            } // 加上整个 dotnet 的基础库
+            .Concat(MetadataReferenceProvider.GetDotNetMetadataReferenceList())
         );
 
         driver = driver.RunGenerators(compilation);
