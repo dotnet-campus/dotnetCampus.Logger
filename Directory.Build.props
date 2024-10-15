@@ -25,7 +25,7 @@
   <!-- 打包控制 -->
   <PropertyGroup>
     <!-- 嵌入源代码到符号文件，方便调试 -->
-    <EmbedAllSources>true</EmbedAllSources>
+    <EmbedAllSources Condition="'$(Configuration)' != 'Debug'">true</EmbedAllSources>
     <!-- 输出 pdb 文件 NuGet 包 -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
