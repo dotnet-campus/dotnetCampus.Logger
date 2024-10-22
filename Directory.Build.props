@@ -19,7 +19,24 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/dotnet-campus/dotnetCampus.Logger</RepositoryUrl>
     <PackageProjectUrl>https://github.com/dotnet-campus/dotnetCampus.Logger</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <!-- 打包控制 -->
+  <PropertyGroup>
+    <!-- 嵌入源代码到符号文件，方便调试 -->
+    <EmbedAllSources Condition="'$(Configuration)' != 'Debug'">true</EmbedAllSources>
+    <!-- 输出 pdb 文件 NuGet 包 -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <!-- PackageReadmeFile -->
+  <PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md" Link="README.md" Pack="True" PackagePath="\" Visible="False"/>
+  </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)src\dotnetCampus.Logger\Properties\Package\buildTransitive\Package.props" />
 
