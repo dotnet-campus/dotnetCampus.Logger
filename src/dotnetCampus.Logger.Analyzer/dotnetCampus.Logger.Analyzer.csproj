@@ -17,6 +17,7 @@
     <!-- 当前龙芯的 dotnet SDK 是 8.0.7 ，能支持的最高分析器版本为 4.8.0，详细请参阅 https://ftp.loongnix.cn/dotnet/ -->
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
