@@ -18,6 +18,10 @@
       - 所谓优先，指的是生成 global usings 以指定优先级；
     -->
     <!-- <DCUseGeneratedLogger></DCUseGeneratedLogger> -->
+
+    <!--
+      源生成器生成的日志系统的命名空间。-->
+    <!-- <DCGeneratedLoggerNamespace></DCGeneratedLoggerNamespace> -->
   </PropertyGroup>
 
 </Project>

@@ -43,7 +43,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <_DLRootNamespace>$(RootNamespace)</_DLRootNamespace>
+    <_DLRootNamespace Condition=" '$(_DLRootNamespace)' == '' ">$(DCGeneratedLoggerNamespace)</_DLRootNamespace>
+    <_DLRootNamespace Condition=" '$(_DLRootNamespace)' == '' ">$(RootNamespace)</_DLRootNamespace>
     <_DLRootNamespace Condition=" '$(_DLRootNamespace)' == '' ">$(MSBuildProjectName.Replace(" ", "_"))</_DLRootNamespace>
   </PropertyGroup>
 
