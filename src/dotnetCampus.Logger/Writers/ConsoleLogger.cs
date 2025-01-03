@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using dotnetCampus.Logging.Writers.Helpers;
 using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
 using B = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
@@ -16,9 +17,11 @@ public class ConsoleLogger : ILogger
     /// <summary>
     /// 控制台光标控制是否启用。目前可容纳的错误次数为 3 次，当降低到 0 次时，将不再尝试移动光标。
     /// </summary>
-    private int _isCursorMovementEnabled = 3;
+    private int _isCursorMovementEnabled;
 
     private readonly RepeatLoggerDetector _repeat;
+    private static bool _isConsoleOutput;
+    private static readonly TextWriter Out = GetStandardOutputWriter();
 
     /// <summary>
     /// 创建一个 <see cref="ConsoleLogger"/> 的新实例。
@@ -35,6 +38,9 @@ public class ConsoleLogger : ILogger
         _repeat = new RepeatLoggerDetector(ClearAndMoveToLastLine);
         CoreWriter = coreWriter;
         TagManager = tagManager;
+        _isConsoleOutput = Out == Console.Out;
+        // 如果输出流是自己创建的，则不支持光标移动。
+        _isCursorMovementEnabled = _isConsoleOutput ? 3 : 0;
     }
 
     /// <summary>
@@ -105,7 +111,14 @@ public class ConsoleLogger : ILogger
     {
         if (_repeat.RepeatOrResetLastLog(logLevel, message, exception) is var count and > 1)
         {
-            ConsoleMultilineMessage($"上述日志已重复 {count} 次", formatter, true);
+            if (_isConsoleOutput)
+            {
+                ConsoleMultilineMessage($"上述日志已重复 {count} 次", formatter, true);
+            }
+            else
+            {
+                ConsoleMultilineMessage(message, m => $"{formatter(m)}{F.BrightBlack} (重复 {count} 次){Reset}", true);
+            }
         }
         else if (exception is null)
         {
@@ -157,7 +170,7 @@ public class ConsoleLogger : ILogger
     {
         try
         {
-            Console.WriteLine(message);
+            Out.WriteLine(message);
         }
         catch (IOException)
         {
@@ -196,6 +209,26 @@ public class ConsoleLogger : ILogger
         {
             // 日志记录时，有可能已经移动到头了，就不要移动了。
         }
+    }
+
+    /// <summary>
+    /// 获取标准输出的写入流。<br/>
+    /// 如果当前在控制台中输出，则使用控制台的输出流；否则创建一个 UTF-8 编码的标准输出流。
+    /// </summary>
+    /// <returns>文本写入流。</returns>
+    private static TextWriter GetStandardOutputWriter()
+    {
+        if (Console.OutputEncoding.CodePage is not 0)
+        {
+            return Console.Out;
+        }
+
+        var standardOutput = Console.OpenStandardOutput();
+        var writer = new StreamWriter(standardOutput, Encoding.UTF8)
+        {
+            AutoFlush = true,
+        };
+        return writer;
     }
 
     private const string Reset = C.Reset;
