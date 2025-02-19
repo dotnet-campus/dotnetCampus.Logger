@@ -30,7 +30,7 @@ public enum LogWritingThreadMode
 /// <summary>
 /// 包含 <see cref="LogWritingThreadMode"/> 的扩展方法。
 /// </summary>
-internal static class LogWritingThreadModeExtensions
+public static class LogWritingThreadModeExtensions
 {
     /// <summary>
     /// 根据 <see cref="LogWritingThreadMode"/> 创建对应的 <see cref="ICoreLogWriter"/> 实例。

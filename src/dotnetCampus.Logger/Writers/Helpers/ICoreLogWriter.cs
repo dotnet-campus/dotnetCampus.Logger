@@ -12,7 +12,7 @@ namespace dotnetCampus.Logging.Writers.Helpers;
 /// <summary>
 /// 提供各种不同线程安全方式的最终日志写入功能。
 /// </summary>
-internal interface ICoreLogWriter
+public interface ICoreLogWriter
 {
     /// <summary>
     /// 写入日志。
