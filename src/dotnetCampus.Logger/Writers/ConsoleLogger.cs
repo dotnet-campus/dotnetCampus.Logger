@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using dotnetCampus.Logging.Writers.ConsoleLoggerHelpers;
 using dotnetCampus.Logging.Writers.Helpers;
 using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
 using B = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
@@ -41,6 +42,7 @@ public class ConsoleLogger : ILogger
         _isConsoleOutput = Out == Console.Out;
         // 如果输出流是自己创建的，则不支持光标移动。
         _isCursorMovementEnabled = _isConsoleOutput ? 3 : 0;
+        ConsoleInitializer.Initialize();
     }
 
     /// <summary>
@@ -232,19 +234,19 @@ public class ConsoleLogger : ILogger
     }
 
     private const string Reset = C.Reset;
-    private const string TraceText = F.Magenta;
-    private const string DebugText = F.White;
-    private const string InformationText = F.Green + D.Bold;
+    private const string TraceText = F.BrightBlack;
+    private const string DebugText = F.Magenta;
+    private const string InformationText = F.White;
     private const string WarningText = F.Yellow;
-    private const string ErrorText = F.BrightRed;
-    private const string CriticalText = F.Red;
+    private const string ErrorText = F.Red;
+    private const string CriticalText = $"{B.Red}{F.Black}";
 
-    private static string TraceTag => $"{B.Magenta}{F.White}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
-    private static string DebugTag => $"{B.BrightBlack}{F.White}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
+    private static string TraceTag => $"{F.BrightBlack}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
+    private static string DebugTag => $"{F.Magenta}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
     private static string InformationTag => $"{B.Green}{F.Black}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
     private static string WarningTag => $"{B.Yellow}{F.Black}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
-    private static string ErrorTag => $"{B.BrightRed}{F.Black}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
-    private static string CriticalTag => $"{B.Red}{F.Black}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
+    private static string ErrorTag => $"{B.Red}{F.Black}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
+    private static string CriticalTag => $"{B.Black}{D.Bold}{F.Red}[{DateTime.Now:HH:mm:ss.fff}]{Reset}";
 
     private static string WarningExceptionTag => $"{B.Yellow}{F.Black} ! {Reset}{WarningText} ";
     private static string ErrorExceptionTag => $"{B.BrightRed}{F.Black} X {Reset}{ErrorText} ";

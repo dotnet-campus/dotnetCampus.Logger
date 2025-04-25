@@ -23,7 +23,7 @@ internal class Program
             .WithLevel(LogLevel.Information)
             .WithOptions(new LogOptions
             {
-                LogLevel = LogLevel.Debug,
+                LogLevel = LogLevel.Trace,
             })
             .AddConsoleLogger(b => b
                 .WithThreadSafe(LogWritingThreadMode.ProducerConsumer)
@@ -32,6 +32,13 @@ internal class Program
             .Build()
             .IntoGlobalStaticLog();
 
+        Log.Trace("Trace log");
+        Log.Debug("Debug log");
+        Log.Info("Info log");
+        Log.Warn("Warn log");
+        Log.Error("Error log");
+        Log.Fatal("Fatal log");
+
         Run();
         Thread.Sleep(5000);
     }
@@ -39,13 +46,13 @@ internal class Program
     private static void Run()
     {
         var stopwatch = Stopwatch.StartNew();
-        Log.Debug($"[TEST] 开始 {stopwatch.ElapsedMilliseconds}ms");
+        Log.Info($"[TEST] 开始 {stopwatch.ElapsedMilliseconds}ms");
         Parallel.For(0, 0x00004000, i =>
         {
             Thread.Sleep(0);
-            Log.Debug($"[TEST] {DateTime.Now:HH:mm:ss}");
+            Log.Info($"[TEST] {DateTime.Now:HH:mm:ss}");
         });
-        Log.Debug($"[TEST] 完成 {stopwatch.ElapsedMilliseconds}ms");
+        Log.Info($"[TEST] 完成 {stopwatch.ElapsedMilliseconds}ms");
     }
 }
 

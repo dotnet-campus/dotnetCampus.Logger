@@ -5,28 +5,28 @@
 /// </summary>
 internal static class ConsoleColors
 {
-    public const string Reset = "\u001b[0m";
+    public const string Reset = "\e[0m";
 
     public static class Foreground
     {
         #region 4-bit colors
 
-        public const string Black = "\u001b[30m";
-        public const string Red = "\u001b[31m";
-        public const string Green = "\u001b[32m";
-        public const string Yellow = "\u001b[33m";
-        public const string Blue = "\u001b[34m";
-        public const string Magenta = "\u001b[35m";
-        public const string Cyan = "\u001b[36m";
-        public const string White = "\u001b[37m";
-        public const string BrightBlack = "\u001b[90m";
-        public const string BrightRed = "\u001b[91m";
-        public const string BrightGreen = "\u001b[92m";
-        public const string BrightYellow = "\u001b[93m";
-        public const string BrightBlue = "\u001b[94m";
-        public const string BrightMagenta = "\u001b[95m";
-        public const string BrightCyan = "\u001b[96m";
-        public const string BrightWhite = "\u001b[97m";
+        public const string Black = "\e[30m";
+        public const string Red = "\e[31m";
+        public const string Green = "\e[32m";
+        public const string Yellow = "\e[33m";
+        public const string Blue = "\e[34m";
+        public const string Magenta = "\e[35m";
+        public const string Cyan = "\e[36m";
+        public const string White = "\e[37m";
+        public const string BrightBlack = "\e[90m";
+        public const string BrightRed = "\e[91m";
+        public const string BrightGreen = "\e[92m";
+        public const string BrightYellow = "\e[93m";
+        public const string BrightBlue = "\e[94m";
+        public const string BrightMagenta = "\e[95m";
+        public const string BrightCyan = "\e[96m";
+        public const string BrightWhite = "\e[97m";
 
         #endregion
     }
@@ -35,35 +35,35 @@ internal static class ConsoleColors
     {
         #region 4-bit colors
 
-        public const string Black = "\u001b[40m";
-        public const string Red = "\u001b[41m";
-        public const string Green = "\u001b[42m";
-        public const string Yellow = "\u001b[43m";
-        public const string Blue = "\u001b[44m";
-        public const string Magenta = "\u001b[45m";
-        public const string Cyan = "\u001b[46m";
-        public const string White = "\u001b[47m";
-        public const string BrightBlack = "\u001b[100m";
-        public const string BrightRed = "\u001b[101m";
-        public const string BrightGreen = "\u001b[102m";
-        public const string BrightYellow = "\u001b[103m";
-        public const string BrightBlue = "\u001b[104m";
-        public const string BrightMagenta = "\u001b[105m";
-        public const string BrightCyan = "\u001b[106m";
-        public const string BrightWhite = "\u001b[107m";
+        public const string Black = "\e[40m";
+        public const string Red = "\e[41m";
+        public const string Green = "\e[42m";
+        public const string Yellow = "\e[43m";
+        public const string Blue = "\e[44m";
+        public const string Magenta = "\e[45m";
+        public const string Cyan = "\e[46m";
+        public const string White = "\e[47m";
+        public const string BrightBlack = "\e[100m";
+        public const string BrightRed = "\e[101m";
+        public const string BrightGreen = "\e[102m";
+        public const string BrightYellow = "\e[103m";
+        public const string BrightBlue = "\e[104m";
+        public const string BrightMagenta = "\e[105m";
+        public const string BrightCyan = "\e[106m";
+        public const string BrightWhite = "\e[107m";
 
         #endregion
     }
 
     public static class Decoration
     {
-        public const string Bold = "\u001b[1m";
-        public const string Dim = "\u001b[2m";
-        public const string Italic = "\u001b[3m";
-        public const string Underline = "\u001b[4m";
-        public const string Blink = "\u001b[5m";
-        public const string Reverse = "\u001b[7m";
-        public const string Hidden = "\u001b[8m";
-        public const string Strikethrough = "\u001b[9m";
+        public const string Bold = "\e[1m";
+        public const string Dim = "\e[2m";
+        public const string Italic = "\e[3m";
+        public const string Underline = "\e[4m";
+        public const string Blink = "\e[5m";
+        public const string Reverse = "\e[7m";
+        public const string Hidden = "\e[8m";
+        public const string Strikethrough = "\e[9m";
     }
 }
