@@ -32,12 +32,12 @@ internal class Program
             .Build()
             .IntoGlobalStaticLog();
 
-        Log.Trace($"Trace log");
-        Log.Debug($"Debug log");
-        Log.Info($"Info log");
-        Log.Warn($"Warn log");
-        Log.Error($"Error log");
-        Log.Fatal($"Fatal log");
+        Log.Trace("Trace log");
+        Log.Debug("Debug log");
+        Log.Info("Info log");
+        Log.Warn("Warn log");
+        Log.Error("Error log");
+        Log.Fatal("Fatal log");
 
         Run();
         Thread.Sleep(5000);

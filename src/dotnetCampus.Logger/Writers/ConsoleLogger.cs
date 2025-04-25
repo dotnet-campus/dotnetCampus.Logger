@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using dotnetCampus.Logging.Writers.ConsoleLoggerHelpers;
 using dotnetCampus.Logging.Writers.Helpers;
 using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
 using B = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
@@ -41,6 +42,7 @@ public class ConsoleLogger : ILogger
         _isConsoleOutput = Out == Console.Out;
         // 如果输出流是自己创建的，则不支持光标移动。
         _isCursorMovementEnabled = _isConsoleOutput ? 3 : 0;
+        ConsoleInitializer.Initialize();
     }
 
     /// <summary>
