@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\samples\LoggerSample.MainApp\LoggerSample.MainApp.csproj" />
-    <ProjectReference Include="..\..\src\dotnetCampus.Logger.Analyzer\dotnetCampus.Logger.Analyzer.csproj" />
+    <ProjectReference Include="..\..\src\DotNetCampus.Logger.Analyzer\DotNetCampus.Logger.Analyzer.csproj" />
   </ItemGroup>
 
 </Project>

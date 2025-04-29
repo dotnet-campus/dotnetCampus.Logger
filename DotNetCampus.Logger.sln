@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger", "src\dotnetCampus.Logger\dotnetCampus.Logger.csproj", "{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger", "src\DotNetCampus.Logger\DotNetCampus.Logger.csproj", "{F7ED61F4-920C-49EB-8DC1-74B2BE6AF272}"
 	ProjectSection(ProjectDependencies) = postProject
 		{77F0A6B5-6C8B-4815-8C1E-4F97C24BFB36} = {77F0A6B5-6C8B-4815-8C1E-4F97C24BFB36}
 	EndProjectSection
@@ -27,13 +27,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerSample.LoggerIndepend
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{36852775-3A76-49CF-98CC-3067CE54A5AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger.Tests", "tests\dotnetCampus.Logger.Tests\dotnetCampus.Logger.Tests.csproj", "{D0ACB879-D49B-4ACD-9852-23D0E6D15DDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger.Tests", "tests\DotNetCampus.Logger.Tests\DotNetCampus.Logger.Tests.csproj", "{D0ACB879-D49B-4ACD-9852-23D0E6D15DDB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger.Analyzer", "src\dotnetCampus.Logger.Analyzer\dotnetCampus.Logger.Analyzer.csproj", "{77F0A6B5-6C8B-4815-8C1E-4F97C24BFB36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger.Analyzer", "src\DotNetCampus.Logger.Analyzer\DotNetCampus.Logger.Analyzer.csproj", "{77F0A6B5-6C8B-4815-8C1E-4F97C24BFB36}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerSample.LoggerIndependentProject", "samples\LoggerSample.LoggerIndependentProject\LoggerSample.LoggerIndependentProject.csproj", "{E0DE93BF-AE07-4F92-A3FD-F4D661339BE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger.Analyzer.Tests", "tests\dotnetCampus.Logger.Analyzer.Tests\dotnetCampus.Logger.Analyzer.Tests.csproj", "{62456A3B-33BC-475E-BC55-5134CF89127D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnetCampus.Logger.Analyzer.Tests", "tests\DotNetCampus.Logger.Analyzer.Tests\DotNetCampus.Logger.Analyzer.Tests.csproj", "{62456A3B-33BC-475E-BC55-5134CF89127D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerSample.InternalsVisibleToProject", "samples\LoggerSample.InternalsVisibleToProject\LoggerSample.InternalsVisibleToProject.csproj", "{1FF9CCF6-0BC1-40AE-9158-01F3A2B46F3A}"
 EndProject

@@ -55,7 +55,7 @@
     <ItemGroup>
       <None Include="Properties\Package\buildTransitive\Package.props" Pack="True" PackagePath="buildTransitive\$(PackageId).props" />
       <None Include="Properties\Package\buildTransitive\Package.targets" Pack="True" PackagePath="buildTransitive\$(PackageId).targets" />
-      <None Include="..\..\artifacts\bin\dotnetCampus.Logger.Analyzer\$(Configuration)\**\*.dll" Pack="True" PackagePath="analyzers\dotnet\cs" />
+      <None Include="..\..\artifacts\bin\DotNetCampus.Logger.Analyzer\$(Configuration)\**\*.dll" Pack="True" PackagePath="analyzers\dotnet\cs" />
     </ItemGroup>
   </Target>
 

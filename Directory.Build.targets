@@ -1,5 +1,5 @@
 <Project>
 
-  <Import Project="$(MSBuildThisFileDirectory)src\dotnetCampus.Logger\Properties\Package\buildTransitive\Package.targets" />
+  <Import Project="$(MSBuildThisFileDirectory)src\DotNetCampus.Logger\Properties\Package\buildTransitive\Package.targets" />
 
 </Project>

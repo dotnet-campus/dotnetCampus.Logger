@@ -22,12 +22,12 @@
 
   <ItemGroup>
     <!-- 提供给分析器使用（主要是为了避免使用常量字符串），或单纯为了让分析器项目编译通过。 -->
-    <Compile Include="..\dotnetCampus.Logger\Attributes\*.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
-    <Compile Include="..\dotnetCampus.Logger\Bridges\ILoggerBridgeLinker.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
+    <Compile Include="..\DotNetCampus.Logger\Attributes\*.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
+    <Compile Include="..\DotNetCampus.Logger\Bridges\ILoggerBridgeLinker.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
 
     <!-- 提供给源生成器使用。 -->
-    <Compile Include="..\dotnetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(RecursiveDir)%(FileName).cs" />
-    <EmbeddedResource Include="..\dotnetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(RecursiveDir)%(FileName).cs" />
+    <Compile Include="..\DotNetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(RecursiveDir)%(FileName).cs" />
+    <EmbeddedResource Include="..\DotNetCampus.Logger\**\*.g.cs" Link="Assets\Sources\%(RecursiveDir)%(FileName).cs" />
     <EmbeddedResource Include="Assets\Templates\**\*.cs" />
   </ItemGroup>
 

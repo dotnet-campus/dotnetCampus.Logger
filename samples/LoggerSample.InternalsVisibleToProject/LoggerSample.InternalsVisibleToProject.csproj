@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\dotnetCampus.Logger.Analyzer\dotnetCampus.Logger.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\src\DotNetCampus.Logger.Analyzer\DotNetCampus.Logger.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\LoggerSample.LoggerIndependentLibrary\LoggerSample.LoggerIndependentLibrary.csproj" />
     <ProjectReference Include="..\LoggerSample.LoggerIndependentProject\LoggerSample.LoggerIndependentProject.csproj" />
   </ItemGroup>

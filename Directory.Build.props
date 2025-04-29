@@ -38,6 +38,6 @@
     <None Include="..\..\README.md" Link="README.md" Pack="True" PackagePath="\" Visible="False"/>
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)src\dotnetCampus.Logger\Properties\Package\buildTransitive\Package.props" />
+  <Import Project="$(MSBuildThisFileDirectory)src\DotNetCampus.Logger\Properties\Package\buildTransitive\Package.props" />
 
 </Project>
