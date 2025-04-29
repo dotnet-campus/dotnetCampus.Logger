@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+﻿using System.Linq;
 using System.Text;
 using DotNetCampus.Logger.Utils.CodeAnalysis;
 using DotNetCampus.Logger.Utils.IO;
@@ -16,15 +16,18 @@ public class LoggerGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var provider = context.AnalyzerConfigOptionsProvider;
-        context.RegisterSourceOutput(provider, Execute);
+        var analyzerConfigOptionsProvider = context.AnalyzerConfigOptionsProvider;
+        var compilationProvider = context.CompilationProvider;
+
+        context.RegisterSourceOutput(analyzerConfigOptionsProvider.Combine(compilationProvider), Execute);
     }
 
-    private void Execute(SourceProductionContext context, AnalyzerConfigOptionsProvider provider)
+    private void Execute(SourceProductionContext context, (AnalyzerConfigOptionsProvider Left, Compilation Right) args)
     {
+        var (provider, compilation) = args;
         if (provider.GlobalOptions
                 .TryGetValue<string>("_DLRootNamespace", out var rootNamespace)
-                .TryGetValue<bool>("_DLGenerateSource", out var isGenerateSource)
+                .TryGetValue<bool>("DCUseGeneratedLogger", out var useGeneratedLogger)
                 is var result
                 && !result)
         {
@@ -32,17 +35,55 @@ public class LoggerGenerator : IIncrementalGenerator
             return;
         }
 
-        if (!isGenerateSource)
-        {
-            // 属性设置为不生成源代码。
-            return;
-        }
 
-        var sourceFiles = EmbeddedSourceFiles.Enumerate("Assets/Sources").ToImmutableArray();
+        var logTypes = compilation.GetTypesByMetadataName("DotNetCampus.Logging.Log")
+            .Where(x => x.DeclaredAccessibility is Accessibility.Public || x.ContainingAssembly.GivesAccessTo(compilation.Assembly))
+            .ToArray();
+        var assemblies = logTypes
+            .Select(x => x.ContainingAssembly.ToDisplayString())
+            .ToArray();
+        var isTypeVisible = logTypes.Length is 1;
+
+        var sourceFiles = EmbeddedSourceFiles.Enumerate("Assets/Sources").ToArray();
 
         foreach (var file in sourceFiles)
         {
+            var originalTypeFullType = $"{file.Namespace.Replace("DotNetCampus.Logger", "DotNetCampus.Logging")}.{file.TypeName}";
+            var generatedTypeFullName = originalTypeFullType == "DotNetCampus.Logging.Bridges.ILoggerBridge"
+                ? $"{rootNamespace}.Logging.{file.TypeName}"
+                : originalTypeFullType;
+
             var code = GenerateSource(file.TypeName, rootNamespace, file.Content);
+
+            code = (useGeneratedLogger, isTypeDefined: isTypeVisible) switch
+            {
+                (true, true) => $"""
+// 此文件所涉及的类型 {originalTypeFullType} 已经在依赖程序集中定义，并被传递给当前程序集；为避免冲突，当前程序集不再生成 {generatedTypeFullName} 类型。
+{string.Join("\n", assemblies.Select(x => $"//  - {x}"))}
+
+/*
+{code}
+*/
+""",
+                (true, false) => code,
+                (false, true) =>  $"""
+// 因为 DCUseGeneratedLogger 未被设置为 true，所以不会生成 {generatedTypeFullName} 类型。
+// 此文件所涉及的类型已经在依赖程序集中定义，并被传递给当前程序集。
+{string.Join("\n", assemblies.Select(x => $"//  - {x}"))}
+
+/*
+{code}
+*/
+""",
+                (false, false) =>  $"""
+// 因为 DCUseGeneratedLogger 未被设置为 true，所以不会生成 {generatedTypeFullName} 类型。
+
+/*
+{code}
+*/
+"""
+            };
+
             context.AddSource($"{file.TypeName}.g.cs", SourceText.From(code, Encoding.UTF8));
         }
     }
@@ -57,8 +98,8 @@ public class LoggerGenerator : IIncrementalGenerator
 
         if (typeName == "ILoggerBridge")
         {
-            // 此类型是 ILoggerBridge，应该保持 public 但变更命名空间。
-            return sourceText.ReplaceNamespace($"{rootNamespace}.Logging");
+            // 此类型是 ILoggerBridge，应该修改为 public（引用不公开，源要公开），且变更命名空间。
+            return sourceText.ReplaceTypeModifier("public").ReplaceNamespace($"{rootNamespace}.Logging");
         }
 
         if (typeName == "BridgeLogger")

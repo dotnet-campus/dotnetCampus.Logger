@@ -8,7 +8,7 @@ namespace DotNetCampus.Logging.Bridges;
 /// <summary>
 /// 仅由 .NET 库类型构成的日志桥。用于源生成器将无依赖库中的日志重定向到应用程序聚合日志系统中。
 /// </summary>
-public interface ILoggerBridge
+internal interface ILoggerBridge
 {
     bool IsEnabled(int logLevel)
 #if NETCOREAPP3_0_OR_GREATER
@@ -41,7 +41,7 @@ public interface ILoggerBridge
 /// 提供一个静态类，用于连接日志桥到当前的桥接日志记录器中。
 /// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
-public static class LoggerBridgeLinker
+internal static class LoggerBridgeLinker
 {
 #endif
 

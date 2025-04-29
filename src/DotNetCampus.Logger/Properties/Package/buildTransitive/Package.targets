@@ -4,24 +4,8 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
 
-  <!-- DCUseGeneratedLogger = null -->
-  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == '' ">
-    <DCUseGeneratedLogger>true</DCUseGeneratedLogger>
-  </PropertyGroup>
-
-  <!-- DCUseGeneratedLogger = true -->
-  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'true' ">
-    <_DLGenerateSource>true</_DLGenerateSource>
-  </PropertyGroup>
-
-  <!-- DCUseGeneratedLogger = true -->
-  <ItemGroup Condition=" '$(DCUseGeneratedLogger)' == 'true' ">
-    <PackageReference Update="DotNetCampus.Logger" PrivateAssets="all" />
-  </ItemGroup>
-
-  <!-- DCUseGeneratedLogger = false / 其他值 -->
   <PropertyGroup>
-    <_DLGenerateSource Condition=" '$(_DLGenerateSource)' != 'true' ">false</_DLGenerateSource>
+    <DCUseGeneratedLogger Condition=" '$(DCUseGeneratedLogger)' == '' ">false</DCUseGeneratedLogger>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -31,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <CompilerVisibleProperty Include="_DLGenerateSource" />
+    <CompilerVisibleProperty Include="DCUseGeneratedLogger" />
     <CompilerVisibleProperty Include="_DLRootNamespace" />
   </ItemGroup>
 

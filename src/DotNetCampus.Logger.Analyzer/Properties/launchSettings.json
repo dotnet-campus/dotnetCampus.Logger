@@ -1,9 +1,13 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "DebugRoslynSourceGenerator": {
+    "Debug: Full": {
       "commandName": "DebugRoslynComponent",
       "targetProject": "../../samples/LoggerSample.LoggerIndependentLibrary/LoggerSample.LoggerIndependentLibrary.csproj"
+    },
+    "Debug: InternalsVisibleTo": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "../../samples/LoggerSample.InternalsVisibleToProject/LoggerSample.InternalsVisibleToProject.csproj"
     }
   }
 }

@@ -40,7 +40,7 @@ internal static class EmbeddedSourceFiles
                         fileName,
                         fileName,
                         fileNameWithoutExtension,
-                        desiredFolder,
+                        typeof(GeneratorInfo).Namespace!,
                         contentText);
                 }
                 else
@@ -48,7 +48,7 @@ internal static class EmbeddedSourceFiles
                     // 文件在子文件夹中。
                     var typeName = fileNameWithoutExtension.Substring(fileNameIndex + 1);
                     var relativeFolder = fileNameWithoutExtension.Substring(0, fileNameIndex);
-                    var @namespace = $"{desiredFolder}.{relativeFolder}";
+                    var @namespace = $"{typeof(GeneratorInfo).Namespace}.{relativeFolder}";
                     yield return new EmbeddedSourceFile(
                         $"{typeName}{fileExtension}",
                         $"{relativeFolder.Replace(".", "/")}/{typeName}{fileExtension}",
