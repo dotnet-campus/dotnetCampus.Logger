@@ -9,8 +9,8 @@
 
 namespace DotNetCampus.Logger.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,15 +22,15 @@ namespace DotNetCampus.Logger.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Localizations {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Localizations() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -38,13 +38,13 @@ namespace DotNetCampus.Logger.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("dotnetCampus.Logger.Properties.Localizations", typeof(Localizations).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DotNetCampus.Logger.Properties.Localizations", typeof(Localizations).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -58,7 +58,7 @@ namespace DotNetCampus.Logger.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unknown Error.
         /// </summary>
@@ -67,7 +67,7 @@ namespace DotNetCampus.Logger.Properties {
                 return ResourceManager.GetString("DL0000", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to An unknown error occurred..
         /// </summary>
@@ -76,7 +76,7 @@ namespace DotNetCampus.Logger.Properties {
                 return ResourceManager.GetString("DL0000_Message", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Change the entry class to a partial class.
         /// </summary>
@@ -85,7 +85,7 @@ namespace DotNetCampus.Logger.Properties {
                 return ResourceManager.GetString("DL1001", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to After changing the entry class to a partial class, the source generator can generate auxiliary log code according to the subsequent log initialization requirements; this way, you can even start using logs in the first sentence of the Main method without worrying about initialization issues..
         /// </summary>
@@ -94,7 +94,7 @@ namespace DotNetCampus.Logger.Properties {
                 return ResourceManager.GetString("DL1001_Description", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Change &apos;{0}&apos; to a partial class.
         /// </summary>
@@ -103,7 +103,7 @@ namespace DotNetCampus.Logger.Properties {
                 return ResourceManager.GetString("DL1001_Fix", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Change &apos;{0}&apos; to a partial class to allow it to use the logging system before the logging module is initialized..
         /// </summary>

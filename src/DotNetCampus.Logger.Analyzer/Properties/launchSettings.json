@@ -3,7 +3,7 @@
   "profiles": {
     "DebugRoslynSourceGenerator": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "../dotnetCampus.Logger.Analyzer.Sample/dotnetCampus.Logger.Analyzer.Sample.csproj"
+      "targetProject": "../../samples/LoggerSample.LoggerIndependentLibrary/LoggerSample.LoggerIndependentLibrary.csproj"
     }
   }
 }

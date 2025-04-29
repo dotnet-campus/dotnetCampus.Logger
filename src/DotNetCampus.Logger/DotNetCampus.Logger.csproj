@@ -14,7 +14,7 @@
   <!-- Project Information -->
   <PropertyGroup>
     <ImplicitUsings>disable</ImplicitUsings>
-    <RootNamespace>dotnetCampus.Logging</RootNamespace>
+    <RootNamespace>DotNetCampus.Logging</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
@@ -47,7 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="dotnetCampus.Logger.Tests" />
+    <InternalsVisibleTo Include="DotNetCampus.Logger.Tests" />
   </ItemGroup>
 
   <!-- 生成 NuGet 包。 -->

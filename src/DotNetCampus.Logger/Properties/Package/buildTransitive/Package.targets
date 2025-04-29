@@ -16,7 +16,7 @@
 
   <!-- DCUseGeneratedLogger = true -->
   <ItemGroup Condition=" '$(DCUseGeneratedLogger)' == 'true' ">
-    <PackageReference Update="dotnetCampus.Logger" PrivateAssets="all" />
+    <PackageReference Update="DotNetCampus.Logger" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- DCUseGeneratedLogger = false / 其他值 -->

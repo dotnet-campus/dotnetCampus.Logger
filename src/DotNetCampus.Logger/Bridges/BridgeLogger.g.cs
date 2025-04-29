@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace DotNetCampus.Logging.Bridges;
 
 /// <summary>
-/// dotnetCampus.Logging.Bridges 的桥接日志记录器。
+/// DotNetCampus.Logging.Bridges 的桥接日志记录器。
 /// </summary>
 internal class BridgeLogger : ILogger
 {

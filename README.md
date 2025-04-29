@@ -1,17 +1,17 @@
-# dotnetCampus.Logger
+# DotNetCampus.Logger
 
-| Build | NuGet |
-|--|--|
-|![](https://github.com/dotnet-campus/dotnetCampus.Logger/workflows/.NET%20Core/badge.svg)|[![](https://img.shields.io/nuget/v/dotnetCampus.Logger.svg)](https://www.nuget.org/packages/dotnetCampus.Logger)|
+| Build | NuGet                                                                                                             |
+|--|-------------------------------------------------------------------------------------------------------------------|
+|![](https://github.com/dotnet-campus/DotNetCampus.Logger/workflows/.NET%20Core/badge.svg)| [![](https://img.shields.io/nuget/v/DotNetCampus.Logger.svg)](https://www.nuget.org/packages/DotNetCampus.Logger) |
 
 ## 入门
 
 ### 安装日志库
 
-在你的项目中安装 `dotnetCampus.Logger` 包，你可以通过 NuGet 包管理器或者通过命令行来安装：
+在你的项目中安装 `DotNetCampus.Logger` 包，你可以通过 NuGet 包管理器或者通过命令行来安装：
 
 ```shell
-dotnet add package dotnetCampus.Logger
+dotnet add package DotNetCampus.Logger
 ```
 
 安装完成后，你可以在项目中设置属性来决定如何使用日志库：
@@ -98,7 +98,7 @@ Log.Current.Fatal("[SourceReference] Log.Current.Fatal");
 using DotNetCampus.Logging.Attributes;
 using DotNetCampus.Logging.Writers;
 
-namespace dotnetCampus.Demo.Sample;
+namespace DotNetCampus.Demo.Sample;
 
 internal static class LoggerStartup
 {
@@ -123,12 +123,12 @@ internal static class LoggerStartup
     }
 }
 
-[ImportLoggerBridge<global::dotnetCampus.Demo1.Logging.ILoggerBridge>]
-[ImportLoggerBridge<global::dotnetCampus.Demo2.Logging.ILoggerBridge>]
+[ImportLoggerBridge<global::DotNetCampus.Demo1.Logging.ILoggerBridge>]
+[ImportLoggerBridge<global::DotNetCampus.Demo2.Logging.ILoggerBridge>]
 internal partial class LoggerBridgeLinker;
 ```
 
-当然，在你的应用程序中，日志级别通常不是写死在代码里的，往往需要从命令行参数、环境变量、配置文件等位置读取。那么可通过 `LogLevelParser.Parse` 方法将字符串解析为日志级别，相比于普通枚举的解析，此方法额外支持日志级别的常见别名。支持的别名请参见 [LogLevelParser.cs](https://github.com/dotnet-campus/dotnetCampus.Logger/blob/main/src/dotnetCampus.Logger/LogLevelParser.cs) 的注释。
+当然，在你的应用程序中，日志级别通常不是写死在代码里的，往往需要从命令行参数、环境变量、配置文件等位置读取。那么可通过 `LogLevelParser.Parse` 方法将字符串解析为日志级别，相比于普通枚举的解析，此方法额外支持日志级别的常见别名。支持的别名请参见 [LogLevelParser.cs](https://github.com/dotnet-campus/DotNetCampus.Logger/blob/main/src/DotNetCampus.Logger/LogLevelParser.cs) 的注释。
 
 ### 日志过滤规则
 

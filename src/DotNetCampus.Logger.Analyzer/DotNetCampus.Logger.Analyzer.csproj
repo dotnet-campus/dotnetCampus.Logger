@@ -5,7 +5,7 @@
     <IsPackable>false</IsPackable>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
     <IsRoslynComponent>true</IsRoslynComponent>
-    <RootNamespace>dotnetCampus.Logger</RootNamespace>
+    <RootNamespace>DotNetCampus.Logger</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
