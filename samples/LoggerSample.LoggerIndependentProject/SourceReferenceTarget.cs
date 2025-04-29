@@ -1,4 +1,4 @@
-﻿using LoggerSample.LoggerIndependentProject.Logging;
+﻿using dotnetCampus.Logging;
 
 namespace LoggerSample.LoggerIndependentProject;
 

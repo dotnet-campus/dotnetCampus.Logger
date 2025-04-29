@@ -1,4 +1,4 @@
-﻿using LoggerSample.InternalsVisibleToProject.Logging;
+﻿using dotnetCampus.Logging;
 
 namespace LoggerSample.InternalsVisibleToProject;
 

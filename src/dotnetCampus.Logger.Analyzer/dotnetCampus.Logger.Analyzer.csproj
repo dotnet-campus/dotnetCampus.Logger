@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <!-- 提供给分析器使用（主要是为了避免使用常量字符串），或单纯为了让分析器项目编译通过。 -->
-    <Compile Include="..\dotnetCampus.Logger\Properties\GlobalUsings.cs" Link="Properties\%(FileName).g.cs" />
     <Compile Include="..\dotnetCampus.Logger\Attributes\*.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
     <Compile Include="..\dotnetCampus.Logger\Bridges\ILoggerBridgeLinker.cs" Link="Assets\Analyzers\%(FileName).g.cs" />
 

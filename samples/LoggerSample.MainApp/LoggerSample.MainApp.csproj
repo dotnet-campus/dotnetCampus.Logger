@@ -3,13 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <DCUseGeneratedLogger>preferReference</DCUseGeneratedLogger>
+    <DCUseGeneratedLogger>false</DCUseGeneratedLogger>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\dotnetCampus.Logger.Analyzer\dotnetCampus.Logger.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\src\dotnetCampus.Logger\dotnetCampus.Logger.csproj" OutputItemType="xxxxxxxxxx" />
+    <ProjectReference Include="..\..\src\dotnetCampus.Logger\dotnetCampus.Logger.csproj" />
     <ProjectReference Include="..\LoggerSample.InternalsVisibleToProject\LoggerSample.InternalsVisibleToProject.csproj" />
     <ProjectReference Include="..\LoggerSample.LoggerDependentLibrary\LoggerSample.LoggerDependentLibrary.csproj" />
     <ProjectReference Include="..\LoggerSample.LoggerIndependentLibrary\LoggerSample.LoggerIndependentLibrary.csproj" />

@@ -6,40 +6,22 @@
 
   <!-- DCUseGeneratedLogger = null -->
   <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == '' ">
-    <DCUseGeneratedLogger>onlyReference</DCUseGeneratedLogger>
+    <DCUseGeneratedLogger>true</DCUseGeneratedLogger>
   </PropertyGroup>
 
-  <!-- DCUseGeneratedLogger = onlySource / true -->
-  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'onlySource' or '$(DCUseGeneratedLogger)' == 'true' ">
+  <!-- DCUseGeneratedLogger = true -->
+  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'true' ">
     <_DLGenerateSource>true</_DLGenerateSource>
-    <_DLGenerateGlobalUsings>false</_DLGenerateGlobalUsings>
-    <_DLPreferGeneratedSource>true</_DLPreferGeneratedSource>
   </PropertyGroup>
 
-  <!-- DCUseGeneratedLogger = onlySource / true -->
-  <ItemGroup Condition=" '$(DCUseGeneratedLogger)' == 'onlySource' or '$(DCUseGeneratedLogger)' == 'true' ">
+  <!-- DCUseGeneratedLogger = true -->
+  <ItemGroup Condition=" '$(DCUseGeneratedLogger)' == 'true' ">
     <PackageReference Update="dotnetCampus.Logger" PrivateAssets="all" />
   </ItemGroup>
 
-  <!-- DCUseGeneratedLogger = preferSource -->
-  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'preferSource' ">
-    <_DLGenerateSource>true</_DLGenerateSource>
-    <_DLGenerateGlobalUsings>true</_DLGenerateGlobalUsings>
-    <_DLPreferGeneratedSource>true</_DLPreferGeneratedSource>
-  </PropertyGroup>
-
-  <!-- DCUseGeneratedLogger = preferReference -->
-  <PropertyGroup Condition=" '$(DCUseGeneratedLogger)' == 'preferReference' ">
-    <_DLGenerateSource>true</_DLGenerateSource>
-    <_DLGenerateGlobalUsings>true</_DLGenerateGlobalUsings>
-    <_DLPreferGeneratedSource>false</_DLPreferGeneratedSource>
-  </PropertyGroup>
-
-  <!-- DCUseGeneratedLogger = onlyReference / false / 其他值 -->
+  <!-- DCUseGeneratedLogger = false / 其他值 -->
   <PropertyGroup>
-    <_DLGenerateSource Condition=" '$(_DLGenerateSource)' == '' ">false</_DLGenerateSource>
-    <_DLGenerateGlobalUsings Condition=" '$(_DLGenerateGlobalUsings)' == '' ">false</_DLGenerateGlobalUsings>
-    <_DLPreferGeneratedSource Condition=" '$(_DLPreferGeneratedSource)' == '' ">false</_DLPreferGeneratedSource>
+    <_DLGenerateSource Condition=" '$(_DLGenerateSource)' != 'true' ">false</_DLGenerateSource>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -50,8 +32,6 @@
 
   <ItemGroup>
     <CompilerVisibleProperty Include="_DLGenerateSource" />
-    <CompilerVisibleProperty Include="_DLGenerateGlobalUsings" />
-    <CompilerVisibleProperty Include="_DLPreferGeneratedSource" />
     <CompilerVisibleProperty Include="_DLRootNamespace" />
   </ItemGroup>
 

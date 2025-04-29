@@ -1,4 +1,4 @@
-﻿using LoggerSample.LoggerIndependentLibrary.Logging;
+﻿using dotnetCampus.Logging;
 
 namespace LoggerSample.LoggerIndependentLibrary;
 

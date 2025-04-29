@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Text;
-using System.Text.RegularExpressions;
 using dotnetCampus.Logger.Utils.CodeAnalysis;
 using dotnetCampus.Logger.Utils.IO;
 using Microsoft.CodeAnalysis;
@@ -57,39 +55,20 @@ public class LoggerGenerator : IIncrementalGenerator
             sourceText = sourceText.Replace("new MemoryCacheLogger();", "new BridgeLogger();");
         }
 
-        var sourceSpan = sourceText.AsSpan();
-
-        var namespaceKeywordIndex = sourceText.IndexOf("namespace", StringComparison.Ordinal);
-        var namespaceStartIndex = namespaceKeywordIndex + "namespace".Length + 1;
-        var namespaceEndIndex = sourceText.IndexOf(";", namespaceStartIndex, StringComparison.Ordinal);
-
-        var classKeywordIndex = GetTypeRegex().Match(sourceText).Index;
-        var publicKeywordIndex = sourceText.IndexOf("public", namespaceEndIndex, classKeywordIndex - namespaceEndIndex, StringComparison.Ordinal);
-
-        if (publicKeywordIndex < 0 || typeName.Contains("Bridge"))
+        if (typeName == "ILoggerBridge")
         {
-            // 此类型不是 public 的，无需修改为 internal。
-            // 此类型是 BridgeLogger，应该保持 public。
-            return string.Concat(
-                sourceSpan.Slice(0, namespaceStartIndex).ToString(),
-                $"{rootNamespace}.Logging",
-                sourceSpan.Slice(namespaceEndIndex, sourceSpan.Length - namespaceEndIndex).ToString()
-            );
+            // 此类型是 ILoggerBridge，应该保持 public 但变更命名空间。
+            return sourceText.ReplaceNamespace($"{rootNamespace}.Logging");
         }
-        else
+
+        if (typeName == "BridgeLogger")
         {
-            // 此类型是 public 的，需要修改为 internal。
-            return string.Concat(
-                sourceSpan.Slice(0, namespaceStartIndex).ToString(),
-                $"{rootNamespace}.Logging",
-                sourceSpan.Slice(namespaceEndIndex, publicKeywordIndex - namespaceEndIndex).ToString(),
-                "internal",
-                sourceSpan.Slice(publicKeywordIndex + "public".Length, sourceSpan.Length - publicKeywordIndex - "public".Length).ToString()
-            );
+            // 此类型是 BridgeLogger，里面用到了 ILoggerBridge，要使用新的命名空间。
+            return sourceText.Replace("ILoggerBridge", $"global::{rootNamespace}.Logging.ILoggerBridge");
+
         }
+
+        // 此类型是 public 的，需要修改为 internal。
+        return sourceText.ReplaceTypeModifier("internal");
     }
-
-    private static Regex? _typeRegex;
-
-    private static Regex GetTypeRegex() => _typeRegex ??= new Regex(@"\b(?:class|record|struct|enum|interface)\b", RegexOptions.Compiled);
 }

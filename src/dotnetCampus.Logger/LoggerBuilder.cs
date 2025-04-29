@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using dotnetCampus.Logging.Bridges;
 using dotnetCampus.Logging.Configurations;
+using dotnetCampus.Logging.Writers;
 
 namespace dotnetCampus.Logging;
 

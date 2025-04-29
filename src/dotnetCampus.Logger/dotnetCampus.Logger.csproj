@@ -13,6 +13,7 @@
 
   <!-- Project Information -->
   <PropertyGroup>
+    <ImplicitUsings>disable</ImplicitUsings>
     <RootNamespace>dotnetCampus.Logging</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

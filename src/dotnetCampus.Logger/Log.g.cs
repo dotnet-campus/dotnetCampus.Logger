@@ -1,8 +1,11 @@
 ﻿#nullable enable
-
-using global::System.Runtime.CompilerServices;
 using global::System;
 using global::System.Diagnostics.CodeAnalysis;
+using global::System.Runtime.CompilerServices;
+using BridgeLogger = global::dotnetCampus.Logging.Bridges.BridgeLogger;
+using DebugLogger = global::dotnetCampus.Logging.Writers.DebugLogger;
+using MemoryCacheLogger = global::dotnetCampus.Logging.Writers.MemoryCacheLogger;
+using TraceLogger = global::dotnetCampus.Logging.Writers.TraceLogger;
 
 namespace dotnetCampus.Logging;
 

@@ -1,5 +1,4 @@
 ﻿#nullable enable
-
 using global::System;
 
 namespace dotnetCampus.Logging;
