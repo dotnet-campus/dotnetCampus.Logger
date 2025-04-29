@@ -15,10 +15,10 @@ internal static class EmbeddedSourceFiles
     /// </summary>
     /// <param name="folderName">资源文件夹名称。请以“/”或“\”分隔文件夹。</param>
     /// <returns></returns>
-    internal static IEnumerable<EmbeddedSourceFile> Enumerate(string folderName)
+    internal static IEnumerable<EmbeddedSourceFile> Enumerate(string? folderName)
     {
         // 资源字符串格式为："{Namespace}.{Folder}.{filename}.{Extension}"
-        var desiredFolder = $"{GeneratorInfo.RootNamespace}.{folderName}";
+        var desiredFolder = $"{typeof(GeneratorInfo).Namespace}{(folderName is null ? "" : "." + folderName)}";
         var assembly = Assembly.GetExecutingAssembly();
         foreach (var resourceName in assembly.GetManifestResourceNames())
         {
@@ -31,10 +31,13 @@ internal static class EmbeddedSourceFiles
 
                 var fileName = resourceName.AsSpan().Slice(prefix.Length).ToString();
                 var fileNameWithoutExtension = fileName.Replace(".g.cs", "").Replace(".cs", "");
+                var fileExtension = fileName.Replace(fileNameWithoutExtension, "");
                 var fileNameIndex = fileNameWithoutExtension.LastIndexOf('.');
                 if (fileNameIndex < 0)
                 {
+                    // 文件直接在此文件夹中。
                     yield return new EmbeddedSourceFile(
+                        fileName,
                         fileName,
                         fileNameWithoutExtension,
                         desiredFolder,
@@ -42,11 +45,13 @@ internal static class EmbeddedSourceFiles
                 }
                 else
                 {
+                    // 文件在子文件夹中。
                     var typeName = fileNameWithoutExtension.Substring(fileNameIndex + 1);
-                    var @namespace = $"{desiredFolder}.{fileNameWithoutExtension.Substring(0, fileNameIndex)}";
-
+                    var relativeFolder = fileNameWithoutExtension.Substring(0, fileNameIndex);
+                    var @namespace = $"{desiredFolder}.{relativeFolder}";
                     yield return new EmbeddedSourceFile(
-                        fileName,
+                        $"{typeName}{fileExtension}",
+                        $"{relativeFolder.Replace(".", "/")}/{typeName}{fileExtension}",
                         typeName,
                         @namespace,
                         contentText);
