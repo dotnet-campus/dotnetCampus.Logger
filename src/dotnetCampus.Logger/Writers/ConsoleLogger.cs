@@ -196,7 +196,7 @@ public class ConsoleLogger : ILogger
         try
         {
             var desiredY = Console.CursorTop - 1;
-            var y = Math.Clamp(desiredY, 0, Console.WindowHeight - 1);
+            var y = Clamp(desiredY, 0, Console.WindowHeight - 1);
             Console.SetCursorPosition(0, y);
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, y);
@@ -211,6 +211,11 @@ public class ConsoleLogger : ILogger
         {
             // 日志记录时，有可能已经移动到头了，就不要移动了。
         }
+    }
+
+    public static int Clamp(int value, int min, int max)
+    {
+        return Math.Max(min, Math.Min(max, value));
     }
 
     /// <summary>

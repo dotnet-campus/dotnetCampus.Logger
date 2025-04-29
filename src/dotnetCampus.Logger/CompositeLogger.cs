@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using dotnetCampus.Logging.Configurations;
 
 namespace dotnetCampus.Logging;
@@ -27,7 +28,7 @@ public class CompositeLogger : ILogger
     /// <summary>
     /// 当前所有的日志记录器。
     /// </summary>
-    public required ImmutableArrayILogger Writers { get; init; }
+    public required IReadOnlyList<ILogger> Writers { get; init; }
 
     public bool IsEnabled(LogLevel logLevel)
     {

@@ -15,17 +15,29 @@ internal class TagFilterManager
     /// <summary>
     /// 当前已设置的任一标签。（无前缀）
     /// </summary>
-    public required ImmutableHashSetString AnyFilterTags { get; init; }
+#if NET6_0_OR_GREATER
+    public required IReadOnlySet<string> AnyFilterTags { get; init; }
+#else
+    public required HashSet<string> AnyFilterTags { get; init; }
+#endif
 
     /// <summary>
     /// 当前已设置的包含标签。（前缀为 +）
     /// </summary>
-    public required ImmutableHashSetString IncludingFilterTags { get; init; }
+#if NET6_0_OR_GREATER
+    public required IReadOnlySet<string> IncludingFilterTags { get; init; }
+#else
+    public required HashSet<string> IncludingFilterTags { get; init; }
+#endif
 
     /// <summary>
     /// 当前已设置的排除标签。（前缀为 -）
     /// </summary>
-    public required ImmutableHashSetString ExcludingFilterTags { get; init; }
+#if NET6_0_OR_GREATER
+    public required IReadOnlySet<string> ExcludingFilterTags { get; init; }
+#else
+    public required HashSet<string> ExcludingFilterTags { get; init; }
+#endif
 
     /// <summary>
     /// 判断某个日志是否满足当前标签过滤条件。
@@ -145,9 +157,9 @@ internal class TagFilterManager
 
         return new TagFilterManager
         {
-            AnyFilterTags = anyFilterTags.ToImmutableHashSet(),
-            IncludingFilterTags = includingFilterTags.ToImmutableHashSet(),
-            ExcludingFilterTags = excludingFilterTags.ToImmutableHashSet(),
+            AnyFilterTags = anyFilterTags,
+            IncludingFilterTags = includingFilterTags,
+            ExcludingFilterTags = excludingFilterTags,
         };
     }
 
