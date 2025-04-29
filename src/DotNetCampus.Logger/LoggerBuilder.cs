@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using dotnetCampus.Logging.Bridges;
-using dotnetCampus.Logging.Configurations;
-using dotnetCampus.Logging.Writers;
+using DotNetCampus.Logging.Bridges;
+using DotNetCampus.Logging.Configurations;
+using DotNetCampus.Logging.Writers;
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// 辅助创建日志记录器的构建器。

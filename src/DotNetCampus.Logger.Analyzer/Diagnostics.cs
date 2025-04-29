@@ -1,9 +1,10 @@
-﻿using dotnetCampus.Logger.Properties;
+﻿using DotNetCampus.Logger.Properties;
 using Microsoft.CodeAnalysis;
+using static DotNetCampus.Logger.Properties.Localizations;
 
 // ReSharper disable InconsistentNaming
 
-namespace dotnetCampus.Logger;
+namespace DotNetCampus.Logger;
 
 /// <summary>
 /// 包含日志库中的所有诊断。
@@ -70,5 +71,5 @@ public class Diagnostics
         public const string Useless = "dotnetCampus.Useless";
     }
 
-    private static LocalizableString Localize(string key) => new LocalizableResourceString(key, ResourceManager, typeof(Localizations));
+    private static LocalizableString Localize(string key) => new LocalizableResourceString(key, Localizations.ResourceManager, typeof(Localizations));
 }

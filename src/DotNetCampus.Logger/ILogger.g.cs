@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using global::System;
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// 表示用于执行日志记录的类型。

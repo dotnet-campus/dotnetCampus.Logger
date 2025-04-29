@@ -1,9 +1,9 @@
 ﻿#nullable enable
 
-using LILogger = global::dotnetCampus.Logging.ILogger;
-using LLog = global::dotnetCampus.Logging.Log;
+using LILogger = global::DotNetCampus.Logging.ILogger;
+using LLog = global::DotNetCampus.Logging.Log;
 
-namespace dotnetCampus.Logger.Assets.Templates;
+namespace DotNetCampus.Logger.Assets.Templates;
 
 partial class Program
 {

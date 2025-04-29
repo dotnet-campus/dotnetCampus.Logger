@@ -1,6 +1,6 @@
-using dotnetCampus.Logging.Writers.Helpers;
+using DotNetCampus.Logging.Writers.Helpers;
 
-namespace dotnetCampus.Logger.Tests;
+namespace DotNetCampus.Logger.Tests;
 
 [TestClass]
 public class TagFilterManagerTests

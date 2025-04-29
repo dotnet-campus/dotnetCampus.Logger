@@ -1,4 +1,4 @@
-﻿namespace dotnetCampus.Logging.Configurations;
+﻿namespace DotNetCampus.Logging.Configurations;
 
 /// <summary>
 /// 当日志系统尚未初始化，但有模块已经开始记录日志时，此选项指定这些日志应如何缓存。

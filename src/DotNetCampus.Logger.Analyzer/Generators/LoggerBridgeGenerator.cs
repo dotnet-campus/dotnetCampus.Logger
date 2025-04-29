@@ -5,14 +5,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using dotnetCampus.Logger.Assets.Templates;
-using dotnetCampus.Logging.Attributes;
+using DotNetCampus.Logger.Assets.Templates;
+using DotNetCampus.Logging.Attributes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace dotnetCampus.Logger.Generators;
+namespace DotNetCampus.Logger.Generators;
 
 /// <summary>
 /// 生成聚合日志桥，为来自各个库的日志桥对接日志记录器。

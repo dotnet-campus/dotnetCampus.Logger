@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.CodeAnalysis;
 
-namespace dotnetCampus.Logger.Analyzer.Tests.Generators;
+namespace DotNetCampus.Logger.Analyzer.Tests.Generators;
 
 internal static class MetadataReferenceProvider
 {

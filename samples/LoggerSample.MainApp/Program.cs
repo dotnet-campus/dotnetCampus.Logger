@@ -2,10 +2,10 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using dotnetCampus.Logging;
-using dotnetCampus.Logging.Attributes;
-using dotnetCampus.Logging.Configurations;
-using dotnetCampus.Logging.Writers;
+using DotNetCampus.Logging;
+using DotNetCampus.Logging.Attributes;
+using DotNetCampus.Logging.Configurations;
+using DotNetCampus.Logging.Writers;
 
 namespace LoggerSample.MainApp;
 

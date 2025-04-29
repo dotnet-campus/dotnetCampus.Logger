@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// 定义日志的严重程度。

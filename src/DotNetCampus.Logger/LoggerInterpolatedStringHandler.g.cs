@@ -1,7 +1,7 @@
 ﻿#if NET6_0_OR_GREATER
 using global::System.Runtime.CompilerServices;
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 [InterpolatedStringHandler]
 public ref struct LoggerInterpolatedStringHandler

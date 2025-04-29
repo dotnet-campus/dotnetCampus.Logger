@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dotnetCampus.Logging.Attributes;
+namespace DotNetCampus.Logging.Attributes;
 
 /// <summary>
 /// 指示源生成器应该生成对接指定的日志桥接器的代码。

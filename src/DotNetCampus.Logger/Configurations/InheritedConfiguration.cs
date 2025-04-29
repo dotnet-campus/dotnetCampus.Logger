@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dotnetCampus.Logging.Configurations;
+namespace DotNetCampus.Logging.Configurations;
 
 internal class InheritedConfiguration<T>(T options)
     where T : notnull

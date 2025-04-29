@@ -7,8 +7,9 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static DotNetCampus.Logger.Properties.Localizations;
 
-namespace dotnetCampus.Logger.CodeFixeProviders;
+namespace DotNetCampus.Logger.CodeFixeProviders;
 
 [ExportCodeFixProvider(LanguageNames.CSharp), Shared]
 public class PartialProgramCodeFixProvider : CodeFixProvider

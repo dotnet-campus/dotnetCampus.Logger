@@ -1,7 +1,7 @@
 ﻿using System;
-using dotnetCampus.Logging.Writers.Helpers;
+using DotNetCampus.Logging.Writers.Helpers;
 
-namespace dotnetCampus.Logging.Writers;
+namespace DotNetCampus.Logging.Writers;
 
 /// <summary>
 /// 表示如何管理日志的写入线程。

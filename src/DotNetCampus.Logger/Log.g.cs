@@ -2,12 +2,12 @@
 using global::System;
 using global::System.Diagnostics.CodeAnalysis;
 using global::System.Runtime.CompilerServices;
-using BridgeLogger = global::dotnetCampus.Logging.Bridges.BridgeLogger;
-using DebugLogger = global::dotnetCampus.Logging.Writers.DebugLogger;
-using MemoryCacheLogger = global::dotnetCampus.Logging.Writers.MemoryCacheLogger;
-using TraceLogger = global::dotnetCampus.Logging.Writers.TraceLogger;
+using BridgeLogger = global::DotNetCampus.Logging.Bridges.BridgeLogger;
+using DebugLogger = global::DotNetCampus.Logging.Writers.DebugLogger;
+using MemoryCacheLogger = global::DotNetCampus.Logging.Writers.MemoryCacheLogger;
+using TraceLogger = global::DotNetCampus.Logging.Writers.TraceLogger;
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// 提供静态的日志记录方法。

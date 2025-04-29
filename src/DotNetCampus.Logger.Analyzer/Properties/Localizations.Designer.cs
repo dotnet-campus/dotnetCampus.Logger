@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace dotnetCampus.Logger.Properties {
+namespace DotNetCampus.Logger.Properties {
     using System;
     
     

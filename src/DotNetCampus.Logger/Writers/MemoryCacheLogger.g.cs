@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using global::System;
 
-namespace dotnetCampus.Logging.Writers;
+namespace DotNetCampus.Logging.Writers;
 
 /// <summary>
 /// 用于在日志模块初始化完成前先对所有记录的日志进行缓存，以便在日志模块初始化完成后再将缓存的日志写入到日志文件中。

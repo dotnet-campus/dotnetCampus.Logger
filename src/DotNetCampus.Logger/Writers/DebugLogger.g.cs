@@ -2,7 +2,7 @@
 using global::System;
 using global::System.Diagnostics;
 
-namespace dotnetCampus.Logging.Writers;
+namespace DotNetCampus.Logging.Writers;
 
 /// <summary>
 /// 提供仅在 debug 下才会记录的日志。

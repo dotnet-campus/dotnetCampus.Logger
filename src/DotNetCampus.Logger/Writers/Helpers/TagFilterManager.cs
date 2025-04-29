@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace dotnetCampus.Logging.Writers.Helpers;
+namespace DotNetCampus.Logging.Writers.Helpers;
 
 /// <summary>
 /// 管理控制台日志的标签过滤。

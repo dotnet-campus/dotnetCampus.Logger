@@ -1,4 +1,4 @@
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// 辅助将字符串解析为日志级别。

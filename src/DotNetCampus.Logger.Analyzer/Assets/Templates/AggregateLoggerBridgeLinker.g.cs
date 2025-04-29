@@ -1,13 +1,13 @@
 ﻿#nullable enable
 
-using GEventId = global::dotnetCampus.Logging.EventId;
+using GEventId = global::DotNetCampus.Logging.EventId;
 using GException = global::System.Exception;
-using GILogger = global::dotnetCampus.Logging.ILogger;
-using GILoggerBridgeLinker = global::dotnetCampus.Logging.Bridges.ILoggerBridgeLinker;
-using GLog = global::dotnetCampus.Logging.Log;
-using GLogLevel = global::dotnetCampus.Logging.LogLevel;
+using GILogger = global::DotNetCampus.Logging.ILogger;
+using GILoggerBridgeLinker = global::DotNetCampus.Logging.Bridges.ILoggerBridgeLinker;
+using GLog = global::DotNetCampus.Logging.Log;
+using GLogLevel = global::DotNetCampus.Logging.LogLevel;
 
-namespace dotnetCampus.Logger.Assets.Templates;
+namespace DotNetCampus.Logger.Assets.Templates;
 
 /// <summary>
 /// 聚合各个来源的日志桥。调用其 <see cref="Link"/> 方法可以将这些来源的日志桥对接到指定的日志记录器上。

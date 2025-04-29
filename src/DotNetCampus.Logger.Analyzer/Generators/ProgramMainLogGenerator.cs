@@ -1,14 +1,14 @@
 ﻿using System.Text;
-using dotnetCampus.Logger.Assets.Templates;
-using dotnetCampus.Logger.Utils.CodeAnalysis;
+using DotNetCampus.Logger.Assets.Templates;
+using DotNetCampus.Logger.Utils.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
-using static dotnetCampus.Logger.Utils.CodeAnalysis.ProgramMainExtensions;
+using static DotNetCampus.Logger.Utils.CodeAnalysis.ProgramMainExtensions;
 
-namespace dotnetCampus.Logger.Generators;
+namespace DotNetCampus.Logger.Generators;
 
 /// <summary>
 /// 生成 Program.g.cs，为 Main 方法第一行日志生成支持代码。
@@ -86,7 +86,7 @@ public class ProgramMainLogGenerator : IIncrementalGenerator
         var templateProgramNamespace = typeof(Program).Namespace!;
         var generatedProgramNamespace = programTypeSymbol.ContainingNamespace.ToDisplayString();
         return sourceText
-            .Replace("global::dotnetCampus.Logging.", $"global::{generatedProgramNamespace}.Logging.")
+            .Replace("global::DotNetCampus.Logging.", $"global::{generatedProgramNamespace}.Logging.")
             .Replace($"namespace {templateProgramNamespace};", $"namespace {generatedProgramNamespace};")
             .Replace("partial class Program", $"partial class {programTypeSymbol.Name}");
     }

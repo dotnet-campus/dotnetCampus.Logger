@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using global::System;
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// <see cref="ILogger"/> 的常见场景的扩展方法。

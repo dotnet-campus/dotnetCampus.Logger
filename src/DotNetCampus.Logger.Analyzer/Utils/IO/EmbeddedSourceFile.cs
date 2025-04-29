@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace dotnetCampus.Logger.Utils.IO;
+namespace DotNetCampus.Logger.Utils.IO;
 
 /// <summary>
 /// 嵌入的文本资源的数据。

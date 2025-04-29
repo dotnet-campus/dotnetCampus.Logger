@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace dotnetCampus.Logging.Writers.Helpers;
+namespace DotNetCampus.Logging.Writers.Helpers;
 
 internal class RepeatLoggerDetector(Action<int> whenRepeated)
 {

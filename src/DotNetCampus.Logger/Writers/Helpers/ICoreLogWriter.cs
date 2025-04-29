@@ -7,7 +7,7 @@ using System.Threading.Channels;
 using System.Collections.Concurrent;
 #endif
 
-namespace dotnetCampus.Logging.Writers.Helpers;
+namespace DotNetCampus.Logging.Writers.Helpers;
 
 /// <summary>
 /// 提供各种不同线程安全方式的最终日志写入功能。

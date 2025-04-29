@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using dotnetCampus.Logger.Utils.IO;
+using DotNetCampus.Logger.Utils.IO;
 
-namespace dotnetCampus.Logger;
+namespace DotNetCampus.Logger;
 
 internal static class GeneratorInfo
 {

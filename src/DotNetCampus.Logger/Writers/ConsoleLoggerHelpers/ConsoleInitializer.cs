@@ -6,7 +6,7 @@ using static Windows.Win32.System.Console.CONSOLE_MODE;
 using static Windows.Win32.PInvoke;
 using static Windows.Win32.System.Console.STD_HANDLE;
 
-namespace dotnetCampus.Logging.Writers.ConsoleLoggerHelpers;
+namespace DotNetCampus.Logging.Writers.ConsoleLoggerHelpers;
 
 internal static class ConsoleInitializer
 {

@@ -95,8 +95,8 @@ Log.Current.Fatal("[SourceReference] Log.Current.Fatal");
 对于复杂的大型项目，可能会有更加丰富的需求，可以参考下面的示例代码：
 
 ```csharp
-using dotnetCampus.Logging.Attributes;
-using dotnetCampus.Logging.Writers;
+using DotNetCampus.Logging.Attributes;
+using DotNetCampus.Logging.Writers;
 
 namespace dotnetCampus.Demo.Sample;
 

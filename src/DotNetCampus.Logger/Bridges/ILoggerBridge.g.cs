@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace dotnetCampus.Logging.Bridges;
+namespace DotNetCampus.Logging.Bridges;
 
 /// <summary>
 /// 仅由 .NET 库类型构成的日志桥。用于源生成器将无依赖库中的日志重定向到应用程序聚合日志系统中。

@@ -1,4 +1,4 @@
-﻿namespace dotnetCampus.Logging.Configurations;
+﻿namespace DotNetCampus.Logging.Configurations;
 
 /// <summary>
 /// 用于配置日志记录器的选项。

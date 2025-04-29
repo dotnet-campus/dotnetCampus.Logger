@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using global::System.Diagnostics.CodeAnalysis;
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// 标识一个日志事件。主要标识是 "Id" 属性，而 "Name" 属性提供了此类型事件的简短描述。

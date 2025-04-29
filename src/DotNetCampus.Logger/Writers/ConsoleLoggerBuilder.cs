@@ -1,7 +1,7 @@
 ﻿using System;
-using dotnetCampus.Logging.Writers.Helpers;
+using DotNetCampus.Logging.Writers.Helpers;
 
-namespace dotnetCampus.Logging.Writers;
+namespace DotNetCampus.Logging.Writers;
 
 /// <summary>
 /// 辅助创建控制台日志记录器的构建器。

@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace dotnetCampus.Logger.Utils.CodeAnalysis;
+namespace DotNetCampus.Logger.Utils.CodeAnalysis;
 
 public static class ProgramMainExtensions
 {

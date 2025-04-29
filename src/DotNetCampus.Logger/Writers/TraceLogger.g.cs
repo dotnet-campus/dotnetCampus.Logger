@@ -2,7 +2,7 @@
 using global::System;
 using global::System.Diagnostics;
 
-namespace dotnetCampus.Logging.Writers;
+namespace DotNetCampus.Logging.Writers;
 
 /// <summary>
 /// 提供仅在开启了 TRACE 条件编译符下才会记录的日志。

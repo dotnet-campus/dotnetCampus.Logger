@@ -1,4 +1,4 @@
-﻿using dotnetCampus.Logger.Generators;
+﻿using DotNetCampus.Logger.Generators;
 
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 
-namespace dotnetCampus.Logger.Analyzer.Tests.Generators;
+namespace DotNetCampus.Logger.Analyzer.Tests.Generators;
 
 [TestClass]
 public class LoggerBridgeGeneratorTest
@@ -32,9 +32,9 @@ public class LoggerBridgeGeneratorTest
                     using System.Diagnostics;
                     using System.Threading;
                     using System.Threading.Tasks;
-                    using dotnetCampus.Logging.Attributes;
-                    using dotnetCampus.Logging.Configurations;
-                    using dotnetCampus.Logging.Writers;
+                    using DotNetCampus.Logging.Attributes;
+                    using DotNetCampus.Logging.Configurations;
+                    using DotNetCampus.Logging.Writers;
                     
                     namespace LoggerSample.MainApp;
                     

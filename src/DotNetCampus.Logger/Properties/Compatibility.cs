@@ -1,6 +1,6 @@
-﻿global using dotnetCampus.Logging.Properties;
+﻿global using DotNetCampus.Logging.Properties;
 
-namespace dotnetCampus.Logging.Properties;
+namespace DotNetCampus.Logging.Properties;
 
 internal static class Compatibility
 {

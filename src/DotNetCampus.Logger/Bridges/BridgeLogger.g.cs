@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace dotnetCampus.Logging.Bridges;
+namespace DotNetCampus.Logging.Bridges;
 
 /// <summary>
 /// dotnetCampus.Logging.Bridges 的桥接日志记录器。

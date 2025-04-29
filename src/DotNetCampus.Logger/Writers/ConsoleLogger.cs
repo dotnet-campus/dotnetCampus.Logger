@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using dotnetCampus.Logging.Writers.ConsoleLoggerHelpers;
-using dotnetCampus.Logging.Writers.Helpers;
-using C = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
-using B = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
-using D = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Decoration;
-using F = dotnetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Foreground;
+using DotNetCampus.Logging.Writers.ConsoleLoggerHelpers;
+using DotNetCampus.Logging.Writers.Helpers;
+using C = DotNetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors;
+using B = DotNetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Background;
+using D = DotNetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Decoration;
+using F = DotNetCampus.Logging.Writers.ConsoleLoggerHelpers.ConsoleColors.Foreground;
 
-namespace dotnetCampus.Logging.Writers;
+namespace DotNetCampus.Logging.Writers;
 
 /// <summary>
 /// 在控制台输出日志的日志记录器。

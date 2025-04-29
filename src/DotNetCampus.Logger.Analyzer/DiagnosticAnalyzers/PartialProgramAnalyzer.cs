@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 
-namespace dotnetCampus.Logger.DiagnosticAnalyzers;
+namespace DotNetCampus.Logger.DiagnosticAnalyzers;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class PartialProgramAnalyzer : DiagnosticAnalyzer

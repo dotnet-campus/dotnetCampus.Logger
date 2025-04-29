@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using dotnetCampus.Logging.Configurations;
+using DotNetCampus.Logging.Configurations;
 
-namespace dotnetCampus.Logging;
+namespace DotNetCampus.Logging;
 
 /// <summary>
 /// 一个聚合多个日志记录器的综合记录器，通常作为应用程序的主要日志记录器。

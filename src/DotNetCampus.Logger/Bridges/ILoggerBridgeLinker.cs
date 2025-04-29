@@ -1,4 +1,4 @@
-﻿namespace dotnetCampus.Logging.Bridges;
+﻿namespace DotNetCampus.Logging.Bridges;
 
 /// <summary>
 /// 表示一个日志桥对接器。

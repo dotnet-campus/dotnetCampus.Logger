@@ -1,12 +1,12 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
-using dotnetCampus.Logger.Utils.CodeAnalysis;
-using dotnetCampus.Logger.Utils.IO;
+using DotNetCampus.Logger.Utils.CodeAnalysis;
+using DotNetCampus.Logger.Utils.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 
-namespace dotnetCampus.Logger.Generators;
+namespace DotNetCampus.Logger.Generators;
 
 /// <summary>
 /// 生成一组用于记录日志的代码。
