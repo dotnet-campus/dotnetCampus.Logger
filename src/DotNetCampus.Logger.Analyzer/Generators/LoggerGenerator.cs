@@ -40,7 +40,7 @@ public class LoggerGenerator : IIncrementalGenerator
             .Where(x => x.DeclaredAccessibility is Accessibility.Public || x.ContainingAssembly.GivesAccessTo(compilation.Assembly))
             .ToArray();
         var assemblies = logTypes
-            .Select(x => x.ContainingAssembly.ToDisplayString())
+            .Select(x => x.ContainingAssembly.Name)
             .ToArray();
         var isTypeVisible = logTypes.Length is 1;
 
@@ -49,39 +49,55 @@ public class LoggerGenerator : IIncrementalGenerator
         foreach (var file in sourceFiles)
         {
             var originalTypeFullType = $"{file.Namespace.Replace("DotNetCampus.Logger", "DotNetCampus.Logging")}.{file.TypeName}";
-            var generatedTypeFullName = originalTypeFullType == "DotNetCampus.Logging.Bridges.ILoggerBridge"
-                ? $"{rootNamespace}.Logging.{file.TypeName}"
-                : originalTypeFullType;
+            var isLoggerBridge = originalTypeFullType == "DotNetCampus.Logging.Bridges.ILoggerBridge";
+            var generatedTypeFullName = isLoggerBridge ? $"{rootNamespace}.Logging.{file.TypeName}" : originalTypeFullType;
 
             var code = GenerateSource(file.TypeName, rootNamespace, file.Content);
 
-            code = (useGeneratedLogger, isTypeDefined: isTypeVisible) switch
+            code = (useGeneratedLogger, isLoggerBridge, isTypeDefined: isTypeVisible) switch
             {
-                (true, true) => $"""
+                (true, true, _) => $"""
+// DCUseGeneratedLogger 被设置为 true，以下为生成的 ILoggerBridge 类型。
+// ILoggerBridge 使用 DCGeneratedLoggerNamespace 设置的命名空间 {rootNamespace}。
+
+{code}
+""",
+                (true, false, true) => $"""
 // 此文件所涉及的类型 {originalTypeFullType} 已经在依赖程序集中定义，并被传递给当前程序集；为避免冲突，当前程序集不再生成 {generatedTypeFullName} 类型。
-{string.Join("\n", assemblies.Select(x => $"//  - {x}"))}
+{string.Join("\n", assemblies.Select(x => $"//  - {(x == "DotNetCampus.Logger" ? x : $"{x} (通过 InternalsVisibleTo 传递)")}"))}
 
 /*
 {code}
 */
 """,
-                (true, false) => code,
-                (false, true) =>  $"""
+                (true, false, false) => $"""
+// DCUseGeneratedLogger 被设置为 true，以下为生成的 {generatedTypeFullName} 类型。
+
+{code}
+""",
+                (false, true, _) => $"""
+// 因为 DCUseGeneratedLogger 未被设置为 true，所以不会生成 {generatedTypeFullName} 类型。
+
+/*
+{code}
+*/
+""",
+                (false, false, true) => $"""
 // 因为 DCUseGeneratedLogger 未被设置为 true，所以不会生成 {generatedTypeFullName} 类型。
 // 此文件所涉及的类型已经在依赖程序集中定义，并被传递给当前程序集。
-{string.Join("\n", assemblies.Select(x => $"//  - {x}"))}
+{string.Join("\n", assemblies.Select(x => $"//  - {(x == "DotNetCampus.Logger" ? x : $"{x} (通过 InternalsVisibleTo 传递)")}"))}
 
 /*
 {code}
 */
 """,
-                (false, false) =>  $"""
+                (false, false, false) => $"""
 // 因为 DCUseGeneratedLogger 未被设置为 true，所以不会生成 {generatedTypeFullName} 类型。
 
 /*
 {code}
 */
-"""
+""",
             };
 
             context.AddSource($"{file.TypeName}.g.cs", SourceText.From(code, Encoding.UTF8));
