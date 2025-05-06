@@ -14,29 +14,6 @@
 dotnet add package DotNetCampus.Logger
 ```
 
-安装完成后，你可以在项目中设置属性来决定如何使用日志库：
-
-```xml
-<PropertyGroup>
-    <!-- 设置以源生成器的方式来使用日志库。 -->
-    <!-- 以此方式使用日志库，不会使你的项目产生任何额外的依赖，特别适合用于不希望引入额外依赖的库项目。 -->
-    <DCUseGeneratedLogger>true</DCUseGeneratedLogger>
-</PropertyGroup>
-```
-
-这个属性可选的值有：
-
-- `onlySource`: 只使用源生成器日志系统，不会引用库；
-- `preferSource`: 使用源生成器日志系统，并优先使用它；
-- `preferReference`: 使用源生成器日志系统，但优先使用引用的库；
-- `onlyReference`: 只使用引用的库，不会生成源代码；
-- `true`: 只使用源生成器日志系统，不会引用库（其含义与 `onlySource` 等同）；
-- `false`: 只使用引用的库，不会生成源代码（其含义与 `onlyReference` 等同）。
-
-在库中，合适的值为 `onlySource` 以不引入依赖；在产品项目中，合适的值为 `onlyReference`，以使用全功能的日志库。
-
-在产品的入口项目中，既可以使用 `onlyReference` 也可以使用 `preferReference`。前者允许你以常规的方式使用日志库，而后者则允许你在初始化日志库之前使用日志库。
-
 ### 初始化
 
 在你的初始化代码中添加如下代码，即可完成日志的配置和初始化：
@@ -48,6 +25,8 @@ new LoggerBuilder()
     .Build()
     .IntoGlobalStaticLog();
 ```
+
+### 使用
 
 在使用上述方法完成初始化之后，你就可以在任何地方使用 `Log` 类来输出日志了：
 
@@ -92,7 +71,33 @@ Log.Current.Error("[SourceReference] Log.Current.Error");
 Log.Current.Fatal("[SourceReference] Log.Current.Fatal");
 ```
 
-对于复杂的大型项目，可能会有更加丰富的需求，可以参考下面的示例代码：
+### 源生成器
+
+有时候你希望制作一个库，想使用日志系统却不希望产生日志系统的 NuGet 依赖。
+
+这时，你可以通过如下方式来引用此 NuGet 包：
+
+```xml
+<ItemGroup>
+   <PackageReference Include="DotNetCampus.Logger" PrivateAssets="all" ExcludeAssets="compile;runtime" />
+</ItemGroup>
+```
+
+其中：
+
+1. PrivateAssets="all" 用于表明生成的 NuGet 包将不引入 DotNetCampus.Logger 包依赖；
+2. ExcludeAssets 中 compile 用于不引入编译时的依赖（此时以下源才会自动解除注释）；
+3. ExcludeAssets 中 runtime 用于不将依赖复制到目标目录（因为运行时已经不需要它们了）。
+
+这时，源生成器会在你的项目中生成一套日志系统的内部代码。你可以在库里各处正常使用日志系统的各种类和方法。
+
+特别的，无论你的项目目前是以什么方式使用的此日志系统库，你都可以在源生成器中找到生成的代码。只是对于不需要生成代码的场景下，里面生成的代码是注释掉的；你可以通过注释调查没有生成源代码的原因，以及辅助查阅本文档的更详细细节。
+
+### 日志桥接
+
+如果你的应用程序依赖了一个或多个包含上述源生成器日志系统的库，可以使用桥接功能将它们的日志接到当前应用程序的日志系统中。
+
+以下是一个复杂大型项目的初始化示例代码：
 
 ```csharp
 using DotNetCampus.Logging.Attributes;
@@ -128,7 +133,9 @@ internal static class LoggerStartup
 internal partial class LoggerBridgeLinker;
 ```
 
-当然，在你的应用程序中，日志级别通常不是写死在代码里的，往往需要从命令行参数、环境变量、配置文件等位置读取。那么可通过 `LogLevelParser.Parse` 方法将字符串解析为日志级别，相比于普通枚举的解析，此方法额外支持日志级别的常见别名。支持的别名请参见 [LogLevelParser.cs](https://github.com/dotnet-campus/DotNetCampus.Logger/blob/main/src/DotNetCampus.Logger/LogLevelParser.cs) 的注释。
+桥接类的命名空间由桥接类所在项目的 `$(RootNamespace)` 决定，你也可以通过指定 `$(DCGeneratedLoggerNamespace)` 单独指定桥接类的命名空间而不影响项目原本的命名空间。
+
+另外，在你的应用程序中，日志级别通常不是写死在代码里的，往往需要从命令行参数、环境变量、配置文件等位置读取。那么可通过 `LogLevelParser.Parse` 方法将字符串解析为日志级别，相比于普通枚举的解析，此方法额外支持日志级别的常见别名。支持的别名请参见 [LogLevelParser.cs](https://github.com/dotnet-campus/DotNetCampus.Logger/blob/main/src/DotNetCampus.Logger/LogLevelParser.cs) 的注释。
 
 ### 日志过滤规则
 
