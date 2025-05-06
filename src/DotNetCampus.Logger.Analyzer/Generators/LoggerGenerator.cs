@@ -29,7 +29,6 @@ public class LoggerGenerator : IIncrementalGenerator
         var (provider, compilation) = args;
         if (provider.GlobalOptions
                 .TryGetValue<string>("_DLRootNamespace", out var rootNamespace)
-                .TryGetValue<bool>("DCUseGeneratedLogger", out var useGeneratedLogger)
                 is var result
                 && !result)
         {

@@ -6,21 +6,8 @@
 
   <PropertyGroup>
     <!--
-      值：
-      - onlySource: 只使用源生成器日志系统，不会引用库；
-      - preferSource: 使用源生成器日志系统，并优先使用它；
-      - preferReference: 使用源生成器日志系统，但优先使用引用的库；
-      - onlyReference: 只使用引用的库，不会生成源代码；
-      - true: 只使用源生成器日志系统，不会引用库（其含义与 onlySource 等同）；
-      - false: 只使用引用的库，不会生成源代码（其含义与 onlyReference 等同）。
-
-      解释：
-      - 所谓优先，指的是生成 global usings 以指定优先级；
+      源生成器生成的日志系统的命名空间。
     -->
-    <!-- <DCUseGeneratedLogger></DCUseGeneratedLogger> -->
-
-    <!--
-      源生成器生成的日志系统的命名空间。-->
     <!-- <DCGeneratedLoggerNamespace></DCGeneratedLoggerNamespace> -->
   </PropertyGroup>
 
