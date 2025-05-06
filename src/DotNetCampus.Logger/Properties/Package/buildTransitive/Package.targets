@@ -19,4 +19,12 @@
     <CompilerVisibleProperty Include="_DLRootNamespace" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!--
+      教程：
+      在目标项目，采用生成的源时，排除 dll 的引用（以避免类型冲突）。
+    -->
+    <!-- <PackageReference Include="DotNetCampus.Logger" ExcludeAssets="compile;runtime" /> -->
+  </ItemGroup>
+
 </Project>
