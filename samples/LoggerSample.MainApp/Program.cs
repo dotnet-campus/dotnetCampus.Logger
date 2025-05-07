@@ -48,9 +48,9 @@ internal class Program
     {
         var stopwatch = Stopwatch.StartNew();
         Log.Info($"[TEST] 开始 {stopwatch.ElapsedMilliseconds}ms");
-        Parallel.For(0, 0x00004000, i =>
+        Parallel.For(0, 0x00001000, i =>
         {
-            Thread.Sleep(0);
+            Thread.Sleep(1);
             Log.Info($"[TEST] {DateTime.Now:HH:mm:ss}");
         });
         Log.Info($"[TEST] 完成 {stopwatch.ElapsedMilliseconds}ms");

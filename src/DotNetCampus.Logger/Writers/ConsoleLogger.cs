@@ -16,9 +16,9 @@ namespace DotNetCampus.Logging.Writers;
 public class ConsoleLogger : ILogger
 {
     /// <summary>
-    /// 控制台光标控制是否启用。目前可容纳的错误次数为 3 次，当降低到 0 次时，将不再尝试移动光标。
+    /// 控制台光标控制是否启用。
     /// </summary>
-    private int _isCursorMovementEnabled;
+    private bool _isCursorMovementEnabled;
 
     private readonly RepeatLoggerDetector _repeat;
     private static bool _isConsoleOutput;
@@ -40,9 +40,9 @@ public class ConsoleLogger : ILogger
         CoreWriter = coreWriter;
         TagManager = tagManager;
         _isConsoleOutput = Out == Console.Out;
+        var success = ConsoleInitializer.Initialize();
         // 如果输出流是自己创建的，则不支持光标移动。
-        _isCursorMovementEnabled = _isConsoleOutput ? 3 : 0;
-        ConsoleInitializer.Initialize();
+        _isCursorMovementEnabled = _isConsoleOutput && success;
     }
 
     /// <summary>
@@ -185,32 +185,32 @@ public class ConsoleLogger : ILogger
     /// 清空当前行并移动光标到上一行。
     /// </summary>
     /// <param name="repeatCount">此移动光标，是因为日志已重复第几次。</param>
-    private void ClearAndMoveToLastLine(int repeatCount)
+    /// <returns>返回 <see langword="true"/> 表示成功移动了光标，返回 <see langword="false"/> 表示未能成功移动光标。</returns>
+    private bool ClearAndMoveToLastLine(int repeatCount)
     {
-        if (_isCursorMovementEnabled <= 0 || repeatCount <= 2)
+        if (!_isCursorMovementEnabled)
         {
             // 如果光标控制不可用，或者还没有重复次数，则不尝试移动光标。
-            return;
+            return false;
         }
 
-        try
+        var width = Console.WindowWidth;
+        const string cursorPreviousLine = "\e[1F";
+        const string cursorHorizontalAbsolute0 = "\e[0G";
+#if NETCOREAPP3_1_OR_GREATER
+        Span<char> builder = stackalloc char[cursorPreviousLine.Length + width + cursorHorizontalAbsolute0.Length];
+        cursorPreviousLine.CopyTo(builder);
+        for (var i = cursorPreviousLine.Length; i < cursorPreviousLine.Length + width; i++)
         {
-            var desiredY = Console.CursorTop - 1;
-            var y = Clamp(desiredY, 0, Console.WindowHeight - 1);
-            Console.SetCursorPosition(0, y);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, y);
+            builder[cursorPreviousLine.Length + i] = ' ';
         }
-        catch (IOException)
-        {
-            // 日志记录时，如果无法移动光标，说明可能当前输出位置不在缓冲区内。
-            // 如果多次尝试失败，则认为当前控制台缓冲区不支持光标移动，遂放弃。
-            _isCursorMovementEnabled--;
-        }
-        catch (ArgumentException)
-        {
-            // 日志记录时，有可能已经移动到头了，就不要移动了。
-        }
+        cursorHorizontalAbsolute0.CopyTo(builder.Slice(cursorPreviousLine.Length + width));
+        Out.Write(builder.ToString());
+#else
+        Out.Write($"{cursorPreviousLine}{new string(' ', width)}{cursorHorizontalAbsolute0}");
+#endif
+
+        return true;
     }
 
     public static int Clamp(int value, int min, int max)
