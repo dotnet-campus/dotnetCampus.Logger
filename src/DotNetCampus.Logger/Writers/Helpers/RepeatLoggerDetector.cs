@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace DotNetCampus.Logging.Writers.Helpers;
 
-internal class RepeatLoggerDetector(Func<int, bool> whenRepeated)
+internal class RepeatLoggerDetector(Action<int> whenRepeated)
 {
     private static volatile int _lastSameItemCount;
     private static LogItem? _lastItem;
@@ -22,8 +22,8 @@ internal class RepeatLoggerDetector(Func<int, bool> whenRepeated)
                 //  2. 当本次为第 1 次重复时，首次输出
                 //  3. 当本次为第 2 次重复时，输出“重复日志行”
                 //  4. 当本次为第 >2 次重复时，将向上移动光标，顶替掉上次的“重复日志行”
-                var supportRepeatOutput = whenRepeated(count);
-                return supportRepeatOutput ? count : 1;
+                whenRepeated(count);
+                return count;
             }
             else
             {

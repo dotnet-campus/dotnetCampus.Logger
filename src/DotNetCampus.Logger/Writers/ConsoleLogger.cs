@@ -18,8 +18,7 @@ public class ConsoleLogger : ILogger
     /// <summary>
     /// 控制台光标控制是否启用。
     /// </summary>
-    private bool _isCursorMovementEnabled;
-
+    private readonly bool _isCursorMovementEnabled;
     private readonly RepeatLoggerDetector _repeat;
     private static bool _isConsoleOutput;
     private static readonly TextWriter Out = GetStandardOutputWriter();
@@ -115,7 +114,7 @@ public class ConsoleLogger : ILogger
         {
             if (_isConsoleOutput)
             {
-                ConsoleMultilineMessage($"上述日志已重复 {count} 次", formatter, true);
+                ConsoleMultilineMessage($"{F.BrightBlack}上述日志已重复 {count} 次{Reset}", formatter, true);
             }
             else
             {
@@ -185,13 +184,12 @@ public class ConsoleLogger : ILogger
     /// 清空当前行并移动光标到上一行。
     /// </summary>
     /// <param name="repeatCount">此移动光标，是因为日志已重复第几次。</param>
-    /// <returns>返回 <see langword="true"/> 表示成功移动了光标，返回 <see langword="false"/> 表示未能成功移动光标。</returns>
-    private bool ClearAndMoveToLastLine(int repeatCount)
+    private void ClearAndMoveToLastLine(int repeatCount)
     {
         if (!_isCursorMovementEnabled)
         {
             // 如果光标控制不可用，或者还没有重复次数，则不尝试移动光标。
-            return false;
+            return;
         }
 
         var width = Console.WindowWidth;
@@ -209,8 +207,6 @@ public class ConsoleLogger : ILogger
 #else
         Out.Write($"{cursorPreviousLine}{new string(' ', width)}{cursorHorizontalAbsolute0}");
 #endif
-
-        return true;
     }
 
     public static int Clamp(int value, int min, int max)
