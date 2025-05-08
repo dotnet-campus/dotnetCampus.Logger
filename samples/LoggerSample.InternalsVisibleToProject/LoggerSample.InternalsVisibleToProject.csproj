@@ -2,15 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>$(NoWarn);CS0436</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DotNetCampus.Logger.Analyzer\DotNetCampus.Logger.Analyzer.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <InternalsVisibleTo Include="LoggerSample.InternalsVisibleToProject" />
+    <ProjectReference Include="..\LoggerSample.LoggerIndependentLibrary\LoggerSample.LoggerIndependentLibrary.csproj" />
+    <ProjectReference Include="..\LoggerSample.LoggerIndependentProject\LoggerSample.LoggerIndependentProject.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,0 @@
-﻿{
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "profiles": {
-    "DebugRoslynSourceGenerator": {
-      "commandName": "DebugRoslynComponent",
-      "targetProject": "../dotnetCampus.Logger.Analyzer.Sample/dotnetCampus.Logger.Analyzer.Sample.csproj"
-    }
-  }
-}

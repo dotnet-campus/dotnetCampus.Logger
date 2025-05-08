@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\dotnetCampus.Logger\dotnetCampus.Logger.csproj" />
+    <ProjectReference Include="..\..\src\DotNetCampus.Logger\DotNetCampus.Logger.csproj" />
   </ItemGroup>
 
 </Project>

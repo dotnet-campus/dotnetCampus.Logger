@@ -17,8 +17,8 @@
     <Company>dotnet campus（.NET 职业技术学院）</Company>
     <Copyright>Copyright 2020-$([System.DateTime]::Now.ToString(`yyyy`)) &#169; dotnet campus, All Rights Reserved.</Copyright>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/dotnet-campus/dotnetCampus.Logger</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/dotnet-campus/dotnetCampus.Logger</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotnet-campus/DotNetCampus.Logger</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dotnet-campus/DotNetCampus.Logger</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
@@ -38,6 +38,6 @@
     <None Include="..\..\README.md" Link="README.md" Pack="True" PackagePath="\" Visible="False"/>
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)src\dotnetCampus.Logger\Properties\Package\buildTransitive\Package.props" />
+  <Import Project="$(MSBuildThisFileDirectory)src\DotNetCampus.Logger\Properties\Package\buildTransitive\Package.props" />
 
 </Project>

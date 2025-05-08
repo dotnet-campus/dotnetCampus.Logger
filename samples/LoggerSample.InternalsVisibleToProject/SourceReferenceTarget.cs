@@ -1,6 +1,6 @@
 ﻿using DotNetCampus.Logging;
 
-namespace LoggerSample.LoggerIndependentProject;
+namespace LoggerSample.InternalsVisibleToProject;
 
 public class SourceReferenceTarget
 {
