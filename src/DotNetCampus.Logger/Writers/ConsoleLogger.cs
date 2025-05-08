@@ -227,7 +227,7 @@ public class ConsoleLogger : ILogger
         }
 
         var standardOutput = Console.OpenStandardOutput();
-        var writer = new StreamWriter(standardOutput, Encoding.UTF8)
+        var writer = new StreamWriter(standardOutput, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false))
         {
             AutoFlush = true,
         };
