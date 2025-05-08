@@ -162,6 +162,7 @@ public class ConsoleLogger : ILogger
             {
                 (LogLevel.Critical, 1) => $"{otherLineStyle}{tag}{m.PadRight(SafeGetSpaceCount(" ", EmptyTag, EmptyExceptionTag))}{Reset}",
                 (LogLevel.Critical, _) => $"{otherLineStyle}{m.PadRight(SafeGetSpaceCount(" ", EmptyTag))}{Reset}",
+                (_, 1) => $"{otherLineStyle}{tag}{m}{Reset}",
                 _ => $"{otherLineStyle}{m}{Reset}",
             };
 
