@@ -131,7 +131,7 @@ public static partial class Log
     /// <param name="exception">如果有异常信息，可以传入此参数。</param>
     public static void Fatal(string message, Exception? exception = null)
     {
-        Current.Log(LogLevel.Critical, default, message, null, static (s, ex) => s);
+        Current.Log(LogLevel.Critical, default, message, exception, static (s, ex) => s);
     }
 
 #if NET6_0_OR_GREATER
