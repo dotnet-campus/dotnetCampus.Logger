@@ -321,7 +321,7 @@ public class ConsoleLogger : ILogger
     private const string Reset = C.Reset;
     private const string TraceText = F.BrightBlack;
     private const string DebugText = F.Magenta;
-    private const string InformationText = F.White;
+    private const string InformationText = Reset;
     private const string WarningText = F.Yellow;
     private const string ErrorText = F.Red;
     private const string CriticalText = $"{B.Red}{F.Black}";
