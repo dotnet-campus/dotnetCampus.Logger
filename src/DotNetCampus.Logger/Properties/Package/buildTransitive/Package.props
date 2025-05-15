@@ -1,0 +1,14 @@
+<Project>
+
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--
+      源生成器生成的日志系统的命名空间。
+    -->
+    <!-- <DCGeneratedLoggerNamespace></DCGeneratedLoggerNamespace> -->
+  </PropertyGroup>
+
+</Project>

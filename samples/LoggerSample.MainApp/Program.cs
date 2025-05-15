@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using dotnetCampus.Logging.Attributes;
-using dotnetCampus.Logging.Configurations;
-using dotnetCampus.Logging.Writers;
+using DotNetCampus.Logging;
+using DotNetCampus.Logging.Attributes;
+using DotNetCampus.Logging.Configurations;
+using DotNetCampus.Logging.Writers;
 
 namespace LoggerSample.MainApp;
 
@@ -39,6 +41,41 @@ internal class Program
         Log.Error("Error log");
         Log.Fatal("Fatal log");
 
+        Log.Trace("""
+            This is a very very long trace log
+            written in multiline.
+            """);
+        Log.Debug("""
+            This is a very very long debug log
+            written in multiline.
+            """);
+        Log.Info("""
+            This is a very very long information log
+            written in multiline.
+            """);
+        Log.Warn("""
+            This is a very very long warning log
+            written in multiline.
+            """);
+        Log.Error("""
+            This is a very very long error log
+            written in multiline.
+            """);
+        Log.Fatal("""
+            This is a very very long critical log
+            written in multiline.
+            """);
+        Log.Fatal("""
+            This is a very very long critical log
+            written in multiline.
+            """);
+
+        var exception = GetException();
+        Log.Warn("Ah..., exception!", exception);
+        Log.Error("Ah..., exception!", exception);
+        Log.Fatal("Ah..., exception!", exception);
+        Log.Fatal("Ah..., exception!", exception);
+
         Run();
         Thread.Sleep(5000);
     }
@@ -47,12 +84,31 @@ internal class Program
     {
         var stopwatch = Stopwatch.StartNew();
         Log.Info($"[TEST] 开始 {stopwatch.ElapsedMilliseconds}ms");
-        Parallel.For(0, 0x00004000, i =>
+        Parallel.For(0, 0x00001000, i =>
         {
-            Thread.Sleep(0);
+            Thread.Sleep(1);
             Log.Info($"[TEST] {DateTime.Now:HH:mm:ss}");
         });
         Log.Info($"[TEST] 完成 {stopwatch.ElapsedMilliseconds}ms");
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static Exception GetException()
+    {
+        try
+        {
+            return ThrowException();
+        }
+        catch (Exception ex)
+        {
+            return ex;
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static Exception ThrowException()
+    {
+        throw new InvalidOperationException();
     }
 }
 
