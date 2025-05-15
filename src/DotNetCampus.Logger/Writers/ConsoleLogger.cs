@@ -15,13 +15,20 @@ namespace DotNetCampus.Logging.Writers;
 /// </summary>
 public class ConsoleLogger : ILogger
 {
-    /// <summary>
-    /// 控制台光标控制是否启用。
-    /// </summary>
-    private readonly bool _isCursorMovementEnabled;
-    private readonly RepeatLoggerDetector _repeat;
-    private static bool _isConsoleOutput;
     private static readonly TextWriter Out = GetStandardOutputWriter();
+
+    /// <summary>
+    /// 用于处理重复的日志，避免重复日志污染控制台输出内容。
+    /// </summary>
+    private readonly RepeatLoggerDetector _repeat;
+
+    /// <summary>
+    /// 判断当前是否在控制台输出日志（否则可能在普通的标准输入流，被其他应用程序对接）。
+    /// </summary>
+    /// <remarks>
+    /// 如果在控制台输出，则可以使用 ASCII 控制码来修改颜色、控制光标移动。也可以用来获取控制台窗口信息。
+    /// </remarks>
+    private readonly bool _isConsoleOutput;
 
     /// <summary>
     /// 创建一个 <see cref="ConsoleLogger"/> 的新实例。
@@ -38,10 +45,7 @@ public class ConsoleLogger : ILogger
         _repeat = new RepeatLoggerDetector(ClearAndMoveToLastLine);
         CoreWriter = coreWriter;
         TagManager = tagManager;
-        _isConsoleOutput = Out == Console.Out;
-        var success = ConsoleInitializer.Initialize();
-        // 如果输出流是自己创建的，则不支持光标移动。
-        _isCursorMovementEnabled = _isConsoleOutput && success;
+        _isConsoleOutput = ConsoleInitializer.Initialize();
     }
 
     /// <summary>
@@ -179,7 +183,7 @@ public class ConsoleLogger : ILogger
     /// <param name="repeatCount">此移动光标，是因为日志已重复第几次。</param>
     private void ClearAndMoveToLastLine(int repeatCount)
     {
-        if (!_isCursorMovementEnabled)
+        if (!_isConsoleOutput)
         {
             // 如果光标控制不可用，或者还没有重复次数，则不尝试移动光标。
             return;
@@ -256,10 +260,12 @@ public class ConsoleLogger : ILogger
     {
         try
         {
-            return _isCursorMovementEnabled ? Console.WindowWidth : 0;
+            return _isConsoleOutput ? Console.WindowWidth : 0;
         }
         catch (IOException)
         {
+            // _isConsoleOutput 的条件已经非常苛刻了，足以确保 Console.WindowWidth 的获取不会出现异常。
+            // 这只是保险性捕获。
             return 0;
         }
     }

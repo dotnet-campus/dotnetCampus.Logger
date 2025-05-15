@@ -15,29 +15,17 @@ internal class TagFilterManager
     /// <summary>
     /// 当前已设置的任一标签。（无前缀）
     /// </summary>
-#if NET6_0_OR_GREATER
-    public required IReadOnlySet<string> AnyFilterTags { get; init; }
-#else
-    public required HashSet<string> AnyFilterTags { get; init; }
-#endif
+    internal required IReadOnlyList<string> AnyFilterTags { get; init; }
 
     /// <summary>
     /// 当前已设置的包含标签。（前缀为 +）
     /// </summary>
-#if NET6_0_OR_GREATER
-    public required IReadOnlySet<string> IncludingFilterTags { get; init; }
-#else
-    public required HashSet<string> IncludingFilterTags { get; init; }
-#endif
+    internal required IReadOnlyList<string> IncludingFilterTags { get; init; }
 
     /// <summary>
     /// 当前已设置的排除标签。（前缀为 -）
     /// </summary>
-#if NET6_0_OR_GREATER
-    public required IReadOnlySet<string> ExcludingFilterTags { get; init; }
-#else
-    public required HashSet<string> ExcludingFilterTags { get; init; }
-#endif
+    internal required IReadOnlyList<string> ExcludingFilterTags { get; init; }
 
     /// <summary>
     /// 判断某个日志是否满足当前标签过滤条件。
@@ -127,9 +115,9 @@ internal class TagFilterManager
             return null;
         }
 
-        HashSet<string> anyFilterTags = [];
-        HashSet<string> includingFilterTags = [];
-        HashSet<string> excludingFilterTags = [];
+        List<string> anyFilterTags = [];
+        List<string> includingFilterTags = [];
+        List<string> excludingFilterTags = [];
         var filterTags = value.Split([',', ';', ' ']);
         foreach (var tag in filterTags)
         {
